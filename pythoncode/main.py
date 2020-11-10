@@ -5,6 +5,7 @@
 
 
 import numpy as np
+import curl
 import matplotlib.pyplot as plt
 import os
 from mlagents_envs.environment import UnityEnvironment
