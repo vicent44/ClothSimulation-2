@@ -8,48 +8,68 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from mlagents_envs.environment import UnityEnvironment
-# This is a non-blocking call that only loads the environment.
-env = UnityEnvironment(file_name=None)
-# Start interacting with the environment.
-env.reset()
-env.reset()
-#print(env.behavior_spec.observation_shapes)
 
-batch_observation =[]
+def main():
+    # This is a non-blocking call that only loads the environment.
+    env = UnityEnvironment(file_name=None)
+    # Start interacting with the environment.
+    env.reset()
+    env.reset()
+    # print(env.behavior_spec.observation_shapes)
 
-episodes = 500 #Number of games (number of times that succed the goal)
-max_steps = 1000 #Maximum steps for each episode
+    episodes = 500  # Number of games (number of times that succed the goal)
+    max_steps = 1000  # Maximum steps for each episode
+    batch_size = 128
+    stached_frames = 3
+    dimension_h = 84
+    dimension_w = 84
 
-im = np.random.randint(0, 255, (16, 16))
-print(im.shape, type(im))
+    # batch_observation = np.empty((batch_size, stached_frames, dimension_h, dimension_w))
+    batch_observation = []
+    im = np.random.randint(0, 255, (16, 16))
+    print(im.shape, type(im))
 
-for episode in range(episodes):
+    #Number of times that the goal if succed
+    for episode in range(episodes):
+        #number of steps maximum that have the agent to get the goal
+        for steps in range(max_steps):
+            behavior_names = env.behavior_specs
 
-    for steps in range(max_steps):
-        behavior_names = env.behavior_specs
-        #for behavior_name in behavior_names:
-        #    print(behavior_name)
-        #    decision_steps, terminal_steps = env.get_steps(behavior_name)
+            behavior_name_left = list(env.behavior_specs)[0]
+            behavior_name_right = list(env.behavior_specs)[1]
 
-        #print(decision_steps.action_mask)
-        #print(decision_steps.obs)
-        #print(decision_steps.agent_id[0])
+            decision_steps_left, terminal_steps_left = env.get_steps(behavior_name_left)
+            decision_steps_right, terminal_steps_right = env.get_steps(behavior_name_right)
+            print(decision_steps_left.reward, decision_steps_right.reward)
 
-        behavior_name_left = list(env.behavior_specs)[0]
-        behavior_name_right = list(env.behavior_specs)[1]
+            if (steps % 4) == 0:
+                image = get_image(decision_steps_left[0].obs[0], 1)
+            else:
+                image = concatenate_image(image, get_image(decision_steps_left[0].obs[0], 1))
 
-        decision_steps_left, terminal_steps_left = env.get_steps(behavior_name_left)
-        decision_steps_right, terminal_steps_right = env.get_steps(behavior_name_right)
-        print( decision_steps_left.reward, decision_steps_right.reward)
-        #batch_observation_temp = np.array([decision_steps_left[0].obs[0]])
+            if image.shape[0] == 4:
+                batch_images = add_batch_dimension(image, batch_size)
+                print(batch_images.shape)
 
-        batch_observation.append(decision_steps_left[0].obs[0])
+                actions = []
+                actions.append(np.random.uniform(0, 6, 1))
+                env.set_actions(behavior_name_left, np.array(actions))
+                env.set_actions(behavior_name_right, np.array(actions))
+
+            env.step()
+
+
+
+        """batch_observation.append(decision_steps_left[0].obs[0])
         print(len(batch_observation))
         if len(batch_observation) == 4:
             print( len(batch_observation))
-            print(decision_steps_left[0].obs[0].shape, type(batch_observation[0]))
-            temp = decision_steps_left[0].obs[0]
-            plt.imshow(temp.reshape(84,84))
+            observation = decision_steps_left[0].obs[0]
+            prova = np.transpose(observation, (2, 0, 1))
+            image_observation = observation[:,:,0]
+            print(observation[:,:,0].shape, type(batch_observation[0]), prova.shape)
+            #temp = decision_steps_left[0].obs[0]
+            plt.imshow(observation[:,:,0])
             plt.show()
             if np.array_equal(batch_observation[0],batch_observation[3]) :
                 print("equal")
@@ -61,7 +81,7 @@ for episode in range(episodes):
             env.set_actions(behavior_name_right, np.array(actions))
         #print(type(decision_steps_left[0].obs[0]))
             env.step()
-    """for observation in decision_steps_left[0].obs:
+    for observation in decision_steps_left[0].obs:
         print(observation.shape)
         if len(observation.shape) == 3 :
             print("uno")
@@ -85,13 +105,22 @@ for episode in range(episodes):
 
     #print(list(decision_steps), list(terminal_steps), tracked_agent)
 
+def get_image(observation, color):
+    transpose_observation = np.transpose(observation, (2, 0, 1))
+    if color == 1:
+        image_observation = transpose_observation[ 0:1,:,:]
+    elif color == 3:
+        image_observation = transpose_observation[ 0:3,:,:]
+    return image_observation
 
+def concatenate_image(image_stack, new_image):
+    new_image_stack = np.concatenate((image_stack, new_image))
+    return new_image_stack
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def add_batch_dimension(image_stack, batch_stack):
+    batch_stack_image = np.expand_dims(image_stack, axis = 0)
+    batch_stack_image = np.vstack([batch_stack_image]*batch_stack)
+    return batch_stack_image
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+if __name__ == "__main__":
+    main()
