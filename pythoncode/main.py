@@ -5,22 +5,26 @@
 
 
 import numpy as np
-import curl
+import curlsac
 import matplotlib.pyplot as plt
 import os
 from mlagents_envs.environment import UnityEnvironment
 
+
 def main():
     # This is a non-blocking call that only loads the environment.
     env = UnityEnvironment(file_name=None)
+
     # Start interacting with the environment.
     env.reset()
     env.reset()
     # print(env.behavior_spec.observation_shapes)
 
     episodes = 500  # Number of games (number of times that succed the goal)
-    max_steps = 1000  # Maximum steps for each episode
-    batch_size = 128
+    num_train_steps = 1000  # The number of training steps that will be performed
+    num_new_ext = 1000 # The number of experiences to collect per training step
+    buffer_size = 10000 # The maximum size of the Buffer
+    batch_size = 32
     stached_frames = 3
     dimension_h = 84
     dimension_w = 84
@@ -30,21 +34,48 @@ def main():
     im = np.random.randint(0, 255, (16, 16))
     print(im.shape, type(im))
 
+
+    for n in range(num_train_steps):
+
+
+
+
+"""
     #Number of times that the goal if succed
-    for episode in range(episodes):
+    for n in range(num_train_steps):
         #number of steps maximum that have the agent to get the goal
         for steps in range(max_steps):
-            behavior_names = env.behavior_specs
+            behavior_names, behavior_spec = env.behavior_specs
+            print(behavior_spec, behavior_names[1])
 
             behavior_name_left = list(env.behavior_specs)[0]
             behavior_name_right = list(env.behavior_specs)[1]
+
+            spec =env.behavior_specs[behavior_name_left]
+
+            # Examine the number of observations per Agent
+            print("Number of observations : ", len(spec.observation_shapes))
+
+            # Is there a visual observation ?
+            # Visual observation have 3 dimensions: Height, Width and number of channels
+            vis_obs = any(len(shape) == 3 for shape in spec.observation_shapes)
+            print("Is there a visual observation ?", vis_obs)
+
+            print(f"There are {spec.action_size} action(s)")
+
+            # For discrete actions only : How many different options does each action has ?
+            if spec.is_action_discrete():
+                for action, branch_size in enumerate(spec.discrete_action_branches):
+                    print(f"Action number {action} has {branch_size} different options")
 
             decision_steps_left, terminal_steps_left = env.get_steps(behavior_name_left)
             decision_steps_right, terminal_steps_right = env.get_steps(behavior_name_right)
             print(decision_steps_left.reward, decision_steps_right.reward)
 
+
             if (steps % 4) == 0:
                 image = get_image(decision_steps_left[0].obs[0], 1)
+                image = get_image(decision_steps_right[0].obs[0], 1)
             else:
                 image = concatenate_image(image, get_image(decision_steps_left[0].obs[0], 1))
 
@@ -60,8 +91,7 @@ def main():
             env.step()
 
 
-
-        """batch_observation.append(decision_steps_left[0].obs[0])
+        batch_observation.append(decision_steps_left[0].obs[0])
         print(len(batch_observation))
         if len(batch_observation) == 4:
             print( len(batch_observation))
