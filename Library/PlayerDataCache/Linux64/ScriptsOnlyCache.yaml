@@ -995,4 +995,4 @@ ScriptsOnlyBuild:
   platform: 24
   scenePathNames:
   - Assets/Scenes/UnionScene.unity
-  playerPath: /home/vroig/Escritorio/TFM/BuildRobot1.x86_64
+  playerPath: /home/vroig/Escritorio/TFM/RobotAgents.x86_64
