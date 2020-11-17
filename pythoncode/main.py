@@ -15,6 +15,8 @@ from copy import deepcopy
 from utils import ReplayBuffer
 from mlagents_envs.environment import UnityEnvironment
 
+from curlsac import CurlSacAgent
+
 from yaml_operations import load_yaml
 
 
@@ -49,21 +51,31 @@ def main():
     args = load_yaml("config.yaml")
     env = init_unity_env(args["unity_wrapper"])
 
-    action_shape = env.behavior_spec.action_size.shape
+    CurlSacAgent, args["algo"], args["train"], _policy_type =
+
+    behavior_spec = env.behavior_specs
+    behavior_name_left = list(env.behavior_specs)[0]
+    spec = env.behavior_specs[behavior_name_left]
+    action_shape = spec.action_shape
+
     obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_post"], args["environment"]["image_size_post"])
     pre_aug_obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_pre"], args["environment"]["image_size_pre"])
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     replay_buffer = ReplayBuffer(
         obs_shape = pre_aug_obs_shape,
         action_shape= action_shape,
         capacity= args["environment"]["buffer_size"],
         batch_size= args["environment"]["batch_size"],
-        device=device,
+        device='cpu',
         image_size= args["environment"]["image_size_post"]
     )
-
-
+    print(env.EnvSpec)
+    print(env.group_agents,env.fixed_group_names)
+    print(env.group_num)
+    for i, fgn in enumerate(env.fixed_group_names):
+        print(i, "+",fgn)
+    env.close()
 
 
 
@@ -192,7 +204,7 @@ def init_unity_env(env_args):
     print('Unity InfoWrapper success.')
 
     if env_args['frame_stack'] > 1:
-        env = StackVisualWrapper(env, stack_nums=env_kargs['stack_visual_nums'])
+        env = StackVisualWrapper(env, stack_nums=env_kargs['frame_stack'])
         print('Unity StackVisualWrapper success.')
     else:
         env = UnityReturnWrapper(env)

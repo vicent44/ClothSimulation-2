@@ -104,7 +104,7 @@ class BasicWrapper:
 class InfoWrapper(BasicWrapper):
     def __init__(self, env, env_args):
         super().__init__(env)
-        # self._env.step()    # NOTE: 在一些图像输入的场景，如果初始化时不执行这条指令，那么将不能获取正确的场景智能体数量
+        self._env.step()    # NOTE: 在一些图像输入的场景，如果初始化时不执行这条指令，那么将不能获取正确的场景智能体数量
         self.resize = env_args['resize']
 
         self.group_names = list(self._env.behavior_specs.keys())  # 所有脑的名字列表
@@ -117,7 +117,7 @@ class InfoWrapper(BasicWrapper):
 
         self.visual_sources = [len(v) for v in self.visual_idxs]
         self.visual_resolutions = []
-        stack_visual_nums = env_args['stack_visual_nums'] if env_args['stack_visual_nums'] > 1 else 1
+        stack_visual_nums = env_args['frame_stack'] if env_args['frame_stack'] > 1 else 1
         for spec in self.group_specs:
             for g in spec.observation_shapes:
                 if len(g) == 3:
@@ -134,9 +134,9 @@ class InfoWrapper(BasicWrapper):
         self.is_continuous = [spec.is_action_continuous() for spec in self.group_specs]
 
         self.group_agents = self.get_real_agent_numbers()  # 得到每个环境控制几个智能体
-
         if all('#' in name for name in self.group_names):
             # use for multi-agents
+            print("Multi-Agent-EachAgent")
             self.group_controls = list(map(lambda x: int(x.split('#')[0]), self.group_names))
             self.env_copys = self.group_agents[0] // self.group_controls[0]
             self.EnvSpec = MultiAgentEnvArgs(
@@ -149,6 +149,7 @@ class InfoWrapper(BasicWrapper):
                 group_controls=self.group_controls
             )
         else:
+            print("Single-Agent-EachAgent")
             self.EnvSpec = [
                 SingleAgentEnvArgs(
                     s_dim=self.s_dim[i],
