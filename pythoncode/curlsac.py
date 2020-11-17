@@ -189,7 +189,7 @@ class CURL(nn.Module):
     CURL
     """
 
-    def __init__(self, obs_shape, z_dim, batch_size, critic, critic_target, output_type="continuous"):
+    def __init__(self, obs_shape, z_dim, batch_size, critic, critic_target, output_type="discrete"):
         super(CURL, self).__init__()
         self.batch_size = batch_size
 
@@ -318,7 +318,7 @@ class CurlSacAgent(object):
         if self.encoder_type == 'pixel':
             # create CURL encoder (the 128 batch size is probably unnecessary)
             self.CURL = CURL(obs_shape, encoder_feature_dim,
-                             self.curl_latent_dim, self.critic, self.critic_target, output_type='continuous').to(
+                             self.curl_latent_dim, self.critic, self.critic_target, output_type='discrete').to(
                 self.device)
 
             # optimizer for critic encoder for reconstruction loss

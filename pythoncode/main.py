@@ -5,15 +5,22 @@
 
 
 import numpy as np
+from typing import Dict
 import curlsac
 import matplotlib.pyplot as plt
 import os
+import argparse
+import torch
+from copy import deepcopy
+from utils import ReplayBuffer
 from mlagents_envs.environment import UnityEnvironment
+
+from yaml_operations import load_yaml
 
 
 def main():
     # This is a non-blocking call that only loads the environment.
-    env = UnityEnvironment(file_name=None)
+    """env = UnityEnvironment(file_name=None)
 
     # Start interacting with the environment.
     env.reset()
@@ -32,10 +39,31 @@ def main():
     # batch_observation = np.empty((batch_size, stached_frames, dimension_h, dimension_w))
     batch_observation = []
     im = np.random.randint(0, 255, (16, 16))
-    print(im.shape, type(im))
+    print(im.shape, type(im))"""
+
+    #1 - First take the config of the yml file for the algorithm
+    #2 - Open the Unity environment and initiate the neural networks
+    #3 - Initialize unity (agents)
+    #4 - Run simulation
+
+    args = load_yaml("config.yaml")
+    env = init_unity_env(args["unity_wrapper"])
+
+    action_shape = env.behavior_spec.action_size.shape
+    obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_post"], args["environment"]["image_size_post"])
+    pre_aug_obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_pre"], args["environment"]["image_size_pre"])
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    replay_buffer = ReplayBuffer(
+        obs_shape = pre_aug_obs_shape,
+        action_shape= action_shape,
+        capacity= args["environment"]["buffer_size"],
+        batch_size= args["environment"]["batch_size"],
+        device=device,
+        image_size= args["environment"]["image_size_post"]
+    )
 
 
-    for n in range(num_train_steps):
 
 
 
@@ -152,6 +180,29 @@ def add_batch_dimension(image_stack, batch_stack):
     batch_stack_image = np.expand_dims(image_stack, axis = 0)
     batch_stack_image = np.vstack([batch_stack_image]*batch_stack)
     return batch_stack_image
+
+def init_unity_env(env_args):
+    from unity_wrapper import (UnityWrapper, UnityReturnWrapper,
+                                InfoWrapper, ActionWrapper, StackVisualWrapper)
+    env_kargs = deepcopy(env_args)
+    env = UnityWrapper(env_kargs)
+    print('Unity UnityWrapper success.')
+
+    env = InfoWrapper(env, env_kargs)
+    print('Unity InfoWrapper success.')
+
+    if env_args['frame_stack'] > 1:
+        env = StackVisualWrapper(env, stack_nums=env_kargs['stack_visual_nums'])
+        print('Unity StackVisualWrapper success.')
+    else:
+        env = UnityReturnWrapper(env)
+        print('Unity UnityReturnWrapper success.')
+
+    env = ActionWrapper(env)
+    print('Unity ActionWrapper success.')
+
+    return env
+
 
 if __name__ == "__main__":
     main()
