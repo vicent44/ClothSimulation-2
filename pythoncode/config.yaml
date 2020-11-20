@@ -13,17 +13,26 @@ unity_wrapper:
     file_path:
     env_seed: 123
     reset_config: {}
-
     frame_stack: 4
+    batch_size: 16
     
+buffer:
+    buffer_size: 100000
+
 
 environment:
+    domain_name: robot
+    task_name: fold
     frame_stack: 4
     image_size_pre: 84
     image_size_post: 64
     frame_stack: 4
     buffer_size: 100000
     batch_size: 16
+    seed: 1
+    encoder_type: pixel
+    work_dir: .
+    save_tb: False
 
 train:
     train_mode: True
@@ -31,6 +40,13 @@ train:
     train_steps: 1000000
     episodes: 10
     eval_freq: 1000
+    num_train_steps: 1000000
+    num_eval_episodes: 10
+    log_interval: 100
+    save_model: True
+    save_buffer: True
+    image_size_pre: 84
+    image_size_post: 64
 
 general:
     use_rnn: false # always false, using -r to active RNN
@@ -54,7 +70,36 @@ off_policy:
     episode_buffer_size: 10000
     train_times_per_step: 1 # train multiple times per agent step
 
-curl:
+curl_sac:
+    agent: curl_sac
+    hidden_dim: 256
+    discount: 0.99
+    init_temperature: 0.01
+    alpha_lr: 0.001
+    alpha_beta: 0.9
+    actor_lr: 0.001
+    actor_beta: 0.9
+    actor_log_std_min: -10
+    actor_log_std_max: 2
+    actor_update_freq: 2
+    critic_lr: 0.001
+    critic_beta: 0.9
+    critic_tau: 0.005
+    critic_target_update_freq: 2
+    encoder_type: 'pixel'
+    encoder_feature_dim: 50
+    encoder_lr: 0.001
+    encoder_tau: 0.005
+    num_layers: 4
+    num_filters: 32
+    cpc_update_freq: 1
+    log_interval: 100
+    detach_encoder: False
+    curl_latent_dim: 128
+
+
+
+altre:
     alpha: 0.2
     auto_adaption: true
     annealing: true

@@ -10,6 +10,7 @@ from collections import namedtuple
 from yaml_operations import load_yaml
 from collections import deque
 import itertools
+from LazyFrames import LazyFrames
 
 
 
@@ -114,10 +115,10 @@ class InfoWrapper(BasicWrapper):
         self.vector_dims = [[g[0] for g in spec.observation_shapes if len(g) == 1] for spec in self.group_specs]  # 得到所有脑 观测值为向量的维度
         self.visual_idxs = [[i for i, g in enumerate(spec.observation_shapes) if len(g) == 3] for spec in self.group_specs]   # 得到所有脑 观测值为图像的下标
         self.group_num = len(self.group_names)
-
+        print(self.vector_dims, self.visual_idxs, self.vector_idxs, "spec", self.group_specs, self.group_num)
         self.visual_sources = [len(v) for v in self.visual_idxs]
         self.visual_resolutions = []
-        stack_visual_nums = env_args['frame_stack'] if env_args['frame_stack'] > 1 else 1
+        stack_visual_nums = env_args['batch_size'] if env_args['batch_size'] > 1 else 1
         for spec in self.group_specs:
             for g in spec.observation_shapes:
                 if len(g) == 3:
