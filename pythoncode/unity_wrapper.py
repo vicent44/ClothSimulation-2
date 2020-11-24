@@ -118,7 +118,7 @@ class InfoWrapper(BasicWrapper):
         print(self.vector_dims, self.visual_idxs, self.vector_idxs, "spec", self.group_specs, self.group_num)
         self.visual_sources = [len(v) for v in self.visual_idxs]
         self.visual_resolutions = []
-        stack_visual_nums = env_args['batch_size'] if env_args['batch_size'] > 1 else 1
+        stack_visual_nums = env_args['frame_stack'] if env_args['frame_stack'] > 1 else 1
         for spec in self.group_specs:
             for g in spec.observation_shapes:
                 if len(g) == 3:
@@ -133,12 +133,12 @@ class InfoWrapper(BasicWrapper):
         self.discrete_action_dim_list = [spec.action_shape for spec in self.group_specs]
         self.a_size = [spec.action_size for spec in self.group_specs]
         self.is_continuous = [spec.is_action_continuous() for spec in self.group_specs]
-
+        print(self.discrete_action_dim_list[0])
         self.group_agents = self.get_real_agent_numbers()  # 得到每个环境控制几个智能体
         if all('#' in name for name in self.group_names):
             # use for multi-agents
             print("Multi-Agent-EachAgent")
-            self.group_controls = list(map(lambda x: int(x.split('#')[0]), self.group_names))
+            self.group_controls = list(map(lambda x: int(x.split('_')[0]), self.group_names))
             self.env_copys = self.group_agents[0] // self.group_controls[0]
             self.EnvSpec = MultiAgentEnvArgs(
                 s_dim=self.s_dim,

@@ -251,7 +251,7 @@ def random_crop(imgs, output_size):
 
 
 def center_crop_image(image, output_size):
-    h, w = image.shape[1:3]
+    h, w = image.shape[1:]
     new_h, new_w = output_size, output_size
 
     top = (h - new_h) // 2

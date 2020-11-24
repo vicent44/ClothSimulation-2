@@ -352,6 +352,7 @@ class CurlSacAgent(object):
             mu, _, _, _ = self.actor(
                 obs, compute_pi=False, compute_log_pi=False
             )
+
             return mu.cpu().data.numpy().flatten()
 
     def sample_action(self, obs):

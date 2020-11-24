@@ -1,0 +1,127 @@
+
+&env
+
+unity_wrapper:
+    train_mode: True
+    train_time_scale: 100
+    width: 1028
+    height: 720
+    resize: [84, 84]
+    quality_level: 5
+    inference_time_scale: 0
+    target_frame_rate: 60
+    file_path:
+    env_seed: 123
+    reset_config: {}
+    frame_stack: 4
+    batch_size: 16
+    
+buffer:
+    buffer_size: 100000
+
+
+environment:
+    domain_name: robot
+    task_name: fold
+    frame_stack: 4
+    image_size_pre: 84
+    image_size_post: 64
+    frame_stack: 4
+    buffer_size: 100000
+    batch_size: 16
+    seed: 1
+    encoder_type: pixel
+    work_dir: .
+    save_tb: False
+
+train:
+    train_mode: True
+    init_steps: 1000
+    train_steps: 1000000
+    episodes: 10
+    eval_freq: 1000
+    num_train_steps: 1000000
+    num_eval_episodes: 10
+    log_interval: 100
+    save_model: True
+    save_buffer: True
+    image_size_pre: 84
+    image_size_post: 64
+
+general:
+    use_rnn: false # always false, using -r to active RNN
+    decay_lr: false
+    burn_in_time_step: 10
+    train_time_step: 5
+    rnn_units: 8
+    tf_dtype: float32 # float32 or float64
+    use_curiosity: false # whether to use ICM or not
+    curiosity_lr: 1.0e-3 # the learning rate for ICM
+    curiosity_reward_eta: 0.01 # scale the forward loss of ICM to shape intrinsic reward. It depends on the range of reward of specific environment.
+    curiosity_loss_weight: 5 # weight that scale the gradient loss and ICM loss
+    curiosity_beta: 0.2 # weight that scale the forward loss and inverse loss of ICM
+    visual_feature: 128
+    normalize_vector_obs: False
+    logger2file: false
+
+off_policy:
+    use_isw: false
+    episode_batch_size: 32 # rnn
+    episode_buffer_size: 10000
+    train_times_per_step: 1 # train multiple times per agent step
+
+curl_sac:
+    agent: curl_sac
+    hidden_dim: 256
+    discount: 0.99
+    init_temperature: 0.01
+    alpha_lr: 0.001
+    alpha_beta: 0.9
+    actor_lr: 0.001
+    actor_beta: 0.9
+    actor_log_std_min: -10
+    actor_log_std_max: 2
+    actor_update_freq: 2
+    critic_lr: 0.001
+    critic_beta: 0.9
+    critic_tau: 0.005
+    critic_target_update_freq: 2
+    encoder_type: 'pixel'
+    encoder_feature_dim: 50
+    encoder_lr: 0.001
+    encoder_tau: 0.005
+    num_layers: 4
+    num_filters: 32
+    cpc_update_freq: 1
+    log_interval: 100
+    detach_encoder: False
+    curl_latent_dim: 128
+
+
+
+altre:
+    alpha: 0.2
+    auto_adaption: true
+    annealing: true
+    last_alpha: 0.01
+    log_std_bound: [-20, 2]
+    actor_lr: 5.0e-4
+    critic_lr: 1.0e-3
+    alpha_lr: 5.0e-4
+    curl_lr: 5.0e-4
+    gamma: 0.99
+    ployak: 0.995
+    discrete_tau: 1.0
+    batch_size: 8
+    buffer_size: 1000
+    img_size: 64
+    use_priority: false
+    n_step: false
+    network_settings:
+        actor_continuous:
+            share: [64, 64]
+            mu: [64]
+            log_std: [64]
+        actor_discrete: [64, 64]
+        q: [64, 64]
+        encoder: 128

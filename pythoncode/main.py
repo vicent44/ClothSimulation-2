@@ -78,7 +78,7 @@ def main():
     behavior_name_left = list(env.behavior_specs)[0]
     spec = env.behavior_specs[behavior_name_left]
     action_shape = spec.action_shape
-    print(spec.observation_shapes)
+    print(spec.observation_shapes, action_shape[0],"aquiii bro", spec.discrete_action_branches)
 
     obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_post"], args["environment"]["image_size_post"])
     pre_aug_obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_pre"], args["environment"]["image_size_pre"])
@@ -93,15 +93,28 @@ def main():
         image_size= args["environment"]["image_size_post"]
     )'''
     print(env.EnvSpec)
-    print(env.group_agents,env.fixed_group_names)
+    print(len(env.EnvSpec), obs_shape)
+    print(env.group_agents,env.fixed_group_names,env.group_names)
     print(env.group_num)
     vis = env.reset()
-    print("list:", len(vis), "0-Zero", vis[0], "1- Primer", type(vis[1][1][0]), vis[1][0][0].shape, vis[1][1].shape, "2-Segon", vis[2], "3-Tercer", vis[3], "4-Cuart", vis[4])
+    print("list:", len(vis), "0-Zero", len(vis[0]), vis[0], "1- Primer", type(vis[1]), len(vis[1]), vis[1][0][:,0].shape, vis[1][0][0].shape)#, vis[1][1].shape, vis[1][0][0].shape, vis[1][1][0].shape, "2-Segon", vis[2], "3-Tercer", vis[3], "4-Cuart", vis[4])
+    #Give [A, C, H, W, C] visual( Agent1(Camera1(H, W, C), camera2(H, W, C)), Agent2(Camera1(H, W, C), camera2(H, W, C))
 
     #print("Reset:", vis[0], vis[0].shape, "next")
     #print(env.)
+    for i, brain_name in enumerate(env.group_names):
+        print(i, brain_name)
+    print("--------------------------")
     for i, fgn in enumerate(env.fixed_group_names):
         print(i, "+",fgn)
+    ObsRewDone = zip(*env.reset())
+    """for i, (v, vs, r, d, info) in enumerate(ObsRewDone):
+        print(v)
+        print(vs)
+        print(r)
+        print(d)
+        print(info)
+        print("done")"""
 
     agents = initialize_model_buffer_each_agent(args, env)
 
@@ -122,7 +135,7 @@ def main():
 
         if step % args["train"]["eval_freq"] == 0:
             L.log('eval/episode', episode, step)
-            evaluate(env, agents[0][0], args["train"]["num_eval_episodes"], L, step,args)
+            evaluate(env, agents[0][0], args["train"]["num_eval_episodes"], L, step, args)
             if args["train"]["save_model"]:
                 agents[0][0].save_curl(model_dir, step)
             if args["train"]["save_buffer"]:
@@ -271,22 +284,6 @@ def main():
 
     #print(list(decision_steps), list(terminal_steps), tracked_agent)
 
-def get_image(observation, color):
-    transpose_observation = np.transpose(observation, (2, 0, 1))
-    if color == 1:
-        image_observation = transpose_observation[ 0:1,:,:]
-    elif color == 3:
-        image_observation = transpose_observation[ 0:3,:,:]
-    return image_observation
-
-def concatenate_image(image_stack, new_image):
-    new_image_stack = np.concatenate((image_stack, new_image))
-    return new_image_stack
-
-def add_batch_dimension(image_stack, batch_stack):
-    batch_stack_image = np.expand_dims(image_stack, axis = 0)
-    batch_stack_image = np.vstack([batch_stack_image]*batch_stack)
-    return batch_stack_image
 
 def init_unity_env(env_args):
     from unity_wrapper import (UnityWrapper, UnityReturnWrapper,
@@ -380,38 +377,47 @@ def make_agent(obs_shape, action_shape, args, device):
 
 def evaluate(env, agent, num_episodes, L, step, args):
     all_ep_rewards = []
-    state, visual_state, action, dones_flag, rewards = zeros_initializer(env.group_num, 5)
-    def run_eval_loop(sample_stochastically=True):
+
+    def run_eval_loop(sample_stochastically=False):
         start_time = time.time()
         prefix = 'stochastic_' if sample_stochastically else ''
         for i in range(num_episodes):
-            obs = env.reset()
-
-            ObsRewDone = zip(*env.reset())
-            for i, (_v, _vs, _r, _d, _info) in enumerate(ObsRewDone):
-                dones_flag[i] = np.zeros(env.group_agents[i])
-                rewards[i] = np.zeros(env.group_agents[i])
-                state[i] = _v
-                visual_state[i] = _vs
-
-            print(state[1], type(state[1]), state[1].shape)
-            print(visual_state[1], type(visual_state[1]), visual_state[1].shape)
-            visual = visual_state[1]
-            #s, visual_s, _, _, _ = env.reset()
-            #print( s, "hi", visual_s,np.asarray(visual_s).shape)
+            _, obs, _, _, _ = env.reset()
             #video.init(enabled=(i == 0))
             done = False
             episode_reward = 0
             while not done:
                 # center crop image
-                if args["curl_sac"]["encoder_type"] == 'pixel':
-                    obs = utils.center_crop_image(visual[:,0], args["train"]["image_size_post"])
+                if True: #args.encoder_type == 'pixel':
+                    prev = np.transpose(obs[0][0][0], (2, 0, 1))
+                    obs = utils.center_crop_image(prev, args["train"]["image_size_post"])
+                    print(obs, type(obs), obs.shape, agent, type(agent))
                 with utils.eval_mode(agent):
+                    print(utils.eval_mode(agent), type(utils.eval_mode(agent)))
                     if sample_stochastically:
                         action = agent.sample_action(obs)
                     else:
                         action = agent.select_action(obs)
-                obs, reward, done, _ = env.step(action)
+
+
+                print(action, type(action), action.shape)
+                print("Arg max: ", np.argmax(action))
+                #action.shape = [1, 7]
+                #print(action.shape, action[1])
+                actions = {f'{brain_name}': action for i, brain_name in enumerate(env.group_names)}
+                print(actions, type(actions))
+                print(actions.keys())
+                """ObsRewDone = zip(*env.step(actions))
+                print(ObsRewDone)
+
+                for i, (vect, visual, rew, don, inf) in enumerate(ObsRewDone):
+                    obs = visual
+                    reward = rew
+                    done = done
+
+                print(obs.shape, reward, done)"""
+                #env.set_actions(env.group_names[0], )
+                obs, reward, done, _ = env.step(actions)
                 #video.record(env)
                 episode_reward += reward
 
