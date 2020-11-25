@@ -150,7 +150,8 @@ def main():
             if step % args["train"]["log_interval"] == 0:
                 L.log('train/episode_reward', episode_reward, step)
 
-            obs = env.reset()
+            _, obs, _, _, _ = env.reset()
+            obs = np.transpose(obs[0][0][0], (2, 0, 1))
             done = False
             episode_reward = 0
             episode_step = 0
@@ -160,10 +161,13 @@ def main():
 
         # sample action for data collection
         if step < args["train"]["init_steps"]:
-            action = env.action_space.sample()
+            action = env.random_action() #action_space.sample()
+            actions = {f'{brain_name}': action[i] for i, brain_name in enumerate(env.group_names)}
+            print("Action random: ", action)
         else:
             with utils.eval_mode(agents[0][0]):
                 action = agents[0][0].sample_action(obs)
+                actions = {f'{brain_name}': action for i, brain_name in enumerate(env.group_names)}
 
         # run training update
         if step >= args["train"]["init_steps"]:
@@ -171,14 +175,17 @@ def main():
             for _ in range(num_updates):
                 agents[0][0].update(agents[0][1], L, step)
 
-        next_obs, reward, done, _ = env.step(action)
-
+        print("Noves actions: ", actions, type(actions))
+        _, next_obs, reward, done, _ = env.step(actions)
+        next_obs = np.transpose(next_obs[0][0][0], (2, 0, 1))
         # allow infinit bootstrap
-        done_bool = 0 if episode_step + 1 == env._max_episode_steps else float(
-            done
+        _max_episode_steps = 200
+        done_bool = 0 if episode_step + 1 == _max_episode_steps else float(
+            done[0]
         )
-        episode_reward += reward
-        agents[0][1].add(obs, action, reward, next_obs, done_bool)
+        episode_reward += reward[0][0]
+        print("Final: ", reward )
+        agents[0][1].add(obs, action[0], reward[0], next_obs, done_bool)
 
         obs = next_obs
         episode_step += 1
@@ -391,7 +398,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
                 if True: #args.encoder_type == 'pixel':
                     prev = np.transpose(obs[0][0][0], (2, 0, 1))
                     obs = utils.center_crop_image(prev, args["train"]["image_size_post"])
-                    print(obs, type(obs), obs.shape, agent, type(agent))
+                    #print(obs, type(obs), obs.shape, agent, type(agent))
                 with utils.eval_mode(agent):
                     print(utils.eval_mode(agent), type(utils.eval_mode(agent)))
                     if sample_stochastically:
@@ -417,9 +424,10 @@ def evaluate(env, agent, num_episodes, L, step, args):
 
                 print(obs.shape, reward, done)"""
                 #env.set_actions(env.group_names[0], )
-                obs, reward, done, _ = env.step(actions)
+                _, obs, reward, done, _ = env.step(actions)
                 #video.record(env)
-                episode_reward += reward
+                print("Reward: ", reward)
+                episode_reward += reward[0][0]
 
             #video.save('%d.mp4' % step)
             L.log('eval/' + prefix + 'episode_reward', episode_reward, step)
