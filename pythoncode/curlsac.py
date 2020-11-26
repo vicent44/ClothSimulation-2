@@ -5,6 +5,7 @@ import torch.nn.functional as F
 import copy
 import math
 import tensorflow as tf
+from torch.distributions import Categorical
 
 import utils
 from encoder import make_encoder
@@ -351,11 +352,15 @@ class CurlSacAgent(object):
             obs = torch.FloatTensor(obs).to(self.device)
             obs = obs.unsqueeze(0)
             mu, _, _, _ = self.actor(
-                obs, compute_pi=False, compute_log_pi=False
+                obs, compute_pi=False, compute_log_pi=False, detach_encoder=True
             )
             greedy_actions = torch.argmax(mu, dim=1, keepdim=True)
-            print("Mu: ", greedy_actions, mu)
-            return greedy_actions.cpu().data.numpy().flatten()
+            action = tf.tanh(tf.atanh(mu) + tf.random.normal(tf.shape(mu), stddev=0.4))
+            action2 = np.argmax(action, axis=1)
+            print("Action2: ", action2)
+            action2.resize((4,1))
+            print("Mu: ", greedy_actions, mu, action2)
+            return mu.numpy()
 
     def sample_action(self, obs):
         if obs.shape[-1] != self.image_size:
@@ -366,7 +371,7 @@ class CurlSacAgent(object):
             obs = obs.unsqueeze(0)
             mu, pi, _, _ = self.actor(obs, compute_log_pi=False)
             greedy_actions = torch.argmax(pi, dim=1, keepdim=True)
-            return greedy_actions.cpu().data.numpy().flatten() # pi.cpu().data.numpy().flatten()
+            return pi.numpy() # pi.cpu().data.numpy().flatten()
 
     def update_critic(self, obs, action, reward, next_obs, not_done, L, step):
         with torch.no_grad():

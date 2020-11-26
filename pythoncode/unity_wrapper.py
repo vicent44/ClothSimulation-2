@@ -138,7 +138,7 @@ class InfoWrapper(BasicWrapper):
         if all('#' in name for name in self.group_names):
             # use for multi-agents
             print("Multi-Agent-EachAgent")
-            self.group_controls = list(map(lambda x: int(x.split('_')[0]), self.group_names))
+            self.group_controls = list(map(lambda x: int(x.split('#')[0]), self.group_names))
             self.env_copys = self.group_agents[0] // self.group_controls[0]
             self.EnvSpec = MultiAgentEnvArgs(
                 s_dim=self.s_dim,

@@ -25,27 +25,6 @@ from yaml_operations import load_yaml
 
 
 def main():
-    # This is a non-blocking call that only loads the environment.
-    """env = UnityEnvironment(file_name=None)
-
-    # Start interacting with the environment.
-    env.reset()
-    env.reset()
-    # print(env.behavior_spec.observation_shapes)
-
-    episodes = 500  # Number of games (number of times that succed the goal)
-    num_train_steps = 1000  # The number of training steps that will be performed
-    num_new_ext = 1000 # The number of experiences to collect per training step
-    buffer_size = 10000 # The maximum size of the Buffer
-    batch_size = 32
-    stached_frames = 3
-    dimension_h = 84
-    dimension_w = 84
-
-    # batch_observation = np.empty((batch_size, stached_frames, dimension_h, dimension_w))
-    batch_observation = []
-    im = np.random.randint(0, 255, (16, 16))
-    print(im.shape, type(im))"""
 
     #1 - First take the config of the yml file for the algorithm
     #2 - Open the Unity environment and initiate the neural networks
@@ -72,26 +51,18 @@ def main():
     model_dir = utils.make_dir(os.path.join(args["environment"]["work_dir"], 'model'))
     buffer_dir = utils.make_dir(os.path.join(args["environment"]["work_dir"], 'buffer'))
 
-    #CurlSacAgent, args["algo"], args["train"], _policy_type =
-
     behavior_spec = env.behavior_specs
     behavior_name_left = list(env.behavior_specs)[0]
     spec = env.behavior_specs[behavior_name_left]
+    action_size = spec.action_size
     action_shape = spec.action_shape
-    print(spec.observation_shapes, action_shape[0],"aquiii bro", spec.discrete_action_branches)
+    print(spec.observation_shapes, action_size, action_shape,"aquiii bro", spec.discrete_action_branches)
 
+    action_shape = (action_shape,1)
     obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_post"], args["environment"]["image_size_post"])
     pre_aug_obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_pre"], args["environment"]["image_size_pre"])
     #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    '''replay_buffer = ReplayBuffer(
-        obs_shape = pre_aug_obs_shape,
-        action_shape= action_shape,
-        capacity= args["environment"]["buffer_size"],
-        batch_size= args["environment"]["batch_size"],
-        device='cpu',
-        image_size= args["environment"]["image_size_post"]
-    )'''
     print(env.EnvSpec)
     print(len(env.EnvSpec), obs_shape)
     print(env.group_agents,env.fixed_group_names,env.group_names)
@@ -117,13 +88,6 @@ def main():
         print("done")"""
 
     agents = initialize_model_buffer_each_agent(args, env)
-
-    '''agent = make_agent(
-        obs_shape= obs_shape,
-        action_shape= action_shape,
-        args= args["curl_sac"],
-        device= "cpu"
-    )'''
 
     L = Logger(args["environment"]["work_dir"], use_tb=args["environment"]["save_tb"])
 
@@ -163,7 +127,7 @@ def main():
         if step < args["train"]["init_steps"]:
             action = env.random_action() #action_space.sample()
             actions = {f'{brain_name}': action[i] for i, brain_name in enumerate(env.group_names)}
-            print("Action random: ", action)
+            print("Action random: ", action, len(action))
         else:
             with utils.eval_mode(agents[0][0]):
                 action = agents[0][0].sample_action(obs)
@@ -323,7 +287,7 @@ def initialize_model_buffer_each_agent(args, env):
         behavior_spec = env.behavior_specs
         behavior_name_left = list(env.behavior_specs)[0]
         spec = env.behavior_specs[behavior_name_left]
-        action_shape = spec.action_shape
+        action_shape = (spec.action_shape,2)
 
         obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_post"],
                      args["environment"]["image_size_post"])

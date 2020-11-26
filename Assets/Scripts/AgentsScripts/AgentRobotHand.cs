@@ -38,7 +38,7 @@ public class AgentRobotHand : Agent
     }
     public Hand hand;
 
-    public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
+    /*public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
         var positionX = transform.position.x;
         var positionY = transform.position.y;
@@ -76,11 +76,19 @@ public class AgentRobotHand : Agent
             actionMask.WriteMask(0, new[] {forward});
         }
     }
-
+*/
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         AddReward(-0.01f);
-        var action = actionBuffers.DiscreteActions[0];
+
+        var continuousActions = actionBuffers.ContinuousActions;
+        var moveX = Mathf.Clamp(continuousActions[0], -1f, 1f);
+        var moveY = Mathf.Clamp(continuousActions[1], -1f, 1f);
+        var moveZ = Mathf.Clamp(continuousActions[2], -1f, 1f);
+        //Debug.Log(moveZ);
+        var targetPos = transform.position;
+        targetPos = transform.position + new Vector3(moveX*0.01f, moveY*0.01f, moveZ*0.01f);
+        /*var action = actionBuffers.DiscreteActions[0];
 
         var targetPos = transform.position;
         switch (action)
@@ -108,7 +116,7 @@ public class AgentRobotHand : Agent
                 break;
             //default:
             //    Debug.Log("Invalid action value");
-        }
+        }*/
         var hit = Physics.OverlapBox(targetPos, new Vector3(0.02f, 0.02f, 0.02f));
         if(hit.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
         {
@@ -153,24 +161,11 @@ public class AgentRobotHand : Agent
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        var discreteActionsOut = actionsOut.DiscreteActions;
-        discreteActionsOut[0] = noAction;
-        if (Input.GetKey(KeyCode.T))
-        {
-            discreteActionsOut[0] = forward;
-        }
-        /*if (Input.GetKey(KeyCode.W))
-        {
-            discreteActionsOut[0] = k_Up;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            discreteActionsOut[0] = k_Left;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            discreteActionsOut[0] = k_Down;
-        }*/
+        var continuousActionsOut = actionsOut.ContinuousActions;
+        continuousActionsOut[0] = Input.GetAxis("Horizontal");    // Racket Movement
+        //continuousActionsOut[1] = Input.GetKey(KeyCode.T);//Input.GetKey(KeyCode.Space) ? 1f : 0f;   // Racket Jumping
+        continuousActionsOut[2] = Input.GetAxis("Vertical");
+        if(Input.GetKey(KeyCode.M)) continuousActionsOut[0] = 0.01f;  
     }
 
     public override void OnEpisodeBegin()
