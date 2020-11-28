@@ -31,12 +31,20 @@ public class AgentRobotHand : Agent
     const int forward = 5;
     const int backward = 6;
 
+    private bool leftDone;
+    private bool rightDone;
+    private bool leftCatch;
+    private bool rightCatch;
+
     public enum Hand
     {
         Right,
         Left
     }
     public Hand hand;
+
+    private GameObject left_hand;
+    private GameObject right_hand;
 
     /*public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
@@ -79,15 +87,23 @@ public class AgentRobotHand : Agent
 */
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        AddReward(-0.01f);
 
         var continuousActions = actionBuffers.ContinuousActions;
-        var moveX = Mathf.Clamp(continuousActions[0], -1f, 1f);
-        var moveY = Mathf.Clamp(continuousActions[1], -1f, 1f);
-        var moveZ = Mathf.Clamp(continuousActions[2], -1f, 1f);
+        var moveX_left = Mathf.Clamp(continuousActions[0], -1f, 1f);
+        var moveY_left = Mathf.Clamp(continuousActions[1], -1f, 1f);
+        var moveZ_left = Mathf.Clamp(continuousActions[2], -1f, 1f);
         //Debug.Log(moveZ);
-        var targetPos = transform.position;
-        targetPos = transform.position + new Vector3(moveX*0.01f, moveY*0.01f, moveZ*0.01f);
+        var targetPos_left = left_hand.transform.position;
+        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.01f, moveY_left*0.01f, moveZ_left*0.01f);
+        
+        var moveX_right = Mathf.Clamp(continuousActions[3], -1f, 1f);
+        var moveY_right = Mathf.Clamp(continuousActions[4], -1f, 1f);
+        var moveZ_right = Mathf.Clamp(continuousActions[5], -1f, 1f);
+        //Debug.Log(moveZ);
+        var targetPos_right = right_hand.transform.position;
+        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.01f, moveY_right*0.01f, moveZ_right*0.01f);
+                
+        
         /*var action = actionBuffers.DiscreteActions[0];
 
         var targetPos = transform.position;
@@ -117,10 +133,31 @@ public class AgentRobotHand : Agent
             //default:
             //    Debug.Log("Invalid action value");
         }*/
-        var hit = Physics.OverlapBox(targetPos, new Vector3(0.02f, 0.02f, 0.02f));
-        if(hit.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
+        var hit_left = Physics.OverlapBox(targetPos_left, new Vector3(0.02f, 0.02f, 0.02f));
+        if(hit_left.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
         {
-            transform.position = targetPos;
+            left_hand.transform.position = targetPos_left;
+            Debug.Log("Next Position No Walls - Posible");
+
+            /*if(hit.Where(col => col.gameObject.CompareTag("goal")).ToArray().Length >= 0)
+            {
+                foreach (var coll in hit)
+                {
+                    if(this.gameObject.tag == coll.gameObject.name && firstCollisionDone)
+                    {
+                        Debug.Log("Fold Completed!!");
+                        SetReward(1f);
+                        StartCoroutine(Example());
+                        EndEpisode();
+                    }
+                }
+            }*/
+        }
+
+        var hit_right = Physics.OverlapBox(targetPos_right, new Vector3(0.02f, 0.02f, 0.02f));
+        if(hit_right.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
+        {
+            right_hand.transform.position = targetPos_right;
             Debug.Log("Next Position No Walls - Posible");
 
             /*if(hit.Where(col => col.gameObject.CompareTag("goal")).ToArray().Length >= 0)
@@ -163,9 +200,10 @@ public class AgentRobotHand : Agent
     {
         var continuousActionsOut = actionsOut.ContinuousActions;
         continuousActionsOut[0] = Input.GetAxis("Horizontal");    // Racket Movement
+        continuousActionsOut[3] = Input.GetAxis("Horizontal"); 
         //continuousActionsOut[1] = Input.GetKey(KeyCode.T);//Input.GetKey(KeyCode.Space) ? 1f : 0f;   // Racket Jumping
         continuousActionsOut[2] = Input.GetAxis("Vertical");
-        if(Input.GetKey(KeyCode.M)) continuousActionsOut[0] = 0.01f;  
+        continuousActionsOut[5] = Input.GetAxis("Vertical");    
     }
 
     public override void OnEpisodeBegin()
@@ -174,11 +212,23 @@ public class AgentRobotHand : Agent
         //arearobot.AreaReset();
         arearobot.SetEnvironment();
         //System.Threading.Thread.Sleep(4000);
+        left_hand = transform.Find("TargetLeft").gameObject;
+        right_hand = transform.Find("TargetRight").gameObject;
     }
 
     public void FixedUpdate()
     {
-        //if(float.IsNaN(mesh.transform.GetChild(0).gameObject.GetComponent<ParticlesBehaviour>().transform.position.x)) arearobot.AreaReset();
+        if(leftDone && rightDone) FoldCompleted();
+        else if(leftDone && !rightDone) AddReward(-0.01f);
+        else if(!leftDone && rightDone) AddReward(-0.01f);
+
+        if(!leftCatch) AddReward(-0.01f);
+        if(!rightCatch) AddReward(-0.01f);
+
+        if(leftCatch && !leftDone) AddReward(-0.01f);
+        if(rightCatch && !rightDone) AddReward(-0.01f);
+        
+
         WaitTimeInference();
     }
 
@@ -201,6 +251,58 @@ public class AgentRobotHand : Agent
             }
         }
     }
+
+    void FoldCompleted()
+    {
+        AddReward(1f);
+        EndEpisode();
+        arearobot.AreaReset();
+    }
+
+    public void ClothCathLeft()
+    {
+        AddReward(0.25f);
+        leftCatch = true;
+    }
+    public void ClothCathRight()
+    {
+        AddReward(0.25f);
+        rightCatch = true;
+    }
+
+    public void ClothLostLeft()
+    {
+        AddReward(-0.25f);
+        leftCatch = false;
+    }
+    public void ClothLostRight()
+    {
+        AddReward(-0.25f);
+        rightCatch = false;
+    }
+
+    public void ClothFoldedLeft()
+    {
+        AddReward(0.25f);
+        leftDone = true;
+    }
+    public void ClothFoldedRight()
+    {
+        AddReward(0.25f);
+        rightDone = true;
+    }
+
+    public void ClothLostFoldedLeft()
+    {
+        AddReward(-0.25f);
+        leftDone = false;
+    }
+    public void ClothLostFoldedRight()
+    {
+        AddReward(-0.25f);
+        rightDone = false;
+    }
+
 
 
 /*

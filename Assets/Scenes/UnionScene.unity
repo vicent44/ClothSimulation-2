@@ -3667,7 +3667,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 651075827}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 90, y: 135, z: 0}
 --- !u!20 &209136119
 Camera:
@@ -7391,7 +7391,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 651075827}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!20 &455799098
 Camera:
@@ -8016,11 +8016,8 @@ GameObject:
   m_Component:
   - component: {fileID: 479389275}
   - component: {fileID: 479389276}
-  - component: {fileID: 479389279}
-  - component: {fileID: 479389278}
-  - component: {fileID: 479389277}
   - component: {fileID: 479389280}
-  - component: {fileID: 479389281}
+  - component: {fileID: 479389277}
   m_Layer: 0
   m_Name: TargetLeft
   m_TagString: left
@@ -8036,11 +8033,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479389274}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05000001, y: 0, z: -0.099999994}
+  m_LocalPosition: {x: 1.675, y: 0, z: -2.0843308}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 651075827}
-  m_RootOrder: 3
+  m_Father: {fileID: 1633177817}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &479389276
 Rigidbody:
@@ -8067,64 +8064,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 479389274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 282f342c2ab144bf38be65d4d0c4e07d, type: 3}
+  m_Script: {fileID: 11500000, guid: 25ade9821a5899464b98d1ccca5ee76c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Camera: {fileID: 455799098}
-  m_SensorName: CameraSensor
-  m_Width: 84
-  m_Height: 84
-  m_Grayscale: 0
-  m_ObservationStacks: 1
-  m_Compression: 1
---- !u!114 &479389278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479389274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfad2eb0f43df1caab449cad93d606c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
-  plane: {fileID: 1544403512}
-  plane2: {fileID: 1014346335}
-  mesh: {fileID: 670033704}
-  arearobot: {fileID: 651075828}
-  timeBetweenDecisionsAtInference: 0.15
-  hand: 1
---- !u!114 &479389279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479389274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BrainParameters:
-    VectorObservationSize: 0
-    NumStackedVectorObservations: 1
-    VectorActionSize: 07000000
-    VectorActionDescriptions: []
-    VectorActionSpaceType: 0
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
-  m_BehaviorType: 0
-  m_BehaviorName: Left
-  TeamId: 0
-  m_UseChildSensors: 1
-  m_UseChildActuators: 1
-  m_ObservableAttributeHandling: 0
 --- !u!135 &479389280
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8138,23 +8080,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.02
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &479389281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479389274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3231295cb08230e55b2248669b4fca5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trainEnvironment: {fileID: 651075826}
-  agentLeftDone: 0
-  agentRightDone: 0
-  agentLeftCatch: 0
-  agentRightCatch: 0
 --- !u!1 &480158869
 GameObject:
   m_ObjectHideFlags: 0
@@ -11262,8 +11187,7 @@ Transform:
   - {fileID: 1014346339}
   - {fileID: 670033708}
   - {fileID: 1544403516}
-  - {fileID: 479389275}
-  - {fileID: 2022774853}
+  - {fileID: 1633177817}
   - {fileID: 1494988038}
   - {fileID: 455799097}
   - {fileID: 209136118}
@@ -11282,8 +11206,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eced88be96eeeb7ff8de4d6aedeb778e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentRight: {fileID: 2022774851}
-  agentLeft: {fileID: 479389274}
+  handRight: {fileID: 2022774851}
+  handLeft: {fileID: 479389274}
+  agentHand: {fileID: 1633177816}
   cloth: {fileID: 670033704}
   mesh: {fileID: 670033707}
 --- !u!1 &652160084
@@ -22446,7 +22371,7 @@ Transform:
   - {fileID: 1980705170}
   - {fileID: 1848878684}
   m_Father: {fileID: 651075827}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1505867904
 GameObject:
@@ -23452,6 +23377,108 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615379113}
   m_Mesh: {fileID: -5445818082538018625, guid: 074c228fadc52ee0ab97f70b952e44db, type: 3}
+--- !u!1 &1633177816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1633177817}
+  - component: {fileID: 1633177820}
+  - component: {fileID: 1633177819}
+  - component: {fileID: 1633177818}
+  m_Layer: 0
+  m_Name: AgentHands
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1633177817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633177816}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.6550267, y: 0, z: 1.9843309}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 479389275}
+  - {fileID: 2022774853}
+  m_Father: {fileID: 651075827}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1633177818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633177816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 282f342c2ab144bf38be65d4d0c4e07d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Camera: {fileID: 455799098}
+  m_SensorName: CameraSensor
+  m_Width: 84
+  m_Height: 84
+  m_Grayscale: 0
+  m_ObservationStacks: 1
+  m_Compression: 1
+--- !u!114 &1633177819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633177816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfad2eb0f43df1caab449cad93d606c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  plane: {fileID: 1544403512}
+  plane2: {fileID: 1014346335}
+  mesh: {fileID: 670033704}
+  arearobot: {fileID: 651075828}
+  timeBetweenDecisionsAtInference: 0.15
+  hand: 0
+--- !u!114 &1633177820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633177816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 0
+    NumStackedVectorObservations: 1
+    VectorActionSize: 06000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 1
+  m_BehaviorName: Hands
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_ObservableAttributeHandling: 0
 --- !u!4 &1635353683
 Transform:
   m_ObjectHideFlags: 0
@@ -28056,11 +28083,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2022774853}
   - component: {fileID: 2022774852}
-  - component: {fileID: 2022774855}
-  - component: {fileID: 2022774854}
-  - component: {fileID: 2022774856}
   - component: {fileID: 2022774857}
-  - component: {fileID: 2022774858}
+  - component: {fileID: 2022774854}
   m_Layer: 0
   m_Name: TargetRight
   m_TagString: right
@@ -28092,11 +28116,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022774851}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.85, y: 0, z: -0.099999994}
+  m_LocalPosition: {x: 2.46, y: 0, z: -2.0843308}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 651075827}
-  m_RootOrder: 4
+  m_Father: {fileID: 1633177817}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2022774854
 MonoBehaviour:
@@ -28107,64 +28131,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2022774851}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfad2eb0f43df1caab449cad93d606c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 971240cc300dc0bfcb859d8adc2a55c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
-  plane: {fileID: 1544403512}
-  plane2: {fileID: 1014346335}
-  mesh: {fileID: 670033704}
-  arearobot: {fileID: 651075828}
-  timeBetweenDecisionsAtInference: 0.15
-  hand: 0
---- !u!114 &2022774855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022774851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BrainParameters:
-    VectorObservationSize: 0
-    NumStackedVectorObservations: 1
-    VectorActionSize: 07000000
-    VectorActionDescriptions: []
-    VectorActionSpaceType: 0
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
-  m_BehaviorType: 0
-  m_BehaviorName: Right
-  TeamId: 0
-  m_UseChildSensors: 1
-  m_UseChildActuators: 1
-  m_ObservableAttributeHandling: 0
---- !u!114 &2022774856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022774851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 282f342c2ab144bf38be65d4d0c4e07d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Camera: {fileID: 455799098}
-  m_SensorName: CameraSensor
-  m_Width: 84
-  m_Height: 84
-  m_Grayscale: 0
-  m_ObservationStacks: 1
-  m_Compression: 1
 --- !u!135 &2022774857
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -28178,23 +28147,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.02
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2022774858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022774851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3231295cb08230e55b2248669b4fca5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trainEnvironment: {fileID: 651075826}
-  agentLeftDone: 0
-  agentRightDone: 0
-  agentLeftCatch: 0
-  agentRightCatch: 0
 --- !u!1 &2029973883
 GameObject:
   m_ObjectHideFlags: 0

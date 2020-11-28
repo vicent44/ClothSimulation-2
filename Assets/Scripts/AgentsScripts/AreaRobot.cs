@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AreaRobot : MonoBehaviour
 {
-    public GameObject agentRight;
-    public GameObject agentLeft;
+    public GameObject handRight;
+    public GameObject handLeft;
+    public GameObject agentHand;
     public GameObject cloth;
     public MeshGenerator mesh;
 
@@ -21,9 +22,10 @@ public class AreaRobot : MonoBehaviour
     Vector3 planeInitial;
     Vector3 plane2Initial;
     Vector3 clothInitial;
-    Vector3 agentRightInitial;
-    Vector3 agentLeftInitial;
+    Vector3 rightInitial;
+    Vector3 leftInitial;
     Vector3 agentCamInitial;
+    Vector3 agentHandInitial;
 
     Vector3 initialPosition;
     List<GameObject> clothPosition;
@@ -48,8 +50,9 @@ public class AreaRobot : MonoBehaviour
         clothInitial = cloth.transform.position;
         initialPosition = transform.position;
 
-        agentRightInitial = agentRight.transform.position;
-        agentLeftInitial = agentLeft.transform.position;
+        agentHandInitial = agentHand.transform.position;
+        rightInitial = handRight.transform.position;
+        leftInitial = handLeft.transform.position;
     }
 
     public void SetEnvironment()
@@ -82,8 +85,9 @@ public class AreaRobot : MonoBehaviour
 
         Debug.Log("reset - Area Reset Script");
 
-        agentRight.transform.position = agentRightInitial;
-        agentLeft.transform.position = agentLeftInitial;
+        handRight.transform.position = rightInitial;
+        handLeft.transform.position = leftInitial;
+        agentHand.transform.position = agentHandInitial;
         //StartCoroutine(Example());
     }
 }

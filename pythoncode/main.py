@@ -287,7 +287,7 @@ def initialize_model_buffer_each_agent(args, env):
         behavior_spec = env.behavior_specs
         behavior_name_left = list(env.behavior_specs)[0]
         spec = env.behavior_specs[behavior_name_left]
-        action_shape = (spec.action_shape,2)
+        action_shape = (spec.action_shape,)
 
         obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_post"],
                      args["environment"]["image_size_post"])

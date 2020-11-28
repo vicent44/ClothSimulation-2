@@ -11,13 +11,18 @@ public class FoldControl : MonoBehaviour
     AgentRobotHand m_AgentLeft;
     AgentRobotHand m_AgentRight;
 
+    private GameObject left_hand;
+    private GameObject right_hand;
+
     public bool agentLeftDone;
     public bool agentRightDone;
     public bool agentLeftCatch;
     public bool agentRightCatch;
 
-    void Start()
+    /*void Start()
     {
+        left_hand = transform.Find("TargetLeft").gameObject;
+        right_hand = transform.Find("TargetRight").gameObject;
         agentLeftDone = false;
         agentRightDone = false;
         agentLeftCatch = false; 
@@ -26,8 +31,8 @@ public class FoldControl : MonoBehaviour
         //var trainEnvironment = transform.Find("TrainEnvironment").gameObject;
         //var trainEnvironment = this.transform.parent.gameObject.transform.parent.gameObject;
         m_Area = trainEnvironment.GetComponent<AreaRobot>();
-        m_AgentLeft = m_Area.agentLeft.GetComponent<AgentRobotHand>();
-        m_AgentRight = m_Area.agentRight.GetComponent<AgentRobotHand>();
+        //m_AgentLeft = m_Area.agentLeft.GetComponent<AgentRobotHand>();
+        //m_AgentRight = m_Area.agentRight.GetComponent<AgentRobotHand>();
     }
 
     void Reset()
@@ -138,5 +143,5 @@ public class FoldControl : MonoBehaviour
             agentRightDone = false;
             m_AgentRight.AddReward(-0.1f);
         }
-    } 
+    } */
 }
