@@ -61,33 +61,25 @@ def main():
     action_shape = (action_shape,)
     obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_post"], args["environment"]["image_size_post"])
     pre_aug_obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_pre"], args["environment"]["image_size_pre"])
-    #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print("Device: ", device)
 
     print(env.EnvSpec)
     print(len(env.EnvSpec), obs_shape)
     print(env.group_agents,env.fixed_group_names,env.group_names)
-    print(env.group_num)
+    #print(env.group_num) #Number of brains
     vis = env.reset()
     print("list:", len(vis), "0-Zero", len(vis[0]), vis[0], "1- Primer", type(vis[1]), len(vis[1]), vis[1][0][:,0].shape, vis[1][0][0].shape)#, vis[1][1].shape, vis[1][0][0].shape, vis[1][1][0].shape, "2-Segon", vis[2], "3-Tercer", vis[3], "4-Cuart", vis[4])
     #Give [A, C, H, W, C] visual( Agent1(Camera1(H, W, C), camera2(H, W, C)), Agent2(Camera1(H, W, C), camera2(H, W, C))
 
-    #print("Reset:", vis[0], vis[0].shape, "next")
-    #print(env.)
+
     for i, brain_name in enumerate(env.group_names):
         print(i, brain_name)
     print("--------------------------")
     for i, fgn in enumerate(env.fixed_group_names):
         print(i, "+",fgn)
-    ObsRewDone = zip(*env.reset())
-    """for i, (v, vs, r, d, info) in enumerate(ObsRewDone):
-        print(v)
-        print(vs)
-        print(r)
-        print(d)
-        print(info)
-        print("done")"""
 
-    agents = initialize_model_buffer_each_agent(args, env)
+    agents = initialize_model_buffer_each_agent(args, env, device)
     print("Agents: ", type(agents), len(agents), agents)
 
     L = Logger(args["environment"]["work_dir"], use_tb=args["environment"]["save_tb"])
@@ -143,14 +135,16 @@ def main():
         #print("Noves actions: ", actions, type(actions))
         _, next_obs, reward, done, _ = env.step(actions)
         next_obs = np.transpose(next_obs[0][0][0], (2, 0, 1))
+        reward = reward[0][0]
+        #done = done[0][0]
         # allow infinit bootstrap
         _max_episode_steps = 200
         done_bool = 0 if episode_step + 1 == _max_episode_steps else float(
             done[0]
         )
-        episode_reward += reward[0][0]
-        print("Final: ", reward )
-        agents[1].add(obs, action, reward[0][0], next_obs, done_bool)
+        episode_reward += reward
+        #print("Final: ", reward, done, type(done), done_bool)
+        agents[1].add(obs, action, reward, next_obs, done_bool)
 
         obs = next_obs
         episode_step += 1
@@ -238,24 +232,6 @@ def main():
             print("uno")
     #print(get_behavior_spec)"""
 
-    #print(decision_steps_left.agent_id[0], decision_steps_right.agent_id[0])
-    #print(terminal_steps_left.agent_id, terminal_steps_right.agent_id)
-    #if():
-    #    env
-
-    #h, w = env.behavior_specs.obserbation_shapes[1:]
-    #print(decision_steps_left.obs, h, w)
-
-    #curl(decision_steps_left)
-
-    #env.step()
-
-    #print(len(decision_steps_left), len(terminal_steps_left), behavior_name_left)
-    #print(len(decision_steps_right), len(terminal_steps_right), behavior_name_right)
-    #tracked_agent = decision_steps.agent_id[0]
-
-    #print(list(decision_steps), list(terminal_steps), tracked_agent)
-
 
 def init_unity_env(env_args):
     from unity_wrapper import (UnityWrapper, UnityReturnWrapper,
@@ -279,7 +255,7 @@ def init_unity_env(env_args):
 
     return env
 
-def initialize_model_buffer_each_agent(args, env):
+def initialize_model_buffer_each_agent(args, env, device):
     #models = []
 
     for i, fgn in enumerate(env.fixed_group_names):
@@ -300,16 +276,15 @@ def initialize_model_buffer_each_agent(args, env):
             action_shape=action_shape,
             capacity=args["environment"]["buffer_size"],
             batch_size=args["environment"]["batch_size"],
-            device='cpu',
+            device=device,
             image_size=args["environment"]["image_size_post"]
         )
 
-        model = make_agent(obs_shape, action_shape, _aargs, "cpu")
+        model = make_agent(obs_shape, action_shape, _aargs, device)
         model_buffer =[model, replay_buffer]
         #models.append(model_buffer)
 
     return model_buffer
-
 
 
 def make_agent(obs_shape, action_shape, args, device):
@@ -344,7 +319,7 @@ def make_agent(obs_shape, action_shape, args, device):
 
         )
     else:
-        assert 'agent is not supported: %s' % args.agent
+        assert 'agent is not supported: %s' % args["curl_sac"]["agent"]
 
 
 def evaluate(env, agent, num_episodes, L, step, args):
@@ -361,7 +336,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
             episode_reward = 0
             while not done:
                 # center crop image
-                if True: #args.encoder_type == 'pixel':
+                if args["curl_sac"]["encoder_type"] == 'pixel':
                     #prev = np.transpose(obs[0][0][0], (2, 0, 1))
                     obs = utils.center_crop_image(obs, args["train"]["image_size_post"])
                     #print(obs, type(obs), obs.shape, agent, type(agent))
@@ -372,21 +347,21 @@ def evaluate(env, agent, num_episodes, L, step, args):
                     else:
                         action = agent.select_action(obs)
 
-
                 #print(action, type(action), action.shape)
                 #print("Arg max: ", np.argmax(action))
-                #action.shape = [1, 7]
-                #print(action.shape, action[1])
                 actions = {f'{brain_name}': action for i, brain_name in enumerate(env.group_names)}
                 #print(actions, type(actions))
                 #print(actions.keys())
-
+                print("Done 1: ", done, type(done))
                 #env.set_actions(env.group_names[0], )
                 _, obs, reward, done, _ = env.step(actions)
                 obs = np.transpose(obs[0][0][0], (2, 0, 1))
+                reward = reward[0][0]
+                #done = done[0][0]
+                print("Info: ", reward, done)
                 #video.record(env)
                 #print("Reward: ", reward, type(reward[0]), reward[0][0])
-                episode_reward += reward[0][0]
+                episode_reward += reward
 
             #video.save('%d.mp4' % step)
             L.log('eval/' + prefix + 'episode_reward', episode_reward, step)
@@ -397,6 +372,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
         best_ep_reward = np.max(all_ep_rewards)
         L.log('eval/' + prefix + 'mean_episode_reward', mean_ep_reward, step)
         L.log('eval/' + prefix + 'best_episode_reward', best_ep_reward, step)
+        print("DOne 2: ", done, type(done))
 
     run_eval_loop(sample_stochastically=False)
     L.dump(step)

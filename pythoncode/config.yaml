@@ -33,6 +33,7 @@ environment:
     encoder_type: pixel
     work_dir: .
     save_tb: False
+    save_video: True
 
 train:
     train_mode: True

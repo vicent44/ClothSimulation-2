@@ -115,7 +115,7 @@ class InfoWrapper(BasicWrapper):
         self.vector_dims = [[g[0] for g in spec.observation_shapes if len(g) == 1] for spec in self.group_specs]  # 得到所有脑 观测值为向量的维度
         self.visual_idxs = [[i for i, g in enumerate(spec.observation_shapes) if len(g) == 3] for spec in self.group_specs]   # 得到所有脑 观测值为图像的下标
         self.group_num = len(self.group_names)
-        print(self.vector_dims, self.visual_idxs, self.vector_idxs, "spec", self.group_specs, self.group_num)
+        #print(self.vector_dims, self.visual_idxs, self.vector_idxs, "spec", self.group_specs, self.group_num)
         self.visual_sources = [len(v) for v in self.visual_idxs]
         self.visual_resolutions = []
         stack_visual_nums = env_args['frame_stack'] if env_args['frame_stack'] > 1 else 1
@@ -133,7 +133,7 @@ class InfoWrapper(BasicWrapper):
         self.discrete_action_dim_list = [spec.action_shape for spec in self.group_specs]
         self.a_size = [spec.action_size for spec in self.group_specs]
         self.is_continuous = [spec.is_action_continuous() for spec in self.group_specs]
-        print(self.discrete_action_dim_list[0])
+        #print(self.discrete_action_dim_list[0])
         self.group_agents = self.get_real_agent_numbers()  # 得到每个环境控制几个智能体
         if all('#' in name for name in self.group_names):
             # use for multi-agents
