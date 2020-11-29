@@ -58,7 +58,7 @@ def main():
     action_shape = spec.action_shape
     print(spec.observation_shapes, action_size, action_shape,"aquiii bro", spec.discrete_action_branches)
 
-    action_shape = (action_shape,1)
+    action_shape = (action_shape,)
     obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_post"], args["environment"]["image_size_post"])
     pre_aug_obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_pre"], args["environment"]["image_size_pre"])
     #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -88,6 +88,7 @@ def main():
         print("done")"""
 
     agents = initialize_model_buffer_each_agent(args, env)
+    print("Agents: ", type(agents), len(agents), agents)
 
     L = Logger(args["environment"]["work_dir"], use_tb=args["environment"]["save_tb"])
 
@@ -99,11 +100,11 @@ def main():
 
         if step % args["train"]["eval_freq"] == 0:
             L.log('eval/episode', episode, step)
-            evaluate(env, agents[0][0], args["train"]["num_eval_episodes"], L, step, args)
+            evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
             if args["train"]["save_model"]:
-                agents[0][0].save_curl(model_dir, step)
+                agents[0].save_curl(model_dir, step)
             if args["train"]["save_buffer"]:
-                agents[0][1].save(buffer_dir)
+                agents[1].save(buffer_dir)
 
         if done:
             if step > 0:
@@ -127,19 +128,19 @@ def main():
         if step < args["train"]["init_steps"]:
             action = env.random_action() #action_space.sample()
             actions = {f'{brain_name}': action[i] for i, brain_name in enumerate(env.group_names)}
-            print("Action random: ", action, len(action))
+            #print("Action random: ", action, len(action))
         else:
-            with utils.eval_mode(agents[0][0]):
-                action = agents[0][0].sample_action(obs)
+            with utils.eval_mode(agents[0]):
+                action = agents[0].sample_action(obs)
                 actions = {f'{brain_name}': action for i, brain_name in enumerate(env.group_names)}
 
         # run training update
         if step >= args["train"]["init_steps"]:
             num_updates = 1
             for _ in range(num_updates):
-                agents[0][0].update(agents[0][1], L, step)
+                agents[0].update(agents[1], L, step)
 
-        print("Noves actions: ", actions, type(actions))
+        #print("Noves actions: ", actions, type(actions))
         _, next_obs, reward, done, _ = env.step(actions)
         next_obs = np.transpose(next_obs[0][0][0], (2, 0, 1))
         # allow infinit bootstrap
@@ -149,7 +150,7 @@ def main():
         )
         episode_reward += reward[0][0]
         print("Final: ", reward )
-        agents[0][1].add(obs, action[0], reward[0], next_obs, done_bool)
+        agents[1].add(obs, action, reward[0][0], next_obs, done_bool)
 
         obs = next_obs
         episode_step += 1
@@ -279,7 +280,7 @@ def init_unity_env(env_args):
     return env
 
 def initialize_model_buffer_each_agent(args, env):
-    models = []
+    #models = []
 
     for i, fgn in enumerate(env.fixed_group_names):
         _bargs, _targs, _aargs = map(deepcopy, [args["buffer"], args["train"], args["curl_sac"]])
@@ -305,9 +306,9 @@ def initialize_model_buffer_each_agent(args, env):
 
         model = make_agent(obs_shape, action_shape, _aargs, "cpu")
         model_buffer =[model, replay_buffer]
-        models.append(model_buffer)
+        #models.append(model_buffer)
 
-    return models
+    return model_buffer
 
 
 
@@ -354,43 +355,37 @@ def evaluate(env, agent, num_episodes, L, step, args):
         prefix = 'stochastic_' if sample_stochastically else ''
         for i in range(num_episodes):
             _, obs, _, _, _ = env.reset()
+            obs = np.transpose(obs[0][0][0], (2, 0, 1))
             #video.init(enabled=(i == 0))
             done = False
             episode_reward = 0
             while not done:
                 # center crop image
                 if True: #args.encoder_type == 'pixel':
-                    prev = np.transpose(obs[0][0][0], (2, 0, 1))
-                    obs = utils.center_crop_image(prev, args["train"]["image_size_post"])
+                    #prev = np.transpose(obs[0][0][0], (2, 0, 1))
+                    obs = utils.center_crop_image(obs, args["train"]["image_size_post"])
                     #print(obs, type(obs), obs.shape, agent, type(agent))
                 with utils.eval_mode(agent):
-                    print(utils.eval_mode(agent), type(utils.eval_mode(agent)))
+                    #print(utils.eval_mode(agent), type(utils.eval_mode(agent)))
                     if sample_stochastically:
                         action = agent.sample_action(obs)
                     else:
                         action = agent.select_action(obs)
 
 
-                print(action, type(action), action.shape)
-                print("Arg max: ", np.argmax(action))
+                #print(action, type(action), action.shape)
+                #print("Arg max: ", np.argmax(action))
                 #action.shape = [1, 7]
                 #print(action.shape, action[1])
                 actions = {f'{brain_name}': action for i, brain_name in enumerate(env.group_names)}
-                print(actions, type(actions))
-                print(actions.keys())
-                """ObsRewDone = zip(*env.step(actions))
-                print(ObsRewDone)
+                #print(actions, type(actions))
+                #print(actions.keys())
 
-                for i, (vect, visual, rew, don, inf) in enumerate(ObsRewDone):
-                    obs = visual
-                    reward = rew
-                    done = done
-
-                print(obs.shape, reward, done)"""
                 #env.set_actions(env.group_names[0], )
                 _, obs, reward, done, _ = env.step(actions)
+                obs = np.transpose(obs[0][0][0], (2, 0, 1))
                 #video.record(env)
-                print("Reward: ", reward)
+                #print("Reward: ", reward, type(reward[0]), reward[0][0])
                 episode_reward += reward[0][0]
 
             #video.save('%d.mp4' % step)
