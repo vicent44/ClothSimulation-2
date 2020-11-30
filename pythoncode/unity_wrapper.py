@@ -67,16 +67,17 @@ class UnityWrapper(object):
                                          seed=env_args['env_seed'],
                                          side_channels=[self.engine_configuration_channel, self.float_properties_channel])
         else:
-            unity_env_dict = load_yaml(os.path.dirname(__file__) + '/../../unity_env_dict.yaml')
+            #unity_env_dict = load_yaml(os.path.dirname(__file__) + '/../../unity_env_dict.yaml')
             self._env = UnityEnvironment(file_name=env_args['file_path'],
                                          base_port=env_args['port'],
-                                         no_graphics=not env_args['render'],
+                                         #no_graphics=not env_args['render'],
                                          seed=env_args['env_seed'],
-                                         side_channels=[self.engine_configuration_channel, self.float_properties_channel],
-                                         additional_args=[
-                                             '--scene', str(unity_env_dict.get(env_args.get('env_name', 'Roller'), 'None')),
-                                             '--n_agents', str(env_args.get('env_num', 1))
-            ])
+                                         side_channels=[self.engine_configuration_channel, self.float_properties_channel]#,
+                                         #additional_args=[
+                                         #    '--scene', str(unity_env_dict.get(env_args.get('env_name', 'Roller'), 'None')),
+                                         #    '--n_agents', str(env_args.get('env_num', 1))
+            #])
+                                         )
         self.reset_config = env_args['reset_config']
 
     def reset(self, **kwargs):

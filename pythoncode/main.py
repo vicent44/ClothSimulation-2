@@ -58,14 +58,8 @@ def main():
     action_shape = spec.action_shape
     print(spec.observation_shapes, action_size, action_shape,"aquiii bro", spec.discrete_action_branches)
 
-    action_shape = (action_shape,)
-    obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_post"], args["environment"]["image_size_post"])
-    pre_aug_obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_pre"], args["environment"]["image_size_pre"])
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print("Device: ", device)
 
     print(env.EnvSpec)
-    print(len(env.EnvSpec), obs_shape)
     print(env.group_agents,env.fixed_group_names,env.group_names)
     #print(env.group_num) #Number of brains
     vis = env.reset()
@@ -79,6 +73,7 @@ def main():
     for i, fgn in enumerate(env.fixed_group_names):
         print(i, "+",fgn)
 
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     agents = initialize_model_buffer_each_agent(args, env, device)
     print("Agents: ", type(agents), len(agents), agents)
 
@@ -136,14 +131,15 @@ def main():
         _, next_obs, reward, done, _ = env.step(actions)
         next_obs = np.transpose(next_obs[0][0][0], (2, 0, 1))
         reward = reward[0][0]
-        #done = done[0][0]
+        done = done[0][0].item()
         # allow infinit bootstrap
         _max_episode_steps = 200
         done_bool = 0 if episode_step + 1 == _max_episode_steps else float(
-            done[0]
+            done
         )
         episode_reward += reward
-        #print("Final: ", reward, done, type(done), done_bool)
+        #print("Final: ", reward, done, type(done), done_bool, type(done_bool))
+
         agents[1].add(obs, action, reward, next_obs, done_bool)
 
         obs = next_obs
@@ -337,7 +333,6 @@ def evaluate(env, agent, num_episodes, L, step, args):
             while not done:
                 # center crop image
                 if args["curl_sac"]["encoder_type"] == 'pixel':
-                    #prev = np.transpose(obs[0][0][0], (2, 0, 1))
                     obs = utils.center_crop_image(obs, args["train"]["image_size_post"])
                     #print(obs, type(obs), obs.shape, agent, type(agent))
                 with utils.eval_mode(agent):
@@ -352,13 +347,16 @@ def evaluate(env, agent, num_episodes, L, step, args):
                 actions = {f'{brain_name}': action for i, brain_name in enumerate(env.group_names)}
                 #print(actions, type(actions))
                 #print(actions.keys())
-                print("Done 1: ", done, type(done))
+                #print("Done 1: ", done, type(done))
                 #env.set_actions(env.group_names[0], )
                 _, obs, reward, done, _ = env.step(actions)
                 obs = np.transpose(obs[0][0][0], (2, 0, 1))
                 reward = reward[0][0]
-                #done = done[0][0]
-                print("Info: ", reward, done)
+                #done = done[0]
+                #done = done.tolist()
+                #done = done[0]
+                done = done[0][0].item()
+                #print("Info: ", reward, done, type(done))
                 #video.record(env)
                 #print("Reward: ", reward, type(reward[0]), reward[0][0])
                 episode_reward += reward

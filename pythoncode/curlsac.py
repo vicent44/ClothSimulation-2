@@ -370,7 +370,6 @@ class CurlSacAgent(object):
             obs = torch.FloatTensor(obs).to(self.device)
             obs = obs.unsqueeze(0)
             mu, pi, _, _ = self.actor(obs, compute_log_pi=False)
-            greedy_actions = torch.argmax(pi, dim=1, keepdim=True)
             return pi.numpy() # pi.cpu().data.numpy().flatten()
 
     def update_critic(self, obs, action, reward, next_obs, not_done, L, step):
