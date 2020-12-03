@@ -355,10 +355,10 @@ class CurlSacAgent(object):
                 obs, compute_pi=False, compute_log_pi=False, detach_encoder=True
             )
             greedy_actions = torch.argmax(mu, dim=1, keepdim=True)
-            action = tf.tanh(tf.atanh(mu) + tf.random.normal(tf.shape(mu), stddev=0.4))
-            action2 = np.argmax(action, axis=1)
+            #action = tf.tanh(tf.atanh(mu) + tf.random.normal(tf.shape(mu), stddev=0.4))
+            #action2 = np.argmax(action, axis=1)
             #print("Action2: ", action2)
-            action2.resize((4,1))
+            #action2.resize((4,1))
             #print("Mu: ", greedy_actions, mu, action2)
             return mu.numpy()
 

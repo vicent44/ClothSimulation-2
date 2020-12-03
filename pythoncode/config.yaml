@@ -10,7 +10,7 @@ unity_wrapper:
     quality_level: 5
     inference_time_scale: 0
     target_frame_rate: 60
-    file_path: #UnityEnvironment/EnvironmentRobotAgent.x86_64
+    file_path: UnityEnvironment/EnvironmentRobotAgent.x86_64
     env_seed: 123
     reset_config: {}
     frame_stack: 4
@@ -72,7 +72,7 @@ train:
     num_eval_episodes: 10
     log_interval: 100
     save_model: True
-    save_buffer: True
+    save_buffer: False
     image_size_pre: 84
     image_size_post: 64
 
