@@ -70,7 +70,7 @@ class UnityWrapper(object):
             #unity_env_dict = load_yaml(os.path.dirname(__file__) + '/../../unity_env_dict.yaml')
             self._env = UnityEnvironment(file_name=env_args['file_path'],
                                          base_port=env_args['port'],
-                                         #no_graphics=not env_args['render'],
+                                         no_graphics=not env_args['render'],
                                          seed=env_args['env_seed'],
                                          side_channels=[self.engine_configuration_channel, self.float_properties_channel]#,
                                          #additional_args=[

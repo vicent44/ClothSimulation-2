@@ -10,6 +10,7 @@ unity_wrapper:
     quality_level: 5
     inference_time_scale: 0
     target_frame_rate: 60
+    render: True
     file_path: UnityEnvironment/EnvironmentRobotAgent.x86_64
     env_seed: 123
     reset_config: {}
