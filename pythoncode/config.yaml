@@ -12,7 +12,7 @@ unity_wrapper:
     target_frame_rate: 60
     render: True
     file_path: UnityEnvironment/EnvironmentRobotAgent.x86_64
-    env_seed: 123
+    env_seed: 1
     reset_config: {}
     frame_stack: 4
     batch_size: 16
