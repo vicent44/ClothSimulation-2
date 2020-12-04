@@ -345,7 +345,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
                 #print(action, type(action), action.shape)
                 #print("Arg max: ", np.argmax(action))
                 actions = {f'{brain_name}': action for i, brain_name in enumerate(env.group_names)}
-                #print(actions, type(actions))
+                print(actions, type(actions))
                 #print(actions.keys())
                 #print("Done 1: ", done, type(done))
                 #env.set_actions(env.group_names[0], )
@@ -355,7 +355,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
                 #done = done[0]
                 #done = done.tolist()
                 #done = done[0]
-                done = done[0][0].item()
+                #done = done[0][0].item()
                 #print("Info: ", reward, done, type(done))
                 #video.record(env)
                 #print("Reward: ", reward, type(reward[0]), reward[0][0])
