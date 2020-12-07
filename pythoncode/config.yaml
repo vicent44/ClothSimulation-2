@@ -73,7 +73,7 @@ train:
     num_eval_episodes: 10
     log_interval: 100
     save_model: True
-    save_buffer: False
+    save_buffer: True
     image_size_pre: 84
     image_size_post: 64
 

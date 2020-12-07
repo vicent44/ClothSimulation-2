@@ -86,8 +86,8 @@ def main():
         # evaluate agent periodically
 
         if step % args["train"]["eval_freq"] == 0:
-            L.log('eval/episode', episode, step)
-            evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
+            #L.log('eval/episode', episode, step)
+            #evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
             if args["train"]["save_model"]:
                 agents[0].save_curl(model_dir, step)
             if args["train"]["save_buffer"]:
@@ -97,9 +97,11 @@ def main():
             if step > 0:
                 if step % args["train"]["log_interval"] == 0:
                     L.log('train/duration', time.time() - start_time, step)
+                    print("haha-2")
                     L.dump(step)
                 start_time = time.time()
             if step % args["train"]["log_interval"] == 0:
+                print("haha")
                 L.log('train/episode_reward', episode_reward, step)
 
             _, obs, _, _, _ = env.reset()

@@ -71,8 +71,8 @@ class UnityWrapper(object):
             self._env = UnityEnvironment(file_name=env_args['file_path'],
                                          base_port=env_args['port'],
                                          no_graphics=not env_args['render'],
-                                         seed=env_args['env_seed'],
-                                         side_channels=[self.engine_configuration_channel, self.float_properties_channel]#,
+                                         seed=env_args['env_seed']#,
+                                         #side_channels=[self.engine_configuration_channel, self.float_properties_channel]#,
                                          #additional_args=[
                                          #    '--scene', str(unity_env_dict.get(env_args.get('env_name', 'Roller'), 'None')),
                                          #    '--n_agents', str(env_args.get('env_num', 1))
