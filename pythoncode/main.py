@@ -85,7 +85,8 @@ def main():
 
     for step in range(args["train"]["train_steps"]):
         # evaluate agent periodically
-
+        if(step%100 == 0):
+            print("Trainning: ", step, "| Step_episode: ", steps_episode)
         if step % args["train"]["eval_freq"] == 0:
             L.log('eval/episode', episode, step)
             evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
