@@ -43,7 +43,7 @@ def main():
     ts = time.strftime("%m-%d", ts)
     env_name = args["environment"]["domain_name"] + '-' + args["environment"]["task_name"]
     exp_name = env_name + '-' + ts + '-im' + str(args["environment"]["image_size_pre"]) +'-b'  \
-    + str(args["environment"]["batch_size"]) + '-s' + str(args["environment"]["seed"])  + '-' + args["environment"]["encoder_type"]
+    + str(args["unity_wrapper"]["batch_size"]) + '-s' + str(args["environment"]["seed"])  + '-' + args["environment"]["encoder_type"]
     args["environment"]["work_dir"] = args["environment"]["work_dir"] + '/'  + exp_name
 
     utils.make_dir(args["environment"]["work_dir"])
@@ -178,16 +178,16 @@ def initialize_model_buffer_each_agent(args, env, device):
         spec = env.behavior_specs[behavior_name_left]
         action_shape = (spec.action_shape,)
 
-        obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_post"],
+        obs_shape = (3 * args["unity_wrapper"]["frame_stack"], args["environment"]["image_size_post"],
                      args["environment"]["image_size_post"])
-        pre_aug_obs_shape = (3 * args["environment"]["frame_stack"], args["environment"]["image_size_pre"],
+        pre_aug_obs_shape = (3 * args["unity_wrapper"]["frame_stack"], args["environment"]["image_size_pre"],
                              args["environment"]["image_size_pre"])
 
         replay_buffer = ReplayBuffer(
             obs_shape=pre_aug_obs_shape,
             action_shape=action_shape,
             capacity=args["environment"]["buffer_size"],
-            batch_size=args["environment"]["batch_size"],
+            batch_size=args["unity_wrapper"]["batch_size"],
             device=device,
             image_size=args["environment"]["image_size_post"]
         )
