@@ -95,8 +95,9 @@ def main():
             if args["train"]["save_buffer"]:
                 agents[1].save(buffer_dir)
 
-        if (done or (steps_episode > args["train"]["num_train_steps"])):
-            steps_episode = 0
+        if (done or (steps_episode >= args["train"]["num_train_steps"])):
+            steps_episode = 1
+            print("Entereg log: ",step)
             if step > 0:
                 if step % args["train"]["log_interval"] == 0:
                     L.log('train/duration', time.time() - start_time, step)
