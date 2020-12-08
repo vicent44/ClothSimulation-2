@@ -252,6 +252,8 @@ def evaluate(env, agent, num_episodes, L, step, args):
             while((not done) and (steps < args["train"]["num_train_steps"])):
                 # center crop image
                 #print(steps)
+                if steps % 100 == 0:
+                    print(steps)
                 if args["curl_sac"]["encoder_type"] == 'pixel':
                     obs = utils.center_crop_image(obs, args["train"]["image_size_post"])
                 with utils.eval_mode(agent):

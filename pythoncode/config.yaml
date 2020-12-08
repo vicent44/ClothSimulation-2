@@ -62,7 +62,7 @@ train:
     init_steps: 1000 #First batch of random actions
     train_steps: 1000000 #Total steps of training
     episodes: 10
-    eval_freq: 100000 #Every this steps there is an evaluation
+    eval_freq: 10000 #Every this steps there is an evaluation
     num_train_steps: 10000 #Max steps for evaluation
     num_eval_episodes: 10 #Evaluation number of episodes
     log_interval: 1000
