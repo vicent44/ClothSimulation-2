@@ -80,13 +80,12 @@ def main():
     L = Logger(args["environment"]["work_dir"], use_tb=args["environment"]["save_tb"])
 
     episode, episode_reward, done = 0, 0, True
-    steps_episode = 0
     start_time = time.time()
 
     for step in range(args["train"]["train_steps"]):
         # evaluate agent periodically
         if(step%100 == 0):
-            print("Trainning: ", step, "| Step_episode: ", steps_episode)
+            print("Step: ", step)
         if step % args["train"]["eval_freq"] == 0:
             L.log('eval/episode', episode, step)
             evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
@@ -95,9 +94,11 @@ def main():
             if args["train"]["save_buffer"]:
                 agents[1].save(buffer_dir)
 
-        if (done or (steps_episode >= args["train"]["num_train_steps"])):
-            steps_episode = 1
-            print("Entereg log: ",step)
+        if(step%args["train"]["num_train_steps"] == 0):
+            done = True
+
+        if (done):# or (step > args["train"]["num_train_steps"])):
+            print("Dentro :", step)
             if step > 0:
                 if step % args["train"]["log_interval"] == 0:
                     L.log('train/duration', time.time() - start_time, step)
@@ -146,7 +147,6 @@ def main():
 
         obs = next_obs
         episode_step += 1
-        steps_episode += 1
 
     env.close()
 
@@ -257,8 +257,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
             while((not done) and (steps < args["train"]["num_train_steps"])):
                 # center crop image
                 #print(steps)
-                if steps % 100 == 0:
-                    print(steps)
+                
                 if args["curl_sac"]["encoder_type"] == 'pixel':
                     obs = utils.center_crop_image(obs, args["train"]["image_size_post"])
                 with utils.eval_mode(agent):
