@@ -14,12 +14,7 @@ unity_wrapper:
     file_path: UnityEnvironment/Head/EnvironmentRobotAgent.x86_64
     env_seed: 1
     reset_config: {}
-    frame_stack: 4
-    batch_size: 16
     port: 5004
-    
-buffer:
-    buffer_size: 1000
 
 curl_sac:
     agent: curl_sac
@@ -51,7 +46,6 @@ curl_sac:
 environment:
     domain_name: robot
     task_name: fold
-    frame_stack: 4
     image_size_pre: 84
     image_size_post: 64
     frame_stack: 4

@@ -34,7 +34,7 @@ def main():
     args = load_yaml("config.yaml")
     args_env = args["unity_wrapper"]
     args_train = args["curl_sac"]
-    args_buffer = args["buffer"]
+    args_buffer = args["environment"]
 
     env = init_unity_env(args_env)
 
@@ -171,7 +171,7 @@ def initialize_model_buffer_each_agent(args, env, device):
     #models = []
 
     for i, fgn in enumerate(env.fixed_group_names):
-        _bargs, _targs, _aargs = map(deepcopy, [args["buffer"], args["train"], args["curl_sac"]])
+        _bargs, _targs, _aargs = map(deepcopy, [args["environment"], args["train"], args["curl_sac"]])
 
         behavior_spec = env.behavior_specs
         behavior_name_left = list(env.behavior_specs)[0]

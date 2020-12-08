@@ -25,10 +25,10 @@ public class LeftFoldControl : MonoBehaviour
 
     void OnTriggerStay(Collider col)
     {
-        if(float.IsNaN(col.gameObject.GetComponent<ParticlesBehaviour>().particles.Position.x))
+        /*if(float.IsNaN(col.gameObject.GetComponent<ParticlesBehaviour>().particles.Position.x))
         {
             transform.parent.GetComponent<AgentRobotHand>().Error();
-        }
+        }*/
         if(col.gameObject.tag == this.gameObject.tag)
         {
             //Ma esquerra agafan la roba

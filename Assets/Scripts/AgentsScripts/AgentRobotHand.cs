@@ -189,6 +189,11 @@ public class AgentRobotHand : Agent
 
     public void FixedUpdate()
     {
+        if(float.IsNaN(mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position.x))
+        {
+            Error();
+        }        
+
         if(leftDone && rightDone) FoldCompleted();
         else if(leftDone && !rightDone) AddReward(-0.01f);
         else if(!leftDone && rightDone) AddReward(-0.01f);
