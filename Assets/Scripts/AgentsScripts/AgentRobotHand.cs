@@ -266,23 +266,23 @@ public class AgentRobotHand : Agent
 
     public void ClothFoldedLeft()
     {
-        AddReward(0.25f);
+        AddReward(0.50f);
         leftDone = true;
     }
     public void ClothFoldedRight()
     {
-        AddReward(0.25f);
+        AddReward(0.50f);
         rightDone = true;
     }
 
     public void ClothLostFoldedLeft()
     {
-        AddReward(-0.25f);
+        AddReward(-0.50f);
         leftDone = false;
     }
     public void ClothLostFoldedRight()
     {
-        AddReward(-0.25f);
+        AddReward(-0.50f);
         rightDone = false;
     }
 
