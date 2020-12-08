@@ -80,6 +80,7 @@ def main():
     L = Logger(args["environment"]["work_dir"], use_tb=args["environment"]["save_tb"])
 
     episode, episode_reward, done = 0, 0, True
+    steps_episode = 0
     start_time = time.time()
 
     for step in range(args["train"]["train_steps"]):
@@ -93,7 +94,8 @@ def main():
             if args["train"]["save_buffer"]:
                 agents[1].save(buffer_dir)
 
-        if (done or (step > args["train"]["num_train_steps"])):
+        if (done or (steps_episode > args["train"]["num_train_steps"])):
+            steps_episode = 0
             if step > 0:
                 if step % args["train"]["log_interval"] == 0:
                     L.log('train/duration', time.time() - start_time, step)
@@ -142,6 +144,7 @@ def main():
 
         obs = next_obs
         episode_step += 1
+        steps_episode += 1
 
     env.close()
 
