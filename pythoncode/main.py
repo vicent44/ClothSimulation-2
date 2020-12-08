@@ -101,7 +101,7 @@ def main():
                 start_time = time.time()
             if step % args["train"]["log_interval"] == 0:
                 L.log('train/episode_reward', episode_reward, step)
-                print("Hi-1")
+                #print("Hi-1")
 
             _, obs, _, _, _ = env.reset()
             obs = np.transpose(obs[0][0][0], (2, 0, 1))
@@ -251,7 +251,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
             steps = 0
             while((not done) and (steps < args["train"]["num_train_steps"])):
                 # center crop image
-                print(steps)
+                #print(steps)
                 if args["curl_sac"]["encoder_type"] == 'pixel':
                     obs = utils.center_crop_image(obs, args["train"]["image_size_post"])
                 with utils.eval_mode(agent):
