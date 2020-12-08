@@ -45,6 +45,7 @@ public class AgentRobotHand : Agent
 
     private GameObject left_hand;
     private GameObject right_hand;
+    EnvironmentParameters m_ResetParams;
 
     /*public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
@@ -85,6 +86,14 @@ public class AgentRobotHand : Agent
         }
     }
 */
+    /*public override void Initialize()
+    {
+        m_ResetParams = Academy.Instance.EnvironmentParameters;
+        left_hand = transform.Find("TargetLeft").gameObject;
+        right_hand = transform.Find("TargetRight").gameObject;
+        arearobot.SetEnvironment();
+    }*/
+
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
 
@@ -94,14 +103,14 @@ public class AgentRobotHand : Agent
         var moveZ_left = Mathf.Clamp(continuousActions[2], -1f, 1f);
         //Debug.Log(moveZ);
         var targetPos_left = left_hand.transform.position;
-        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.01f, moveY_left*0.01f, moveZ_left*0.01f);
+        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.001f, moveY_left*0.001f, moveZ_left*0.001f);
         
         var moveX_right = Mathf.Clamp(continuousActions[3], -1f, 1f);
         var moveY_right = Mathf.Clamp(continuousActions[4], -1f, 1f);
         var moveZ_right = Mathf.Clamp(continuousActions[5], -1f, 1f);
         //Debug.Log(moveZ);
         var targetPos_right = right_hand.transform.position;
-        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.01f, moveY_right*0.01f, moveZ_right*0.01f);
+        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.001f, moveY_right*0.001f, moveZ_right*0.001f);
                 
         
         /*var action = actionBuffers.DiscreteActions[0];
@@ -180,8 +189,8 @@ public class AgentRobotHand : Agent
     public override void OnEpisodeBegin()
     {
         //StartCoroutine(Example());
-        //arearobot.AreaReset();
-        arearobot.SetEnvironment();
+        arearobot.AreaReset();
+        //arearobot.SetEnvironment();
         //System.Threading.Thread.Sleep(4000);
         left_hand = transform.Find("TargetLeft").gameObject;
         right_hand = transform.Find("TargetRight").gameObject;
