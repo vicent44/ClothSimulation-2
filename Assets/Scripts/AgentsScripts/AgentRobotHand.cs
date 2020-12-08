@@ -137,42 +137,14 @@ public class AgentRobotHand : Agent
         if(hit_left.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
         {
             left_hand.transform.position = targetPos_left;
-            Debug.Log("Next Position No Walls - Posible");
-
-            /*if(hit.Where(col => col.gameObject.CompareTag("goal")).ToArray().Length >= 0)
-            {
-                foreach (var coll in hit)
-                {
-                    if(this.gameObject.tag == coll.gameObject.name && firstCollisionDone)
-                    {
-                        Debug.Log("Fold Completed!!");
-                        SetReward(1f);
-                        StartCoroutine(Example());
-                        EndEpisode();
-                    }
-                }
-            }*/
+            //Debug.Log("Next Position No Walls - Posible");
         }
 
         var hit_right = Physics.OverlapBox(targetPos_right, new Vector3(0.02f, 0.02f, 0.02f));
         if(hit_right.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
         {
             right_hand.transform.position = targetPos_right;
-            Debug.Log("Next Position No Walls - Posible");
-
-            /*if(hit.Where(col => col.gameObject.CompareTag("goal")).ToArray().Length >= 0)
-            {
-                foreach (var coll in hit)
-                {
-                    if(this.gameObject.tag == coll.gameObject.name && firstCollisionDone)
-                    {
-                        Debug.Log("Fold Completed!!");
-                        SetReward(1f);
-                        StartCoroutine(Example());
-                        EndEpisode();
-                    }
-                }
-            }*/
+            //Debug.Log("Next Position No Walls - Posible");
         }
     }
 
@@ -201,7 +173,6 @@ public class AgentRobotHand : Agent
         var continuousActionsOut = actionsOut.ContinuousActions;
         continuousActionsOut[0] = Input.GetAxis("Horizontal");    // Racket Movement
         continuousActionsOut[3] = Input.GetAxis("Horizontal"); 
-        //continuousActionsOut[1] = Input.GetKey(KeyCode.T);//Input.GetKey(KeyCode.Space) ? 1f : 0f;   // Racket Jumping
         continuousActionsOut[2] = Input.GetAxis("Vertical");
         continuousActionsOut[5] = Input.GetAxis("Vertical");    
     }

@@ -19,7 +19,7 @@ unity_wrapper:
     port: 5004
     
 buffer:
-    buffer_size: 100000
+    buffer_size: 1000
 
 curl_sac:
     agent: curl_sac
@@ -55,7 +55,7 @@ environment:
     image_size_pre: 84
     image_size_post: 64
     frame_stack: 4
-    buffer_size: 100000
+    buffer_size: 1000
     batch_size: 32
     seed: 1
     encoder_type: pixel
@@ -65,15 +65,15 @@ environment:
 
 train:
     train_mode: True
-    init_steps: 1000
+    init_steps: 100
     train_steps: 1000000
     episodes: 10
-    eval_freq: 1000
-    num_train_steps: 1000000
+    eval_freq: 100
+    num_train_steps: 10000
     num_eval_episodes: 10
     log_interval: 100
     save_model: True
-    save_buffer: True
+    save_buffer: False
     image_size_pre: 84
     image_size_post: 64
 

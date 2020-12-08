@@ -82,12 +82,12 @@ def main():
     episode, episode_reward, done = 0, 0, True
     start_time = time.time()
 
-    for step in range(args["train"]["num_train_steps"]):
+    for step in range(args["train"]["train_steps"]):
         # evaluate agent periodically
 
         if step % args["train"]["eval_freq"] == 0:
-            #L.log('eval/episode', episode, step)
-            #evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
+            L.log('eval/episode', episode, step)
+            evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
             if args["train"]["save_model"]:
                 agents[0].save_curl(model_dir, step)
             if args["train"]["save_buffer"]:
@@ -97,11 +97,9 @@ def main():
             if step > 0:
                 if step % args["train"]["log_interval"] == 0:
                     L.log('train/duration', time.time() - start_time, step)
-                    print("haha-2")
                     L.dump(step)
                 start_time = time.time()
             if step % args["train"]["log_interval"] == 0:
-                print("haha")
                 L.log('train/episode_reward', episode_reward, step)
 
             _, obs, _, _, _ = env.reset()
@@ -117,7 +115,7 @@ def main():
         if step < args["train"]["init_steps"]:
             action = env.random_action() #action_space.sample()
             actions = {f'{brain_name}': action[i] for i, brain_name in enumerate(env.group_names)}
-            #print("Action random: ", action, len(action))
+
         else:
             with utils.eval_mode(agents[0]):
                 action = agents[0].sample_action(obs)
@@ -129,7 +127,6 @@ def main():
             for _ in range(num_updates):
                 agents[0].update(agents[1], L, step)
 
-        #print("Noves actions: ", actions, type(actions))
         _, next_obs, reward, done, _ = env.step(actions)
         next_obs = np.transpose(next_obs[0][0][0], (2, 0, 1))
         reward = reward[0][0]
@@ -140,95 +137,12 @@ def main():
             done
         )
         episode_reward += reward
-        #print("Final: ", reward, done, type(done), done_bool, type(done_bool))
-
         agents[1].add(obs, action, reward, next_obs, done_bool)
 
         obs = next_obs
         episode_step += 1
 
     env.close()
-
-
-
-
-"""
-    #Number of times that the goal if succed
-    for n in range(num_train_steps):
-        #number of steps maximum that have the agent to get the goal
-        for steps in range(max_steps):
-            behavior_names, behavior_spec = env.behavior_specs
-            print(behavior_spec, behavior_names[1])
-
-            behavior_name_left = list(env.behavior_specs)[0]
-            behavior_name_right = list(env.behavior_specs)[1]
-
-            spec =env.behavior_specs[behavior_name_left]
-
-            # Examine the number of observations per Agent
-            print("Number of observations : ", len(spec.observation_shapes))
-
-            # Is there a visual observation ?
-            # Visual observation have 3 dimensions: Height, Width and number of channels
-            vis_obs = any(len(shape) == 3 for shape in spec.observation_shapes)
-            print("Is there a visual observation ?", vis_obs)
-
-            print(f"There are {spec.action_size} action(s)")
-
-            # For discrete actions only : How many different options does each action has ?
-            if spec.is_action_discrete():
-                for action, branch_size in enumerate(spec.discrete_action_branches):
-                    print(f"Action number {action} has {branch_size} different options")
-
-            decision_steps_left, terminal_steps_left = env.get_steps(behavior_name_left)
-            decision_steps_right, terminal_steps_right = env.get_steps(behavior_name_right)
-            print(decision_steps_left.reward, decision_steps_right.reward)
-
-
-            if (steps % 4) == 0:
-                image = get_image(decision_steps_left[0].obs[0], 1)
-                image = get_image(decision_steps_right[0].obs[0], 1)
-            else:
-                image = concatenate_image(image, get_image(decision_steps_left[0].obs[0], 1))
-
-            if image.shape[0] == 4:
-                batch_images = add_batch_dimension(image, batch_size)
-                print(batch_images.shape)
-
-                actions = []
-                actions.append(np.random.uniform(0, 6, 1))
-                env.set_actions(behavior_name_left, np.array(actions))
-                env.set_actions(behavior_name_right, np.array(actions))
-
-            env.step()
-
-
-        batch_observation.append(decision_steps_left[0].obs[0])
-        print(len(batch_observation))
-        if len(batch_observation) == 4:
-            print( len(batch_observation))
-            observation = decision_steps_left[0].obs[0]
-            prova = np.transpose(observation, (2, 0, 1))
-            image_observation = observation[:,:,0]
-            print(observation[:,:,0].shape, type(batch_observation[0]), prova.shape)
-            #temp = decision_steps_left[0].obs[0]
-            plt.imshow(observation[:,:,0])
-            plt.show()
-            if np.array_equal(batch_observation[0],batch_observation[3]) :
-                print("equal")
-            batch_observation.clear()
-            actions = []
-            actions.append(np.random.uniform(0,6,1))
-            print(len(actions))
-            env.set_actions(behavior_name_left, np.array(actions))
-            env.set_actions(behavior_name_right, np.array(actions))
-        #print(type(decision_steps_left[0].obs[0]))
-            env.step()
-    for observation in decision_steps_left[0].obs:
-        print(observation.shape)
-        if len(observation.shape) == 3 :
-            print("uno")
-    #print(get_behavior_spec)"""
 
 
 def init_unity_env(env_args):
@@ -328,40 +242,31 @@ def evaluate(env, agent, num_episodes, L, step, args):
         prefix = 'stochastic_' if sample_stochastically else ''
         for i in range(num_episodes):
             _, obs, _, _, _ = env.reset()
+
             obs = np.transpose(obs[0][0][0], (2, 0, 1))
             #video.init(enabled=(i == 0))
             done = False
             episode_reward = 0
-            while not done:
+            steps = 0
+            while((not done) and (steps < args["train"]["num_train_steps"])):
                 # center crop image
                 if args["curl_sac"]["encoder_type"] == 'pixel':
                     obs = utils.center_crop_image(obs, args["train"]["image_size_post"])
-                    #print(obs, type(obs), obs.shape, agent, type(agent))
                 with utils.eval_mode(agent):
-                    #print(utils.eval_mode(agent), type(utils.eval_mode(agent)))
                     if sample_stochastically:
                         action = agent.sample_action(obs)
                     else:
                         action = agent.select_action(obs)
 
-                #print(action, type(action), action.shape)
-                #print("Arg max: ", np.argmax(action))
                 actions = {f'{brain_name}': action for i, brain_name in enumerate(env.group_names)}
-                #print(actions, type(actions))
-                #print(actions.keys())
-                #print("Done 1: ", done, type(done))
-                #env.set_actions(env.group_names[0], )
+
                 _, obs, reward, done, _ = env.step(actions)
                 obs = np.transpose(obs[0][0][0], (2, 0, 1))
                 reward = reward[0][0]
-                #done = done[0]
-                #done = done.tolist()
-                #done = done[0]
                 done = done[0][0].item()
-                #print("Info: ", reward, done, type(done))
                 #video.record(env)
-                #print("Reward: ", reward, type(reward[0]), reward[0][0])
                 episode_reward += reward
+                steps +=1
 
             #video.save('%d.mp4' % step)
             L.log('eval/' + prefix + 'episode_reward', episode_reward, step)
@@ -372,7 +277,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
         best_ep_reward = np.max(all_ep_rewards)
         L.log('eval/' + prefix + 'mean_episode_reward', mean_ep_reward, step)
         L.log('eval/' + prefix + 'best_episode_reward', best_ep_reward, step)
-        print("DOne 2: ", done, type(done))
+        #print("DOne 2: ", done, type(done))
 
     run_eval_loop(sample_stochastically=False)
     L.dump(step)
