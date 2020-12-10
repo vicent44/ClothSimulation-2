@@ -50,7 +50,7 @@ environment:
     task_name: fold
     image_size_pre: 84
     image_size_post: 64
-    buffer_size: 100000
+    buffer_size: 200000
     seed: 1
     encoder_type: pixel
     work_dir: .
@@ -59,17 +59,17 @@ environment:
 
 train:
     train_mode: True
-    init_steps: 1000 #First batch of random actions
-    train_steps: 100000 #Total steps of training
+    init_steps: 5000 #First batch of random actions
+    train_steps: 200000 #Total steps of training
     episodes: 10
-    eval_freq: 5000 #Every this steps there is an evaluation
-    num_train_steps: 1000 #Max steps for evaluation
-    num_eval_episodes: 10 #Evaluation number of episodes
+    eval_freq: 25000 #Every this steps there is an evaluation
+    num_train_steps: 5000 #Max steps for evaluation
+    num_eval_episodes: 5 #Evaluation number of episodes
     log_interval: 100
     save_model: True
     save_buffer: True
     image_size_pre: 84
-    image_size_post: 64
+    image_size_post: 34
 
 
 
