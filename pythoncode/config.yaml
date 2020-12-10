@@ -69,7 +69,7 @@ train:
     save_model: True
     save_buffer: True
     image_size_pre: 84
-    image_size_post: 34
+    image_size_post: 64
 
 
 

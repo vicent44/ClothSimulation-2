@@ -7386,13 +7386,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 455799096}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.32, y: 0.41, z: 1.93}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.45, y: 1.44, z: 0.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 651075827}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!20 &455799098
 Camera:
   m_ObjectHideFlags: 0
@@ -11402,7 +11402,7 @@ MonoBehaviour:
   deltaTimeStep: 0.01
   sphereControl: {fileID: 6907724091159522119, guid: c911309835fefc842bf76a3f3d482a3a,
     type: 3}
-  sphereScale: 0.005
+  sphereScale: 0.05
   plane: {fileID: 1544403516}
   secondPlane: {fileID: 1014346339}
   normalSecondPlane: {x: 0, y: 0, z: 1}
