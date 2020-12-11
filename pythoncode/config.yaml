@@ -11,7 +11,7 @@ unity_wrapper:
     inference_time_scale: 0
     target_frame_rate: 60
     render: True
-    file_path: UnityEnvironment/Head-1/Head-Robot.x86_64
+    file_path: UnityEnvironment/Head/Head-Robot-Stiff.x86_64
     env_seed: 1
     reset_config: {}
     port: 5004
@@ -49,7 +49,7 @@ environment:
     domain_name: robot
     task_name: fold
     image_size_pre: 84
-    image_size_post: 64
+    image_size_post: 44
     buffer_size: 200000
     seed: 1
     encoder_type: pixel
@@ -59,17 +59,17 @@ environment:
 
 train:
     train_mode: True
-    init_steps: 5000 #First batch of random actions
+    init_steps: 4000 #First batch of random actions
     train_steps: 200000 #Total steps of training
     episodes: 10
-    eval_freq: 25000 #Every this steps there is an evaluation
-    num_train_steps: 5000 #Max steps for evaluation
+    eval_freq: 10000 #Every this steps there is an evaluation
+    num_train_steps: 2000 #Max steps for evaluation
     num_eval_episodes: 5 #Evaluation number of episodes
     log_interval: 100
     save_model: True
     save_buffer: True
     image_size_pre: 84
-    image_size_post: 64
+    image_size_post: 44
 
 
 

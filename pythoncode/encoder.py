@@ -13,6 +13,8 @@ def tie_weights(src, trg):
 OUT_DIM = {2: 39, 4: 35, 6: 31}
 # for 64 x 64 inputs
 OUT_DIM_64 = {2: 29, 4: 25, 6: 21}
+# for 44 x 44 inputs
+OUT_DIM_44 = {2: 19, 4: 15, 6: 11}
 
 
 class PixelEncoder(nn.Module):
@@ -31,7 +33,14 @@ class PixelEncoder(nn.Module):
         for i in range(num_layers - 1):
             self.convs.append(nn.Conv2d(num_filters, num_filters, 3, stride=1))
 
-        out_dim = OUT_DIM_64[num_layers] if obs_shape[-1] == 64 else OUT_DIM[num_layers]
+        #out_dim = OUT_DIM_64[num_layers] if obs_shape[-1] == 64 else OUT_DIM[num_layers]
+        if(obs_shape[-1] == 64):
+            out_dim = OUT_DIM_64[num_layers]
+        elif(obs_shape[-1] == 44):
+            out_dim = OUT_DIM_44[num_layers]
+        else:
+            out_dim = OUT_DIM[num_layers]
+
         self.fc = nn.Linear(num_filters * out_dim * out_dim, self.feature_dim)
         self.ln = nn.LayerNorm(self.feature_dim)
 
