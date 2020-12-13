@@ -50,7 +50,7 @@ environment:
     task_name: fold
     image_size_pre: 84
     image_size_post: 44
-    buffer_size: 210000
+    buffer_size: 310000
     seed: 1
     encoder_type: pixel
     work_dir: .

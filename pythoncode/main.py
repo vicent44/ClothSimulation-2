@@ -44,7 +44,7 @@ def main():
     env_name = args["environment"]["domain_name"] + '-' + args["environment"]["task_name"]
     exp_name = env_name + '-' + ts + '-im' + str(args["environment"]["image_size_pre"]) +'-b'  \
     + str(args["unity_wrapper"]["batch_size"]) + '-s' + str(args["environment"]["seed"])  + '-' + args["environment"]["encoder_type"]
-    args["environment"]["work_dir"] = args["environment"]["work_dir"] + '/'  + exp_name
+    args["environment"]["work_dir"] = args["environment"]["work_dir"] + '/' + 'data'#+ exp_name
 
     utils.make_dir(args["environment"]["work_dir"])
     #video_dir = utils.make_dir(os.path.join(args["environment"]["work_dir"], 'video'))
