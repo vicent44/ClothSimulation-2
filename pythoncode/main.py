@@ -93,7 +93,7 @@ def main():
                 if step % args["train"]["log_interval"] == 0:
                     L.log('train/duration', time.time() - start_time, step)
                     L.dump(step)
-                start_time = time.time()
+                    start_time = time.time()
 
         if step % args["train"]["eval_freq"] == 0:
             L.log('eval/episode', episode, step)
@@ -106,8 +106,9 @@ def main():
 
         #if(step%(args["train"]["num_train_steps"]) == 0):
         #    done = True
-        if (done or (step%(args["train"]["num_train_steps"]) == 0)):
+        if (done or (step%args["train"]["num_train_steps"] == 0)):
             print("Dentro :", step)
+            step_train = 0
 
             if step % args["train"]["log_interval"] == 0:
                 L.log('train/episode_reward', episode_reward, step)
