@@ -15,7 +15,7 @@ unity_wrapper:
     env_seed: 1
     reset_config: {}
     port: 5004
-    batch_size: 32
+    batch_size: 16
     frame_stack: 4
 
 curl_sac:
@@ -64,7 +64,7 @@ train:
     episodes: 10
     eval_freq: 10000 #Every this steps there is an evaluation
     num_train_steps: 2000 #Max steps for evaluation
-    num_eval_episodes: 5 #Evaluation number of episodes
+    num_eval_episodes: 4 #Evaluation number of episodes
     log_interval: 100
     save_model: True
     save_buffer: True

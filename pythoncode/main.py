@@ -81,11 +81,20 @@ def main():
 
     episode, episode_reward, done = 0, 0, True
     start_time = time.time()
+    step_train = 0
 
     for step in range(args["train"]["train_steps"]):
+
         # evaluate agent periodically
         if(step%100 == 0):
             print("Step: ", step)
+        if (done or (step%(args["train"]["num_train_steps"]) == 0)):
+            if step > 0:
+                if step % args["train"]["log_interval"] == 0:
+                    L.log('train/duration', time.time() - start_time, step)
+                    L.dump(step)
+                start_time = time.time()
+
         if step % args["train"]["eval_freq"] == 0:
             L.log('eval/episode', episode, step)
             evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
@@ -93,17 +102,13 @@ def main():
                 agents[0].save_curl(model_dir, step)
             if args["train"]["save_buffer"]:
                 agents[1].save(buffer_dir)
+            start_time = time.time()
 
-        if(step%args["train"]["num_train_steps"] == 0):
-            done = True
-
-        if (done):# or (step > args["train"]["num_train_steps"])):
+        #if(step%(args["train"]["num_train_steps"]) == 0):
+        #    done = True
+        if (done or (step%(args["train"]["num_train_steps"]) == 0)):
             print("Dentro :", step)
-            if step > 0:
-                if step % args["train"]["log_interval"] == 0:
-                    L.log('train/duration', time.time() - start_time, step)
-                    L.dump(step)
-                start_time = time.time()
+
             if step % args["train"]["log_interval"] == 0:
                 L.log('train/episode_reward', episode_reward, step)
                 #print("Hi-1")
@@ -147,6 +152,7 @@ def main():
 
         obs = next_obs
         episode_step += 1
+        step_train += 1
 
     env.close()
 
@@ -254,7 +260,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
             done = False
             episode_reward = 0
             steps = 0
-            while((not done) and (steps < args["train"]["num_train_steps"])):
+            while((not done) and (steps <= args["train"]["num_train_steps"])):
                 # center crop image
                 #print(steps)
                 if(steps%100==0):
