@@ -59,11 +59,11 @@ environment:
 
 train:
     train_mode: True
-    init_steps: 4000 #First batch of random actions
+    init_steps: 5000 #First batch of random actions
     train_steps: 500000 #Total steps of training
     episodes: 10
     eval_freq: 10000 #Every this steps there is an evaluation
-    num_train_steps: 2000 #Max steps for evaluation
+    num_train_steps: 2500 #Max steps for evaluation
     num_eval_episodes: 4 #Evaluation number of episodes
     log_interval: 100
     save_model: True
