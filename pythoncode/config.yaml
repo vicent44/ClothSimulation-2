@@ -15,7 +15,7 @@ unity_wrapper:
     env_seed: 1
     reset_config: {}
     port: 5004
-    batch_size: 16
+    batch_size: 8
     frame_stack: 4
 
 curl_sac:
