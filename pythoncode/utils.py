@@ -160,6 +160,7 @@ class ReplayBuffer(Dataset):
             self.not_dones[self.last_save:self.idx]
         ]
         self.last_save = self.idx
+        torch.device('cpu')
         torch.save(payload, path)
 
     def load(self, save_dir):

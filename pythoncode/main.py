@@ -73,7 +73,7 @@ def main():
     for i, fgn in enumerate(env.fixed_group_names):
         print(i, "+",fgn)
 
-    device = 'cpu'#torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     agents = initialize_model_buffer_each_agent(args, env, device)
     print("Agents: ", type(agents), len(agents), agents)
 
