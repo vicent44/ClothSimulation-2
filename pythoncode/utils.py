@@ -162,6 +162,7 @@ class ReplayBuffer(Dataset):
         self.last_save = self.idx
         torch.device('cpu')
         torch.save(payload, path)
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     def load(self, save_dir):
         chunks = os.listdir(save_dir)
