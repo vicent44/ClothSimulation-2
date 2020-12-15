@@ -79,7 +79,7 @@ def main():
 
     L = Logger(args["environment"]["work_dir"], use_tb=args["environment"]["save_tb"])
 
-    episode, episode_reward, done = 0, 0, True
+    episode, episode_reward, done, done_bool = 0, 0, True, True
     start_time = time.time()
     step_train = 0
 
@@ -89,6 +89,13 @@ def main():
         if(step%100 == 0):
             print("Step: ", step)
 
+        if (done_bool):
+            if step > 0:
+                if step % args["train"]["log_interval"] == 0:
+                    L.log('train/duration', time.time() - start_time, step)
+                    L.dump(step)
+                start_time = time.time()
+
         if step % args["train"]["eval_freq"] == 0:
             L.log('eval/episode', episode, step)
             evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
@@ -96,17 +103,17 @@ def main():
                 agents[0].save_curl(model_dir, step)
             if args["train"]["save_buffer"]:
                 agents[1].save(buffer_dir)
-            start_time = time.time()
+            #start_time = time.time()
 
         #if(step%(args["train"]["num_train_steps"]) == 0):
         #    done = True
-        if (done or (step%args["train"]["num_train_steps"] == 0)):
+        if (done_bool):
             print("Dentro :", step)
-            if step > 0:
+            """if step > 0:
                 if step % args["train"]["log_interval"] == 0:
                     L.log('train/duration', time.time() - start_time, step)
                     L.dump(step)
-                start_time = time.time()
+                start_time = time.time()"""
 
             if step % args["train"]["log_interval"] == 0:
                 L.log('train/episode_reward', episode_reward, step)
@@ -115,6 +122,7 @@ def main():
             _, obs, _, _, _ = env.reset()
             obs = np.transpose(obs[0][0][0], (2, 0, 1))
             done = False
+            done_bool = False
             episode_reward = 0
             episode_step = 0
             episode += 1
@@ -142,12 +150,16 @@ def main():
         reward = reward[0][0]
         done = done[0][0].item()
         # allow infinit bootstrap
-        _max_episode_steps = 200
-        done_bool = 0 if episode_step + 1 == _max_episode_steps else float(
+        _max_episode_steps = args["train"]["num_train_steps"]
+        done_bool = 1 if episode_step + 1 == _max_episode_steps else float(
             done
         )
+        #print(type(done_bool))
+        if(done_bool == 1):
+            print(done, done_bool)
         episode_reward += reward
         agents[1].add(obs, action, reward, next_obs, done_bool)
+        #print(type(obs), type(action), type(reward), type(next_obs), type(done_bool))
 
         obs = next_obs
         episode_step += 1
