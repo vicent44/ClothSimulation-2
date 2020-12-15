@@ -89,13 +89,6 @@ def main():
         if(step%100 == 0):
             print("Step: ", step)
 
-        if (done_bool):
-            if step > 0:
-                if step % args["train"]["log_interval"] == 0:
-                    L.log('train/duration', time.time() - start_time, step)
-                    L.dump(step)
-                start_time = time.time()
-
         if step % args["train"]["eval_freq"] == 0:
             L.log('eval/episode', episode, step)
             evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
@@ -103,17 +96,17 @@ def main():
                 agents[0].save_curl(model_dir, step)
             if args["train"]["save_buffer"]:
                 agents[1].save(buffer_dir)
-            #start_time = time.time()
+            start_time = time.time()
 
         #if(step%(args["train"]["num_train_steps"]) == 0):
         #    done = True
         if (done_bool):
             print("Dentro :", step)
-            """if step > 0:
+            if step > 0:
                 if step % args["train"]["log_interval"] == 0:
                     L.log('train/duration', time.time() - start_time, step)
                     L.dump(step)
-                start_time = time.time()"""
+                start_time = time.time()
 
             if step % args["train"]["log_interval"] == 0:
                 L.log('train/episode_reward', episode_reward, step)
@@ -269,9 +262,10 @@ def evaluate(env, agent, num_episodes, L, step, args):
             obs = np.transpose(obs[0][0][0], (2, 0, 1))
             #video.init(enabled=(i == 0))
             done = False
+            done_bool = False
             episode_reward = 0
             steps = 0
-            while((not done) and (steps <= args["train"]["num_train_steps"])):
+            while(not done_bool):#(not done) and (steps <= args["train"]["num_train_steps"])):
                 # center crop image
                 #print(steps)
                 if(steps%100==0):
@@ -292,6 +286,11 @@ def evaluate(env, agent, num_episodes, L, step, args):
                 reward = reward[0][0]
                 done = done[0][0].item()
                 #video.record(env)
+                _max_episode_steps = args["train"]["num_train_steps"]
+                done_bool = 1 if steps + 1 == _max_episode_steps else float(
+                    done
+                )
+
                 episode_reward += reward
                 steps +=1
 

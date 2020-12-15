@@ -239,7 +239,7 @@ public class AgentRobotHand : Agent
 
     public void Error()
     {
-        SetReward(-1f);
+        AddReward(-1f);
         EndEpisode();
         arearobot.AreaReset(); 
     }

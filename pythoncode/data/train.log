@@ -1,0 +1,1 @@
+{"episode_reward": 0.0, "episode": 1.0, "batch_reward": 0.7065625190734863, "critic_loss": 0.1397942155599594, "actor_loss": -1.4304756820201874, "actor_target_entropy": -6.0, "actor_entropy": -0.15995126962661743, "alpha_loss": -0.023537492495961487, "alpha_value": 0.00968669071050471, "curl_loss": 4.3289636969566345, "duration": 34.593199491500854, "step": 500}
