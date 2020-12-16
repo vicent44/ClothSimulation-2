@@ -16,7 +16,7 @@ unity_wrapper:
     reset_config: {}
     port: 5004
     batch_size: 16
-    frame_stack: 16
+    frame_stack: 3
 
 curl_sac:
     agent: curl_sac
