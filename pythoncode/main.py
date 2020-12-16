@@ -127,8 +127,8 @@ def main():
             episode_reward = 0
             episode_step = 0
             episode += 1
-            if step % args["train"]["log_interval"] == 0:
-                L.log('train/episode', episode, step)
+            #if step % args["train"]["log_interval"] == 0:
+            L.log('train/episode', episode, step)
 
         # sample action for data collection
         if step < args["train"]["init_steps"]:
