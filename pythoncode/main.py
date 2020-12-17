@@ -20,7 +20,7 @@ from list_utils import zeros_initializer
 from mlagents_envs.environment import UnityEnvironment
 
 from curlsac import CurlSacAgent
-
+from video import VideoRecorder
 from yaml_operations import load_yaml
 
 
@@ -47,9 +47,14 @@ def main():
     args["environment"]["work_dir"] = args["environment"]["work_dir"] + '/' + 'data'#+ exp_name
 
     utils.make_dir(args["environment"]["work_dir"])
-    #video_dir = utils.make_dir(os.path.join(args["environment"]["work_dir"], 'video'))
+    video_dir = utils.make_dir(os.path.join(args["environment"]["work_dir"], 'video'))
     model_dir = utils.make_dir(os.path.join(args["environment"]["work_dir"], 'model'))
     buffer_dir = utils.make_dir(os.path.join(args["environment"]["work_dir"], 'buffer'))
+
+    pre_aug_obs_shape = (3 * args["unity_wrapper"]["frame_stack"], args["environment"]["image_size_pre"],
+                         args["environment"]["image_size_pre"])
+
+    video = VideoRecorder(video_dir if args["environment"]["save_video"] else None, pre_aug_obs_shape)
 
     behavior_spec = env.behavior_specs
     behavior_name_left = list(env.behavior_specs)[0]
@@ -102,12 +107,12 @@ def main():
             if(eval == 4):
                 eval = 0
                 L.log('eval/episode', episode, step)
-                evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
+                evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args, video)
                 if args["train"]["save_model"]:
                     agents[0].save_curl(model_dir, step)
                 if args["train"]["save_buffer"]:
-                    if(step >= 100000):
-                        agents[1].save(buffer_dir)
+                    print("hi")
+                    #agents[1].save(buffer_dir)
                 start_time = time.time()
 
         #if(step%(args["train"]["num_train_steps"]) == 0):
@@ -262,7 +267,7 @@ def make_agent(obs_shape, action_shape, args, device):
         assert 'agent is not supported: %s' % args["curl_sac"]["agent"]
 
 
-def evaluate(env, agent, num_episodes, L, step, args):
+def evaluate(env, agent, num_episodes, L, step, args, video):
     all_ep_rewards = []
 
     def run_eval_loop(sample_stochastically=False):
@@ -272,7 +277,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
             _, obs, _, _, _ = env.reset()
 
             obs = np.transpose(obs[0][0][0], (2, 0, 1))
-            #video.init(enabled=(i == 0))
+            video.init(enabled=(i == 0))
             done = False
             done_bool = False
             episode_reward = 0
@@ -297,7 +302,9 @@ def evaluate(env, agent, num_episodes, L, step, args):
                 obs = np.transpose(obs[0][0][0], (2, 0, 1))
                 reward = reward[0][0]
                 done = done[0][0].item()
+                #print(obs.shape)
                 #video.record(env)
+                video.record(obs)
                 _max_episode_steps = args["train"]["num_train_steps"]
                 done_bool = 1 if steps + 1 == _max_episode_steps else float(
                     done
@@ -306,7 +313,7 @@ def evaluate(env, agent, num_episodes, L, step, args):
                 episode_reward += reward
                 steps +=1
 
-            #video.save('%d.mp4' % step)
+            video.save('%d.mp4' % step)
             L.log('eval/' + prefix + 'episode_reward', episode_reward, step)
             all_ep_rewards.append(episode_reward)
 
