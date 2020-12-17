@@ -82,6 +82,7 @@ def main():
     episode, episode_reward, done, done_bool = 0, 0, True, True
     start_time = time.time()
     step_train = 0
+    eval = 4
 
     for step in range(args["train"]["train_steps"]):
 
@@ -97,13 +98,15 @@ def main():
                 L.dump(step)
                 start_time = time.time()
 
-            if step % args["train"]["eval_freq"] == 0:
+            #if step % args["train"]["eval_freq"] == 0:
+            if(eval == 4):
+                eval = 0
                 L.log('eval/episode', episode, step)
                 evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args)
                 if args["train"]["save_model"]:
                     agents[0].save_curl(model_dir, step)
                 if args["train"]["save_buffer"]:
-                    if(step >= 400000):
+                    if(step >= 200000):
                         agents[1].save(buffer_dir)
                 start_time = time.time()
 
@@ -127,6 +130,7 @@ def main():
             episode_reward = 0
             episode_step = 0
             episode += 1
+            eval += 1
             #if step % args["train"]["log_interval"] == 0:
             L.log('train/episode', episode, step)
 

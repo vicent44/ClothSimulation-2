@@ -154,8 +154,8 @@ class ReplayBuffer(Dataset):
         path = os.path.join(save_dir, '%d_%d.pt' % (self.last_save, self.idx))
         payload = [
             self.obses[self.last_save:self.idx],
-            self.next_obses[self.last_save:self.idx],
-            self.actions[self.last_save:self.idx],
+            #self.next_obses[self.last_save:self.idx],
+            #self.actions[self.last_save:self.idx],
             self.rewards[self.last_save:self.idx],
             self.not_dones[self.last_save:self.idx]
         ]
