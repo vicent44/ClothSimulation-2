@@ -106,7 +106,7 @@ def main():
                 if args["train"]["save_model"]:
                     agents[0].save_curl(model_dir, step)
                 if args["train"]["save_buffer"]:
-                    if(step >= 200000):
+                    if(step >= 100000):
                         agents[1].save(buffer_dir)
                 start_time = time.time()
 
