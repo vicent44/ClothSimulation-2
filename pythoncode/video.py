@@ -1,5 +1,5 @@
 import os
-os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg"
+#os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg"
 import imageio
 import numpy as np
 
