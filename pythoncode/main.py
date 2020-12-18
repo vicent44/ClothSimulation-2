@@ -79,6 +79,7 @@ def main():
         print(i, "+",fgn)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print("Device: ", device)
     agents = initialize_model_buffer_each_agent(args, env, device)
     print("Agents: ", type(agents), len(agents), agents)
 
@@ -87,7 +88,7 @@ def main():
     episode, episode_reward, done, done_bool = 0, 0, True, True
     start_time = time.time()
     step_train = 0
-    eval = 2
+    eval = 4
 
     for step in range(args["train"]["train_steps"]):
 
@@ -104,7 +105,7 @@ def main():
                 start_time = time.time()
 
             #if step % args["train"]["eval_freq"] == 0:
-            if(eval == 2):
+            if(eval == 4):
                 eval = 0
                 L.log('eval/episode', episode, step)
                 evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args, video)
