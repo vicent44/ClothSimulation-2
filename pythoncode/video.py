@@ -13,6 +13,7 @@ class VideoRecorder(object):
         self.fps = fps
         self.frames = []
         self.capacity = capacity
+        self.obs_shape = obs_shape
         obs_dtype = np.float32 if len(obs_shape) == 1 else np.uint8
         self.obses = np.empty((capacity, *obs_shape), dtype=obs_dtype)
 
@@ -47,3 +48,5 @@ class VideoRecorder(object):
             path = os.path.join(self.dir_name, file_name)
             obs = np.transpose(self.obses, (0, 2, 3, 1))
             imageio.mimsave(path, obs[:,:,:,0:3], fps=self.fps)
+            obs_dtype = np.float32 if len(self.obs_shape) == 1 else np.uint8
+            self.obses = np.empty((self.capacity, *self.obs_shape), dtype=obs_dtype)

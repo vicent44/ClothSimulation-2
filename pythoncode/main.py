@@ -87,7 +87,7 @@ def main():
     episode, episode_reward, done, done_bool = 0, 0, True, True
     start_time = time.time()
     step_train = 0
-    eval = 4
+    eval = 2
 
     for step in range(args["train"]["train_steps"]):
 
