@@ -104,7 +104,7 @@ def main():
                 start_time = time.time()
 
             #if step % args["train"]["eval_freq"] == 0:
-            if(eval == 4):
+            if(eval == 2):
                 eval = 0
                 L.log('eval/episode', episode, step)
                 evaluate(env, agents[0], args["train"]["num_eval_episodes"], L, step, args, video)
