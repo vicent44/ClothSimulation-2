@@ -15,8 +15,8 @@ unity_wrapper:
     env_seed: 1
     reset_config: {}
     port: 5004
-    batch_size: 32
-    frame_stack: 4
+    batch_size: 16
+    frame_stack: 6
 
 curl_sac:
     agent: curl_sac
@@ -60,7 +60,7 @@ environment:
 train:
     train_mode: True
     init_steps: 5000 #First batch of random actions
-    train_steps: 510000 #Total steps of training
+    train_steps: 710000 #Total steps of training
     episodes: 10
     eval_freq: 10000 #Every this steps there is an evaluation
     num_train_steps: 2500 #Max steps for evaluation
