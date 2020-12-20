@@ -5,7 +5,7 @@ import numpy as np
 
 
 class VideoRecorder(object):
-    def __init__(self, dir_name, obs_shape,height=256, width=256, camera_id=0, fps=30, capacity=2500):
+    def __init__(self, dir_name, obs_shape, capacity, height=256, width=256, camera_id=0, fps=30):
         self.dir_name = dir_name
         self.height = height
         self.width = width

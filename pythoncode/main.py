@@ -54,7 +54,7 @@ def main():
     pre_aug_obs_shape = (3 * args["unity_wrapper"]["frame_stack"], args["environment"]["image_size_pre"],
                          args["environment"]["image_size_pre"])
 
-    video = VideoRecorder(video_dir if args["environment"]["save_video"] else None, pre_aug_obs_shape)
+    video = VideoRecorder(video_dir if args["environment"]["save_video"] else None, pre_aug_obs_shape, args["train"]["num_train_steps"])
 
     behavior_spec = env.behavior_specs
     behavior_name_left = list(env.behavior_specs)[0]

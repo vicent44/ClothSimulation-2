@@ -23,7 +23,7 @@ public class RightFoldControl : MonoBehaviour
     }
 
 
-    void OnTriggerStay(Collider col)
+    void OnTriggerSta(Collider col)
     {
         if(col.gameObject.tag == this.gameObject.tag && !agentRightCatch)
         {
