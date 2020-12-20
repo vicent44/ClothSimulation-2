@@ -11,7 +11,7 @@ unity_wrapper:
     inference_time_scale: 0
     target_frame_rate: 60
     render: True
-    file_path: UnityEnvironment/Head-0.2/Head-Robot-Stiff-Half.x86_64
+    file_path: UnityEnvironment/Head-Rew/Head-Robot-Stiff-Half.x86_64
     env_seed: 1
     reset_config: {}
     port: 5004
@@ -59,12 +59,12 @@ environment:
 
 train:
     train_mode: True
-    init_steps: 5000 #First batch of random actions
-    train_steps: 710000 #Total steps of training
+    init_steps: 500 #First batch of random actions
+    train_steps: 910000 #Total steps of training
     episodes: 10
-    eval_freq: 10000 #Every this steps there is an evaluation
-    num_train_steps: 2500 #Max steps for evaluation
-    num_eval_episodes: 4 #Evaluation number of episodes
+    eval_freq: 1000 #Every this steps there is an evaluation
+    num_train_steps: 500 #Max steps for evaluation
+    num_eval_episodes: 1 #Evaluation number of episodes
     log_interval: 100
     save_model: True
     save_buffer: True

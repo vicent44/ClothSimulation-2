@@ -25,7 +25,7 @@ public class RightFoldControl : MonoBehaviour
 
     void OnTriggerStay(Collider col)
     {
-        if(col.gameObject.tag == this.gameObject.tag)
+        if(col.gameObject.tag == this.gameObject.tag && !agentRightCatch)
         {
             //Ma esquerra agafan la roba
             Debug.Log("1-Right");
@@ -33,7 +33,7 @@ public class RightFoldControl : MonoBehaviour
             agentRightCatch = true;
             //ClothCath(m_AgentLeft);
         }
-        if(col.gameObject.name == this.gameObject.tag && agentRightCatch)
+        if(col.gameObject.name == this.gameObject.tag && agentRightCatch && !agentRightDone)
         {
             Debug.Log("2-Right");
             transform.parent.GetComponent<AgentRobotHand>().ClothFoldedRight();

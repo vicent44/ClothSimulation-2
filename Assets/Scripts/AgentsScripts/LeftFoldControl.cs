@@ -29,7 +29,7 @@ public class LeftFoldControl : MonoBehaviour
         {
             transform.parent.GetComponent<AgentRobotHand>().Error();
         }*/
-        if(col.gameObject.tag == this.gameObject.tag)
+        if(col.gameObject.tag == this.gameObject.tag && !agentLeftCatch)
         {
             //Ma esquerra agafan la roba
             Debug.Log("1-Left");
@@ -37,7 +37,7 @@ public class LeftFoldControl : MonoBehaviour
             agentLeftCatch = true;
             //ClothCath(m_AgentLeft);
         }
-        if(col.gameObject.name == this.gameObject.tag && agentLeftCatch)
+        if(col.gameObject.name == this.gameObject.tag && agentLeftCatch && !agentLeftDone)
         {
             Debug.Log("2-Left");
             transform.parent.GetComponent<AgentRobotHand>().ClothFoldedLeft();
