@@ -43,7 +43,14 @@ public class RightFoldControl : MonoBehaviour
     }
     void OnTriggerExit(Collider col)
     {
-        if(col.gameObject.tag == this.gameObject.tag)
+        if(col.gameObject.name == this.gameObject.tag && agentRightCatch && agentRightDone)
+        {
+            Debug.Log("2.1-Right");
+            transform.parent.GetComponent<AgentRobotHand>().ClothLostFoldedRight();
+            agentRightDone = false;
+            //m_AgentLeft.AddReward(-0.1f);
+        }        
+        if(col.gameObject.tag == this.gameObject.tag && agentRightCatch)
         {
             Debug.Log("1.1-Right");
             transform.parent.GetComponent<AgentRobotHand>().ClothLostRight();
@@ -51,12 +58,6 @@ public class RightFoldControl : MonoBehaviour
             agentRightCatch = false;
             //ClothLost(m_AgentLeft);
         }
-        if(col.gameObject.name == this.gameObject.tag)
-        {
-            Debug.Log("2.1-Right");
-            transform.parent.GetComponent<AgentRobotHand>().ClothLostFoldedRight();
-            agentRightDone = false;
-            //m_AgentLeft.AddReward(-0.1f);
-        }
+
     }    
 }

@@ -204,14 +204,14 @@ public class AgentRobotHand : Agent
         }        
 
         if(leftDone && rightDone) FoldCompleted();
-        else if(leftDone && !rightDone) AddReward(-0.01f);
-        else if(!leftDone && rightDone) AddReward(-0.01f);
+        else if(leftDone && !rightDone) AddReward(-0.001f);
+        else if(!leftDone && rightDone) AddReward(-0.001f);
 
-        if(!leftCatch) AddReward(-0.01f);
-        if(!rightCatch) AddReward(-0.01f);
+        if(!leftCatch) AddReward(-0.001f);
+        if(!rightCatch) AddReward(-0.001f);
 
-        if(leftCatch && !leftDone) AddReward(-0.01f);
-        if(rightCatch && !rightDone) AddReward(-0.01f);
+        if(leftCatch && !leftDone) AddReward(-0.001f);
+        if(rightCatch && !rightDone) AddReward(-0.001f);
         
 
         WaitTimeInference();
@@ -239,14 +239,14 @@ public class AgentRobotHand : Agent
 
     public void Error()
     {
-        AddReward(-1f);
+        AddReward(-5f);
         EndEpisode();
         arearobot.AreaReset(); 
     }
 
     void FoldCompleted()
     {
-        AddReward(1f);
+        AddReward(5f);
         EndEpisode();
         arearobot.AreaReset();
     }

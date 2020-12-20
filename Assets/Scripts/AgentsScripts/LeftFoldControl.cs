@@ -47,20 +47,20 @@ public class LeftFoldControl : MonoBehaviour
     }
     void OnTriggerExit(Collider col)
     {
-        if(col.gameObject.tag == this.gameObject.tag)
+        if(col.gameObject.name == this.gameObject.tag && agentLeftCatch && agentLeftDone)
+        {
+            Debug.Log("2.1-Left");
+            transform.parent.GetComponent<AgentRobotHand>().ClothLostFoldedLeft();
+            agentLeftDone = false;
+            //m_AgentLeft.AddReward(-0.1f);
+        }        
+        if(col.gameObject.tag == this.gameObject.tag && agentLeftCatch)
         {
             Debug.Log("1.1-Left");
             transform.parent.GetComponent<AgentRobotHand>().ClothLostLeft();
             //Ma esquerra deixa anar la roba
             agentLeftCatch = false;
             //ClothLost(m_AgentLeft);
-        }
-        if(col.gameObject.name == this.gameObject.tag)
-        {
-            Debug.Log("2.1-Left");
-            transform.parent.GetComponent<AgentRobotHand>().ClothLostFoldedLeft();
-            agentLeftDone = false;
-            //m_AgentLeft.AddReward(-0.1f);
         }
     }     
 }
