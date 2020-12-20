@@ -255,6 +255,7 @@ public class AgentRobotHand : Agent
     public void ClothCathLeft()
     {
         AddReward(25f);
+        //Debug.Log("hehe +");
         leftCatch = true;
     }
     public void ClothCathRight()
@@ -266,11 +267,13 @@ public class AgentRobotHand : Agent
     public void ClothLostLeft()
     {
         AddReward(-25f);
+        //Debug.Log("hehe -");
         leftCatch = false;
     }
     public void ClothLostRight()
     {
         AddReward(-25f);
+        //Debug.Log("hehe -");
         rightCatch = false;
     }
 
