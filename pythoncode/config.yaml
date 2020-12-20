@@ -15,8 +15,8 @@ unity_wrapper:
     env_seed: 1
     reset_config: {}
     port: 5004
-    batch_size: 32
-    frame_stack: 6
+    batch_size: 16
+    frame_stack: 4
 
 curl_sac:
     agent: curl_sac
@@ -50,7 +50,7 @@ environment:
     task_name: fold
     image_size_pre: 84
     image_size_post: 44
-    buffer_size: 40000
+    buffer_size: 80000
     seed: 1
     encoder_type: pixel
     work_dir: .
@@ -64,7 +64,7 @@ train:
     episodes: 10
     eval_freq: 20000 #Every this steps there is an evaluation
     num_train_steps: 5000 #Max steps for evaluation
-    num_eval_episodes: 4 #Evaluation number of episodes
+    num_eval_episodes: 2 #Evaluation number of episodes
     log_interval: 100
     save_model: True
     save_buffer: True
