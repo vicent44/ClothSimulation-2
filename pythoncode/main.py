@@ -271,7 +271,7 @@ def make_agent(obs_shape, action_shape, args, device):
 def evaluate(env, agent, num_episodes, L, step, args, video):
     all_ep_rewards = []
 
-    def run_eval_loop(sample_stochastically=True):
+    def run_eval_loop(sample_stochastically=False):
         start_time = time.time()
         prefix = 'stochastic_' if sample_stochastically else ''
         for i in range(num_episodes):
@@ -325,7 +325,7 @@ def evaluate(env, agent, num_episodes, L, step, args, video):
         L.log('eval/' + prefix + 'best_episode_reward', best_ep_reward, step)
         #print("DOne 2: ", done, type(done))
 
-    run_eval_loop(sample_stochastically=True)
+    run_eval_loop(sample_stochastically=False)
     L.dump(step)
 
 if __name__ == "__main__":
