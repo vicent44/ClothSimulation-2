@@ -148,12 +148,21 @@ public class AgentRobotHand : Agent
             left_hand.transform.position = targetPos_left;
             //Debug.Log("Next Position No Walls - Posible");
         }
+        else
+        {
+            AddReward(-0.01f);
+            //Debug.Log("-0.01");
+        }
 
         var hit_right = Physics.OverlapBox(targetPos_right, new Vector3(0.02f, 0.02f, 0.02f));
         if(hit_right.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
         {
             right_hand.transform.position = targetPos_right;
             //Debug.Log("Next Position No Walls - Posible");
+        }
+        else
+        {
+            AddReward(-0.01f);
         }
     }
 

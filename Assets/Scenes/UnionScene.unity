@@ -12118,7 +12118,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723073219}
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 2.004, y: 0.0023254827, z: 0.14933473}
+  m_LocalPosition: {x: 1.664, y: 0.104, z: 0.14933473}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 651075827}
@@ -23617,7 +23617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282f342c2ab144bf38be65d4d0c4e07d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Camera: {fileID: 209136119}
+  m_Camera: {fileID: 455799098}
   m_SensorName: CameraSensor
   m_Width: 84
   m_Height: 84
@@ -23665,7 +23665,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
   m_Model: {fileID: 0}
-  m_InferenceDevice: 1
+  m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Hands
   TeamId: 0
@@ -28079,7 +28079,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988401710}
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -1.252, y: 0.0023254827, z: 0.14933473}
+  m_LocalPosition: {x: -1.094, y: 0.0023254827, z: 0.14933473}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 651075827}
