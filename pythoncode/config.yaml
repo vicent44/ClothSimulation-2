@@ -11,7 +11,7 @@ unity_wrapper:
     inference_time_scale: 0
     target_frame_rate: 60
     render: True
-    file_path: UnityEnvironment/Head-0.1-Plane/Head-Robot-Stiff-Half.x86_64
+    file_path: UnityEnvironment/Head-0.1-GPU/Head-Robot-Stiff-Half.x86_64
     env_seed: 1
     reset_config: {}
     port: 5004
@@ -23,20 +23,20 @@ curl_sac:
     hidden_dim: 256
     discount: 0.99
     init_temperature: 0.01
-    alpha_lr: 0.01
+    alpha_lr: 0.05
     alpha_beta: 0.9
-    actor_lr: 0.01
+    actor_lr: 0.05
     actor_beta: 0.9
     actor_log_std_min: -10
     actor_log_std_max: 2
     actor_update_freq: 2
-    critic_lr: 0.01
+    critic_lr: 0.05
     critic_beta: 0.9
     critic_tau: 0.005
     critic_target_update_freq: 2
     encoder_type: pixel
     encoder_feature_dim: 50
-    encoder_lr: 0.01
+    encoder_lr: 0.05
     encoder_tau: 0.005
     num_layers: 4
     num_filters: 32
