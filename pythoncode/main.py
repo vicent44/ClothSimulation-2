@@ -298,7 +298,7 @@ def evaluate(env, agent, num_episodes, L, step, args, video):
                         action = agent.select_action(obs)
 
                 actions = {f'{brain_name}': action for i, brain_name in enumerate(env.group_names)}
-
+                #print(actions)
                 _, obs, reward, done, _ = env.step(actions)
                 obs = np.transpose(obs[0][0][0], (2, 0, 1))
                 reward = reward[0][0]

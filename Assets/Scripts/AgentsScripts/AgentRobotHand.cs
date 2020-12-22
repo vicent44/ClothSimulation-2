@@ -47,6 +47,14 @@ public class AgentRobotHand : Agent
     private GameObject right_hand;
     EnvironmentParameters m_ResetParams;
 
+    private GameObject left_goal;
+    private GameObject right_goal;
+
+    private float distance_left_before;
+    private float distance_right_before;
+    private float distance_left_after;
+    private float distance_right_after;
+
     /*public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
         var positionX = transform.position.x;
@@ -96,6 +104,11 @@ public class AgentRobotHand : Agent
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
+        left_goal = mesh.transform.Find("left").gameObject;
+        right_goal = mesh.transform.Find("right").gameObject;
+
+        distance_left_before = Vector3.Distance(left_goal.transform.position, left_hand.transform.position);
+        distance_right_before = Vector3.Distance(right_goal.transform.position, right_hand.transform.position);
 
         var continuousActions = actionBuffers.ContinuousActions;
         var moveX_left = Mathf.Clamp(continuousActions[0], -1f, 1f);
@@ -163,6 +176,21 @@ public class AgentRobotHand : Agent
         else
         {
             AddReward(-0.01f);
+        }
+
+        left_goal = mesh.transform.Find("left").gameObject;
+        right_goal = mesh.transform.Find("right").gameObject;
+        distance_left_after = Vector3.Distance(left_goal.transform.position, left_hand.transform.position);
+        distance_right_after = Vector3.Distance(right_goal.transform.position, right_hand.transform.position);
+        if(distance_left_after < distance_left_before)
+        {
+            AddReward(0.01f);
+            Debug.Log("More near");
+        }
+        if(distance_right_after < distance_right_before)
+        {
+            AddReward(0.01f);
+            Debug.Log("More near");
         }
     }
 

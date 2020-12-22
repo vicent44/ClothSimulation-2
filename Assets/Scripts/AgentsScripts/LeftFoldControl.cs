@@ -1,13 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class LeftFoldControl : MonoBehaviour
 {
-
+    //public GameObject mesh;
     private bool agentLeftCatch;
     private bool agentLeftDone;
     private float val;
+
+/*    private GameObject left_goal;
+    private GameObject right_goal;
+
+    private float distance_left_before;
+    private float distance_right_before;
+    private float distance_left_after;
+    private float distance_right_after;
+    private Vector3 past;*/
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +31,23 @@ public class LeftFoldControl : MonoBehaviour
     void Update()
     {
         Debug.Log("Left: "+val);
+
+        /*left_goal = mesh.transform.Find("left").gameObject;
+        Debug.Log(left_goal.transform.position);
+
+        distance_left_before = Vector3.Distance(left_goal.transform.position, past);
+
+        //left_goal = mesh.transform.Find("left").gameObject;
+        distance_left_after = Vector3.Distance(left_goal.transform.position, this.transform.position);
+        
+        //Debug.Log(distance_left_after-distance_left_before);
+        if(Math.Abs(distance_left_after) < Math.Abs(distance_left_before))
+        {
+            //AddReward(1f);
+            Debug.Log("More near");
+        }
+        past = this.transform.position;*/
+
     }
 
 
