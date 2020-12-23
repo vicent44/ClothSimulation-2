@@ -132,9 +132,11 @@ public class MeshGenerator : MonoBehaviour
 
         var rightFirst = _particlesBehaviour[gridSize - 1].gameObject;
         rightFirst.tag = "right";
+        //rightFirst.name = "right_start";
 
         var leftFirst = _particlesBehaviour[0].gameObject;
         leftFirst.tag = "left";
+        //leftFirst.name = "left_start";
 
 
         var rightLast = _particlesBehaviour[_particles.Count - 1].gameObject;

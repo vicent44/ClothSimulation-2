@@ -175,7 +175,7 @@ ScriptsOnlyBuild:
     className: FibonacciActionClient
   - hash:
       serializedVersion: 2
-      Hash: 88f4930929598466a7aea7b33fc588c0
+      Hash: c649a8f88c7fc61bd14bd81c976141ae
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AgentRobotHand

@@ -5,6 +5,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using System.Linq;
+using System;
 
 public class AgentRobotHand : Agent
 {
@@ -31,10 +32,10 @@ public class AgentRobotHand : Agent
     const int forward = 5;
     const int backward = 6;
 
-    private bool leftDone;
-    private bool rightDone;
-    private bool leftCatch;
-    private bool rightCatch;
+    public bool leftDone;
+    public bool rightDone;
+    public bool leftCatch;
+    public bool rightCatch;
 
     public enum Hand
     {
@@ -47,8 +48,10 @@ public class AgentRobotHand : Agent
     private GameObject right_hand;
     EnvironmentParameters m_ResetParams;
 
-    private GameObject left_goal;
-    private GameObject right_goal;
+    private Vector3 left_goal;
+    private Vector3 right_goal;
+    private Vector3 left_start;
+    private Vector3 right_start;
 
     private float distance_left_before;
     private float distance_right_before;
@@ -104,11 +107,11 @@ public class AgentRobotHand : Agent
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        left_goal = mesh.transform.Find("left").gameObject;
-        right_goal = mesh.transform.Find("right").gameObject;
+        //left_goal = mesh.transform.Find("left").gameObject;
+        //right_goal = mesh.transform.Find("right").gameObject;
 
-        distance_left_before = Vector3.Distance(left_goal.transform.position, left_hand.transform.position);
-        distance_right_before = Vector3.Distance(right_goal.transform.position, right_hand.transform.position);
+        //distance_left_before = Vector3.Distance(left_goal.transform.position, left_hand.transform.position);
+        //distance_right_before = Vector3.Distance(right_goal.transform.position, right_hand.transform.position);
 
         var continuousActions = actionBuffers.ContinuousActions;
         var moveX_left = Mathf.Clamp(continuousActions[0], -1f, 1f);
@@ -178,11 +181,12 @@ public class AgentRobotHand : Agent
             AddReward(-0.01f);
         }
 
-        left_goal = mesh.transform.Find("left").gameObject;
-        right_goal = mesh.transform.Find("right").gameObject;
-        distance_left_after = Vector3.Distance(left_goal.transform.position, left_hand.transform.position);
-        distance_right_after = Vector3.Distance(right_goal.transform.position, right_hand.transform.position);
-        if(distance_left_after < distance_left_before)
+        //left_goal = mesh.transform.Find("left").gameObject;
+        //right_goal = mesh.transform.Find("right").gameObject;
+        //distance_left_after = Vector3.Distance(left_goal.transform.position, left_hand.transform.position);
+        //distance_right_after = Vector3.Distance(right_goal.transform.position, right_hand.transform.position);
+        //AddReward(-(Math.Abs(distance_left_after)+Math.Abs(distance_right_after))*0.1f);
+        /*if(distance_left_after < distance_left_before)
         {
             AddReward(0.01f);
             Debug.Log("More near");
@@ -191,7 +195,7 @@ public class AgentRobotHand : Agent
         {
             AddReward(0.01f);
             Debug.Log("More near");
-        }
+        }*/
     }
 
     /*void OnTriggerStay(Collider col)
@@ -231,6 +235,11 @@ public class AgentRobotHand : Agent
         //System.Threading.Thread.Sleep(4000);
         left_hand = transform.Find("TargetLeft").gameObject;
         right_hand = transform.Find("TargetRight").gameObject;
+
+        leftCatch = false;
+        rightCatch = false;
+        leftDone = false;
+        rightDone = false;
     }
 
     public void FixedUpdate()
@@ -242,14 +251,28 @@ public class AgentRobotHand : Agent
         }        
 
         if(leftDone && rightDone) FoldCompleted();
-        else if(leftDone && !rightDone) AddReward(-0.01f);
+
+        if(leftCatch) ClothCathLeft();
+        else ClothLostLeft();
+
+        if(rightCatch) ClothCathRight();
+        else ClothLostRight();
+
+
+        /*if(leftDone) ClothFoldedLeft();
+        else ClothLostFoldedLeft();
+
+        if(rightDone) ClothFoldedRight();
+        else ClothLostFoldedRight();*/
+
+        /*else if(leftDone && !rightDone) AddReward(-0.01f);
         else if(!leftDone && rightDone) AddReward(-0.01f);
 
         if(!leftCatch) AddReward(-0.01f);
         if(!rightCatch) AddReward(-0.01f);
 
         if(leftCatch && !leftDone) AddReward(-0.01f);
-        if(rightCatch && !rightDone) AddReward(-0.01f);
+        if(rightCatch && !rightDone) AddReward(-0.01f);*/
         
 
         WaitTimeInference();
@@ -284,55 +307,79 @@ public class AgentRobotHand : Agent
 
     void FoldCompleted()
     {
-        AddReward(100f);
+        //AddReward(100f);
         EndEpisode();
         arearobot.AreaReset();
     }
 
     public void ClothCathLeft()
     {
-        AddReward(25f);
+        //AddReward(25f);
         //Debug.Log("hehe +");
+        left_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
+        left_start = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
+
+        distance_left_after = Vector3.Distance(left_goal, left_start);
+
+        AddReward(-(Math.Abs(distance_left_after))*0.1f);
         leftCatch = true;
     }
     public void ClothCathRight()
     {
-        AddReward(25f);
+        //AddReward(25f);
+        right_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
+        right_start = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
+
+        distance_right_after = Vector3.Distance(right_goal, right_start);
+
+        AddReward(-(Math.Abs(distance_right_after))*0.1f);
         rightCatch = true;
     }
 
     public void ClothLostLeft()
     {
-        AddReward(-25f);
+        //AddReward(-25f);
         //Debug.Log("hehe -");
+        //left_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
+        left_start = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
+
+        distance_left_after = Vector3.Distance(left_start, left_hand.transform.position);
+
+        AddReward(-(Math.Abs(distance_left_after))*0.1f);
         leftCatch = false;
     }
     public void ClothLostRight()
     {
-        AddReward(-25f);
+        //AddReward(-25f);
         //Debug.Log("hehe -");
+        //right_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
+        right_start = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
+
+        distance_right_after = Vector3.Distance(right_start, right_hand.transform.position);
+
+        AddReward(-(Math.Abs(distance_right_after))*0.1f);
         rightCatch = false;
     }
 
     public void ClothFoldedLeft()
     {
-        AddReward(50f);
+        //AddReward(50f);
         leftDone = true;
     }
     public void ClothFoldedRight()
     {
-        AddReward(50f);
+        //AddReward(50f);
         rightDone = true;
     }
 
     public void ClothLostFoldedLeft()
     {
-        AddReward(-50f);
+        //AddReward(-50f);
         leftDone = false;
     }
     public void ClothLostFoldedRight()
     {
-        AddReward(-50f);
+        //AddReward(-50f);
         rightDone = false;
     }
 

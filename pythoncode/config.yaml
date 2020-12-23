@@ -23,7 +23,7 @@ curl_sac:
     hidden_dim: 256
     discount: 0.99
     init_temperature: 0.01
-    alpha_lr: 0.05
+    alpha_lr: 0.001
     alpha_beta: 0.6
     actor_lr: 0.001
     actor_beta: 0.9
@@ -50,7 +50,7 @@ environment:
     task_name: fold
     image_size_pre: 84
     image_size_post: 64
-    buffer_size: 80000
+    buffer_size: 100000
     seed: 1
     encoder_type: pixel
     work_dir: .
@@ -64,7 +64,7 @@ train:
     episodes: 10
     eval_freq: 20000 #Every this steps there is an evaluation
     num_train_steps: 5000 #Max steps for evaluation
-    num_eval_episodes: 2 #Evaluation number of episodes
+    num_eval_episodes: 4 #Evaluation number of episodes
     log_interval: 100
     save_model: True
     save_buffer: True
