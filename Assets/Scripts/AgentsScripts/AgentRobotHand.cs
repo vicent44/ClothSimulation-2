@@ -223,10 +223,10 @@ public class AgentRobotHand : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActionsOut = actionsOut.ContinuousActions;
-        continuousActionsOut[0] = Input.GetAxis("Horizontal");    // Racket Movement
-        continuousActionsOut[3] = Input.GetAxis("Horizontal"); 
-        continuousActionsOut[2] = Input.GetAxis("Vertical");
-        continuousActionsOut[5] = Input.GetAxis("Vertical");    
+        continuousActionsOut[0] = Input.GetAxis("Horizontal")*1000000000f;    // Racket Movement
+        continuousActionsOut[3] = Input.GetAxis("Horizontal")*1000000000f; 
+        continuousActionsOut[2] = Input.GetAxis("Vertical")*1000000000f;
+        continuousActionsOut[5] = Input.GetAxis("Vertical")*1000000000f;    
     }
 
     public override void OnEpisodeBegin()
@@ -323,7 +323,14 @@ public class AgentRobotHand : Agent
 
         distance_left_cloth = Vector3.Distance(left_goal, left_start_2);
 
-        AddReward(-(Math.Abs(distance_left_cloth))*0.01f);
+        if(float.IsNaN(distance_left_cloth))
+        {
+            Debug.Log("Error");
+            Error();
+        } 
+
+        //Debug.Log((-(distance_left_cloth))*0.01f);
+        AddReward((-(distance_left_cloth))*0.01f);
         leftCatch = true;
     }
     public void ClothCathRight()
@@ -334,7 +341,13 @@ public class AgentRobotHand : Agent
 
         distance_right_cloth = Vector3.Distance(right_goal, right_start_2);
 
-        AddReward(-(Math.Abs(distance_right_cloth))*0.01f);
+        if(float.IsNaN(distance_right_cloth))
+        {
+            Debug.Log("Error");
+            Error();
+        } 
+
+        AddReward((-(distance_right_cloth))*0.01f);
         rightCatch = true;
     }
 
@@ -352,7 +365,20 @@ public class AgentRobotHand : Agent
 
         distance_left_hand = Vector3.Distance(left_start, left_hand.transform.position);
 
-        AddReward(-(Math.Abs(distance_left_hand)+ distance_left_cloth)*0.01f);
+        if(float.IsNaN(distance_left_cloth))
+        {
+            Debug.Log("Error");
+            Error();
+        } 
+        if(float.IsNaN(distance_left_hand))
+        {
+            Debug.Log("Error");
+            Error();
+        } 
+
+        //Debug.Log(-(distance_left_hand+ distance_left_cloth)*0.01f);
+        //Debug.Log("hi");
+        AddReward(-(distance_left_hand+ distance_left_cloth)*0.01f);
         leftCatch = false;
     }
     public void ClothLostRight()
@@ -369,7 +395,18 @@ public class AgentRobotHand : Agent
 
         distance_right_hand = Vector3.Distance(right_start, right_hand.transform.position);
 
-        AddReward(-(Math.Abs(distance_right_hand)+ distance_right_cloth)*0.01f);
+        if(float.IsNaN(distance_right_cloth))
+        {
+            Debug.Log("Error");
+            Error();
+        } 
+        if(float.IsNaN(distance_right_hand))
+        {
+            Debug.Log("Error");
+            Error();
+        } 
+
+        AddReward(-(distance_right_hand+ distance_right_cloth)*0.01f);
         rightCatch = false;
     }
 

@@ -23645,6 +23645,10 @@ MonoBehaviour:
   mesh: {fileID: 670033704}
   arearobot: {fileID: 651075828}
   timeBetweenDecisionsAtInference: 0.15
+  leftDone: 0
+  rightDone: 0
+  leftCatch: 0
+  rightCatch: 0
   hand: 0
 --- !u!114 &1633177820
 MonoBehaviour:
@@ -23665,7 +23669,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
   m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: Hands
   TeamId: 0
