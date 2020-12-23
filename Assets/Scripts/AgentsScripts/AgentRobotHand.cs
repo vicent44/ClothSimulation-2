@@ -52,11 +52,13 @@ public class AgentRobotHand : Agent
     private Vector3 right_goal;
     private Vector3 left_start;
     private Vector3 right_start;
+    private Vector3 left_start_2;
+    private Vector3 right_start_2;    
 
-    private float distance_left_before;
-    private float distance_right_before;
-    private float distance_left_after;
-    private float distance_right_after;
+    private float distance_left_hand;
+    private float distance_right_hand;
+    private float distance_left_cloth;
+    private float distance_right_cloth;
 
     /*public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
@@ -317,22 +319,22 @@ public class AgentRobotHand : Agent
         //AddReward(25f);
         //Debug.Log("hehe +");
         left_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
-        left_start = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
+        left_start_2 = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
 
-        distance_left_after = Vector3.Distance(left_goal, left_start);
+        distance_left_cloth = Vector3.Distance(left_goal, left_start_2);
 
-        AddReward(-(Math.Abs(distance_left_after))*0.1f);
+        AddReward(-(Math.Abs(distance_left_cloth))*0.01f);
         leftCatch = true;
     }
     public void ClothCathRight()
     {
         //AddReward(25f);
         right_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
-        right_start = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
+        right_start_2 = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
 
-        distance_right_after = Vector3.Distance(right_goal, right_start);
+        distance_right_cloth = Vector3.Distance(right_goal, right_start_2);
 
-        AddReward(-(Math.Abs(distance_right_after))*0.1f);
+        AddReward(-(Math.Abs(distance_right_cloth))*0.01f);
         rightCatch = true;
     }
 
@@ -343,9 +345,14 @@ public class AgentRobotHand : Agent
         //left_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
         left_start = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
 
-        distance_left_after = Vector3.Distance(left_start, left_hand.transform.position);
+        left_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
+        left_start_2 = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
+        distance_left_cloth = Vector3.Distance(left_goal, left_start_2);
+        distance_left_cloth = Math.Abs(distance_left_cloth);
 
-        AddReward(-(Math.Abs(distance_left_after))*0.1f);
+        distance_left_hand = Vector3.Distance(left_start, left_hand.transform.position);
+
+        AddReward(-(Math.Abs(distance_left_hand)+ distance_left_cloth)*0.01f);
         leftCatch = false;
     }
     public void ClothLostRight()
@@ -355,9 +362,14 @@ public class AgentRobotHand : Agent
         //right_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
         right_start = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
 
-        distance_right_after = Vector3.Distance(right_start, right_hand.transform.position);
+        right_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
+        right_start_2 = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
+        distance_right_cloth = Vector3.Distance(right_goal, right_start_2);
+        distance_right_cloth = Math.Abs(distance_right_cloth);
 
-        AddReward(-(Math.Abs(distance_right_after))*0.1f);
+        distance_right_hand = Vector3.Distance(right_start, right_hand.transform.position);
+
+        AddReward(-(Math.Abs(distance_right_hand)+ distance_right_cloth)*0.01f);
         rightCatch = false;
     }
 
