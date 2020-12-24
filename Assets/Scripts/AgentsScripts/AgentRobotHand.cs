@@ -60,6 +60,8 @@ public class AgentRobotHand : Agent
     private float distance_left_cloth;
     private float distance_right_cloth;
 
+    private int count;
+
     /*public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
         var positionX = transform.position.x;
@@ -231,6 +233,7 @@ public class AgentRobotHand : Agent
 
     public override void OnEpisodeBegin()
     {
+        count = 0;
         //StartCoroutine(Example());
         arearobot.AreaReset();
         //arearobot.SetEnvironment();
@@ -246,11 +249,54 @@ public class AgentRobotHand : Agent
 
     public void FixedUpdate()
     {
+        //Left
+        left_start = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
+
+        left_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
+        left_start_2 = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
+        distance_left_cloth = Vector3.Distance(left_goal, left_start_2);
+        distance_left_cloth = Math.Abs(distance_left_cloth);
+
+        distance_left_hand = Vector3.Distance(left_start, left_hand.transform.position);
+
+        //Right
+        right_start = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
+
+        right_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
+        right_start_2 = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
+        distance_right_cloth = Vector3.Distance(right_goal, right_start_2);
+        distance_right_cloth = Math.Abs(distance_right_cloth);
+
+        distance_right_hand = Vector3.Distance(right_start, right_hand.transform.position);
+
+
         if(float.IsNaN(mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position.x))
+        {
+            count += 1;
+            Debug.Log("Error: "+count);
+            Error();
+        }
+        /*if(float.IsNaN(distance_left_hand))
         {
             Debug.Log("Error");
             Error();
-        }        
+        }    
+        else if(float.IsNaN(distance_left_cloth))
+        {
+            Debug.Log("Error");
+            Error();            
+        }
+        if(float.IsNaN(distance_right_hand))
+        {
+            Debug.Log("Error");
+            Error();
+        }    
+        else if(float.IsNaN(distance_right_cloth))
+        {
+            Debug.Log("Error");
+            Error();            
+        }*/
+
 
         if(leftDone && rightDone) FoldCompleted();
 
@@ -325,9 +371,11 @@ public class AgentRobotHand : Agent
 
         if(float.IsNaN(distance_left_cloth))
         {
-            Debug.Log("Error");
-            Error();
-        } 
+            count += 1;
+            Debug.Log("Error: "+ count);
+            distance_left_cloth = 10000f;
+            //Error();
+        }
 
         //Debug.Log((-(distance_left_cloth))*0.01f);
         AddReward((-(distance_left_cloth))*0.01f);
@@ -343,9 +391,11 @@ public class AgentRobotHand : Agent
 
         if(float.IsNaN(distance_right_cloth))
         {
-            Debug.Log("Error");
-            Error();
-        } 
+            count += 1;
+            Debug.Log("Error: "+count);
+            distance_right_cloth = 10000f;
+            //Error();
+        }
 
         AddReward((-(distance_right_cloth))*0.01f);
         rightCatch = true;
@@ -367,14 +417,18 @@ public class AgentRobotHand : Agent
 
         if(float.IsNaN(distance_left_cloth))
         {
-            Debug.Log("Error");
-            Error();
+            count += 1;
+            Debug.Log("Error: "+count);
+            distance_left_cloth = 10000f;
+            //Error();
         } 
         if(float.IsNaN(distance_left_hand))
         {
-            Debug.Log("Error");
-            Error();
-        } 
+            count += 1;
+            Debug.Log("Error: "+count);
+            distance_left_hand = 10000f;
+            //Error();
+        }
 
         //Debug.Log(-(distance_left_hand+ distance_left_cloth)*0.01f);
         //Debug.Log("hi");
@@ -397,13 +451,17 @@ public class AgentRobotHand : Agent
 
         if(float.IsNaN(distance_right_cloth))
         {
-            Debug.Log("Error");
-            Error();
+            count += 1;
+            Debug.Log("Error: "+count);
+            distance_right_cloth = 10000f;
+            //Error();
         } 
         if(float.IsNaN(distance_right_hand))
         {
-            Debug.Log("Error");
-            Error();
+            count += 1;
+            Debug.Log("Error: "+count);
+            distance_right_hand = 10000f;
+            //Error();
         } 
 
         AddReward(-(distance_right_hand+ distance_right_cloth)*0.01f);
