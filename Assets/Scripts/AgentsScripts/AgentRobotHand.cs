@@ -386,10 +386,10 @@ public class AgentRobotHand : Agent
             Debug.Log("Error: "+ count);
             distance_left_cloth = 10000f;
             //Error();
-        }
+        }*/
         rew -=(distance_left_cloth)*0.01f;
         //Debug.Log((-(distance_left_cloth))*0.01f);
-        AddReward((-(distance_left_cloth))*0.01f);*/
+        AddReward((-(distance_left_cloth))*0.01f);
         leftCatch = true;
     }
     public void ClothCathRight()
