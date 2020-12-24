@@ -54,13 +54,18 @@ public class AgentRobotHand : Agent
     private Vector3 right_start;
     private Vector3 left_start_2;
     private Vector3 right_start_2;    
+    private Vector3 left_start_2_prev;
+    private Vector3 right_start_2_prev;  
 
     private float distance_left_hand;
     private float distance_right_hand;
     private float distance_left_cloth;
     private float distance_right_cloth;
+    private float distance_left_cloth_prev;
+    private float distance_right_cloth_prev;
 
     private int count;
+    private float rew;
 
     /*public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
@@ -234,6 +239,7 @@ public class AgentRobotHand : Agent
     public override void OnEpisodeBegin()
     {
         count = 0;
+        rew = 0;
         //StartCoroutine(Example());
         arearobot.AreaReset();
         //arearobot.SetEnvironment();
@@ -241,8 +247,8 @@ public class AgentRobotHand : Agent
         left_hand = transform.Find("TargetLeft").gameObject;
         right_hand = transform.Find("TargetRight").gameObject;
 
-        leftCatch = false;
-        rightCatch = false;
+        leftCatch = true;
+        rightCatch = true;
         leftDone = false;
         rightDone = false;
     }
@@ -305,6 +311,7 @@ public class AgentRobotHand : Agent
 
         if(rightCatch) ClothCathRight();
         else ClothLostRight();
+        Debug.Log(rew);
 
 
         /*if(leftDone) ClothFoldedLeft();
@@ -349,6 +356,7 @@ public class AgentRobotHand : Agent
     public void Error()
     {
         AddReward(-100f);
+        rew -=100;
         EndEpisode();
         arearobot.AreaReset(); 
     }
@@ -367,18 +375,21 @@ public class AgentRobotHand : Agent
         left_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
         left_start_2 = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
 
-        distance_left_cloth = Vector3.Distance(left_goal, left_start_2);
+        left_start_2_prev = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Prev;
 
-        if(float.IsNaN(distance_left_cloth))
+        distance_left_cloth = Vector3.Distance(left_goal, left_start_2);
+        distance_left_cloth_prev = Vector3.Distance(left_goal, left_start_2_prev);
+
+        /*if(float.IsNaN(distance_left_cloth))
         {
             count += 1;
             Debug.Log("Error: "+ count);
             distance_left_cloth = 10000f;
             //Error();
         }
-
+        rew -=(distance_left_cloth)*0.01f;
         //Debug.Log((-(distance_left_cloth))*0.01f);
-        AddReward((-(distance_left_cloth))*0.01f);
+        AddReward((-(distance_left_cloth))*0.01f);*/
         leftCatch = true;
     }
     public void ClothCathRight()
@@ -386,6 +397,8 @@ public class AgentRobotHand : Agent
         //AddReward(25f);
         right_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
         right_start_2 = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
+
+        right_start_2_prev = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Prev;
 
         distance_right_cloth = Vector3.Distance(right_goal, right_start_2);
 
@@ -397,6 +410,7 @@ public class AgentRobotHand : Agent
             //Error();
         }
 
+        rew -=(distance_right_cloth)*0.01f;
         AddReward((-(distance_right_cloth))*0.01f);
         rightCatch = true;
     }
@@ -415,7 +429,8 @@ public class AgentRobotHand : Agent
 
         distance_left_hand = Vector3.Distance(left_start, left_hand.transform.position);
 
-        if(float.IsNaN(distance_left_cloth))
+        if(distance_left_hand > 0.3f) Error();
+        /*if(float.IsNaN(distance_left_cloth))
         {
             count += 1;
             Debug.Log("Error: "+count);
@@ -428,12 +443,13 @@ public class AgentRobotHand : Agent
             Debug.Log("Error: "+count);
             distance_left_hand = 10000f;
             //Error();
-        }
+        }*/
 
         //Debug.Log(-(distance_left_hand+ distance_left_cloth)*0.01f);
         //Debug.Log("hi");
-        AddReward(-(distance_left_hand+ distance_left_cloth)*0.01f);
+        //AddReward(-(distance_left_hand+ distance_left_cloth)*0.01f);
         leftCatch = false;
+        //Error();
     }
     public void ClothLostRight()
     {
@@ -449,7 +465,8 @@ public class AgentRobotHand : Agent
 
         distance_right_hand = Vector3.Distance(right_start, right_hand.transform.position);
 
-        if(float.IsNaN(distance_right_cloth))
+        if(distance_right_hand > 0.3f) Error();
+        /*if(float.IsNaN(distance_right_cloth))
         {
             count += 1;
             Debug.Log("Error: "+count);
@@ -462,9 +479,11 @@ public class AgentRobotHand : Agent
             Debug.Log("Error: "+count);
             distance_right_hand = 10000f;
             //Error();
-        } 
+        } */
 
-        AddReward(-(distance_right_hand+ distance_right_cloth)*0.01f);
+
+        //AddReward(-(distance_right_hand+ distance_right_cloth)*0.01f);
+        //Error();
         rightCatch = false;
     }
 

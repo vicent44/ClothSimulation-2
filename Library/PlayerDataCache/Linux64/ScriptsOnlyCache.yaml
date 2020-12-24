@@ -1010,4 +1010,4 @@ ScriptsOnlyBuild:
   platform: 24
   scenePathNames:
   - Assets/Scenes/UnionScene.unity
-  playerPath: /home/vroig/Escritorio/TFM/Unity-P/RobotAgents/pythoncode/UnityEnvironment/Head-NewRew/Head-Robot-Stiff-Half.x86_64
+  playerPath: /home/vroig/Escritorio/TFM/Unity-P/RobotAgents/pythoncode/UnityEnvironment/Head-NoGrip/Head-Robot-Stiff-Half.x86_64
