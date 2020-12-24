@@ -112,8 +112,8 @@ def main():
                 if args["train"]["save_model"]:
                     agents[0].save_curl(model_dir, step)
                 if args["train"]["save_buffer"]:
-                    print("hi")
-                    #agents[1].save(buffer_dir)
+                    #print("hi")
+                    agents[1].save(buffer_dir)
                 start_time = time.time()
 
         #if(step%(args["train"]["num_train_steps"]) == 0):
