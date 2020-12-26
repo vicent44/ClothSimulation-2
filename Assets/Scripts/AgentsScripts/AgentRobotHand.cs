@@ -380,13 +380,13 @@ public class AgentRobotHand : Agent
         distance_left_cloth = Vector3.Distance(left_goal, left_start_2);
         distance_left_cloth_prev = Vector3.Distance(left_goal, left_start_2_prev);
 
-        /*if(float.IsNaN(distance_left_cloth))
+        if(float.IsNaN(distance_left_cloth))
         {
             count += 1;
             Debug.Log("Error: "+ count);
             distance_left_cloth = 10000f;
             //Error();
-        }*/
+        }
         rew -=(distance_left_cloth)*0.01f;
         //Debug.Log((-(distance_left_cloth))*0.01f);
         AddReward((-(distance_left_cloth))*0.01f);
