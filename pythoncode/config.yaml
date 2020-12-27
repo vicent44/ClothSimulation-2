@@ -59,7 +59,7 @@ environment:
 
 train:
     train_mode: True
-    init_steps: 10000 #First batch of random actions
+    init_steps: 20000 #First batch of random actions
     train_steps: 2000000 #Total steps of training
     episodes: 10
     eval_freq: 20000 #Every this steps there is an evaluation
