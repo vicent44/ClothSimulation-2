@@ -247,10 +247,10 @@ public class AgentRobotHand : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActionsOut = actionsOut.ContinuousActions;
-        continuousActionsOut[0] = Input.GetAxis("Horizontal")*1000000000f;    // Racket Movement
-        continuousActionsOut[3] = Input.GetAxis("Horizontal")*1000000000f; 
-        continuousActionsOut[2] = Input.GetAxis("Vertical")*1000000000f;
-        continuousActionsOut[5] = Input.GetAxis("Vertical")*1000000000f;    
+        continuousActionsOut[0] = Input.GetAxis("Horizontal")*1f;    // Racket Movement
+        continuousActionsOut[3] = Input.GetAxis("Horizontal")*1f; 
+        continuousActionsOut[2] = Input.GetAxis("Vertical")*1f;
+        continuousActionsOut[5] = Input.GetAxis("Vertical")*1f;    
     }
 
     public override void OnEpisodeBegin()
