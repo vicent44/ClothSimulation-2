@@ -381,7 +381,7 @@ public class AgentRobotHand : Agent
 
     void FoldCompleted()
     {
-        AddReward(5f);
+        AddReward(2f);
         EndEpisode();
         arearobot.AreaReset();
     }
@@ -517,23 +517,23 @@ public class AgentRobotHand : Agent
 
     public void ClothFoldedLeft()
     {
-        //AddReward(50f);
+        AddReward(0.5f);
         leftDone = true;
     }
     public void ClothFoldedRight()
     {
-        //AddReward(50f);
+        AddReward(0.5f);
         rightDone = true;
     }
 
     public void ClothLostFoldedLeft()
     {
-        //AddReward(-50f);
+        AddReward(-0.5f);
         leftDone = false;
     }
     public void ClothLostFoldedRight()
     {
-        //AddReward(-50f);
+        AddReward(-0.5f);
         rightDone = false;
     }
 
