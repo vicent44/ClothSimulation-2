@@ -100,7 +100,7 @@ def main():
             print("Dentro :", step)
             if step > 0:
                 #if step % args["train"]["log_interval"] == 0:
-                L.log('train/episode_reward', episode_reward, step)
+                #L.log('train/episode_reward', episode_reward, step)
                 L.log('train/duration', time.time() - start_time, step)
                 L.dump(step)
                 start_time = time.time()
@@ -127,7 +127,7 @@ def main():
                 start_time = time.time()"""
 
             #if step % args["train"]["log_interval"] == 0:
-
+            L.log('train/episode_reward', episode_reward, step)
                 #print("Hi-1")
 
             _, obs, _, _, _ = env.reset()
