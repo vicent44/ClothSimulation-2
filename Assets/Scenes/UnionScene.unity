@@ -11397,8 +11397,8 @@ MonoBehaviour:
   elasticConstantShear: 100
   elasticConstantBend: 10
   dampingConstant: 0.3
-  frictionConstPlane: 0.5
-  dissipationConstPlane: 1
+  frictionConstPlane: 0.01
+  dissipationConstPlane: 0.01
   frictionConstCloth: 1
   dissipationConstCloth: 1
   frictionConstShpereHand: 0.1
@@ -16134,7 +16134,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1014346335}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.8132172, y: -0.14471084, z: -0.48813406}
+  m_LocalPosition: {x: 0.8132172, y: -0.14471084, z: -0.307}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 651075827}
@@ -22556,7 +22556,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1494988036}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3238169, y: 0.19528916, z: -0.66}
+  m_LocalPosition: {x: 0.3238169, y: 0.19528916, z: -0.593}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 798630722}
@@ -29279,7 +29279,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072791597}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.45554307, y: 1.1372675, z: 0.852}
+  m_LocalPosition: {x: 0.45554307, y: 1.1372675, z: 1.165}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 651075827}

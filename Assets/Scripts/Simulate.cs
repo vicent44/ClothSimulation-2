@@ -143,7 +143,7 @@ public class Simulate
             float dot = Vector3.Dot(normalPlane, d);
             if(dot <= 0)
             {
-                p.Position = p.Prev - dot * normalPlane;
+                p.Position = p.Position - dot * normalPlane;
 
                 Vector3 normalVelocity = Vector3.Dot(normalPlane,p.Velocity) * normalPlane;
                 Vector3 tangencialVelocity = p.Velocity - normalVelocity;
