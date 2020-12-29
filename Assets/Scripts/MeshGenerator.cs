@@ -144,15 +144,15 @@ public class MeshGenerator : MonoBehaviour
         rightLast.name = "right";
         rightLast.tag = "goal";
         var collrightLast = rightLast.AddComponent<BoxCollider>();
-        collrightLast.center = (new Vector3(0f, 4f, 0f));
-        collrightLast.size = (new Vector3(1f, 4f, 1f));
+        collrightLast.center = (new Vector3(0f, 2f, 0f));
+        collrightLast.size = (new Vector3(1f, 2f, 1f));
         var leftLast = _particlesBehaviour[_particles.Count - gridSize].gameObject;
         leftLast.layer = 10;
         leftLast.name = "left";
         leftLast.tag = "goal";
         var collleftLast = leftLast.AddComponent<BoxCollider>();
-        collleftLast.center = (new Vector3(0f, 4f, 0f));
-        collleftLast.size = (new Vector3(1f, 4f, 1f));
+        collleftLast.center = (new Vector3(0f, 2f, 0f));
+        collleftLast.size = (new Vector3(1f, 2f, 1f));
 
         int edgesCount = 0;
         //Instntiate all the springs and all the edges to

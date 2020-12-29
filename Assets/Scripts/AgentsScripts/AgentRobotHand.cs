@@ -118,7 +118,7 @@ public class AgentRobotHand : Agent
     {
         //left_goal = mesh.transform.Find("left").gameObject;
         //right_goal = mesh.transform.Find("right").gameObject;
-        AddReward(-1f/(5000f));
+        AddReward(-1f/(500f));
         //distance_left_before = Vector3.Distance(left_goal.transform.position, left_hand.transform.position);
         //distance_right_before = Vector3.Distance(right_goal.transform.position, right_hand.transform.position);
 
@@ -128,14 +128,14 @@ public class AgentRobotHand : Agent
         var moveZ_left = Mathf.Clamp(continuousActions[2], -1f, 1f);
         //Debug.Log(moveZ);
         var targetPos_left = left_hand.transform.position;
-        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.001f, moveY_left*0.001f, moveZ_left*0.001f);
+        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.0005f, moveY_left*0.0005f, moveZ_left*0.0005f);
         
         var moveX_right = Mathf.Clamp(continuousActions[3], -1f, 1f);
         var moveY_right = Mathf.Clamp(continuousActions[4], -1f, 1f);
         var moveZ_right = Mathf.Clamp(continuousActions[5], -1f, 1f);
         //Debug.Log(moveZ);
         var targetPos_right = right_hand.transform.position;
-        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.001f, moveY_right*0.001f, moveZ_right*0.001f);
+        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.0005f, moveY_right*0.0005f, moveZ_right*0.0005f);
                 
         
         /*var action = actionBuffers.DiscreteActions[0];
@@ -177,7 +177,7 @@ public class AgentRobotHand : Agent
         {
             //AddReward(-0.01f);
             //Debug.Log("-0.01");
-            AddReward(-1f/(5000f));
+            AddReward(-1f/(500f));
         }
 
         var hit_right = Physics.OverlapBox(targetPos_right, new Vector3(0.02f, 0.02f, 0.02f));
@@ -189,7 +189,7 @@ public class AgentRobotHand : Agent
         else
         {
             //AddReward(-0.01f);
-            AddReward(-1f/(5000f));
+            AddReward(-1f/(500f));
         }
 
         if(float.IsNaN(mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position.x))
@@ -373,7 +373,7 @@ public class AgentRobotHand : Agent
     public void Error()
     {
         //AddReward(-100f);
-        AddReward(-5f);
+        AddReward(-50f/500f);
         rew -=100;
         EndEpisode();
         arearobot.AreaReset(); 
@@ -381,7 +381,7 @@ public class AgentRobotHand : Agent
 
     void FoldCompleted()
     {
-        AddReward(2f);
+        AddReward(100f/500f);
         EndEpisode();
         arearobot.AreaReset();
     }
@@ -407,7 +407,7 @@ public class AgentRobotHand : Agent
         }
         //rew -=(distance_left_cloth)*0.01f;
         //Debug.Log((-(distance_left_cloth))*1f);
-        AddReward((-(distance_left_cloth))*(1f/(1.2f*5000f)));
+        AddReward((-(distance_left_cloth))*(1f/(1.2f*500f)));
         leftCatch = true;
     }
     public void ClothCathRight()
@@ -429,7 +429,7 @@ public class AgentRobotHand : Agent
         }
 
         //rew -=(distance_right_cloth)*0.01f;
-        AddReward((-(distance_right_cloth))*(1f/(1.2f*5000f)));
+        AddReward((-(distance_right_cloth))*(1f/(1.2f*500f)));
         rightCatch = true;
         //Debug.Log("ei dins");
     }
@@ -517,23 +517,23 @@ public class AgentRobotHand : Agent
 
     public void ClothFoldedLeft()
     {
-        AddReward(0.5f);
+        AddReward(25f/500f);
         leftDone = true;
     }
     public void ClothFoldedRight()
     {
-        AddReward(0.5f);
+        AddReward(25f/500f);
         rightDone = true;
     }
 
     public void ClothLostFoldedLeft()
     {
-        AddReward(-0.5f);
+        AddReward(-25f/500f);
         leftDone = false;
     }
     public void ClothLostFoldedRight()
     {
-        AddReward(-0.5f);
+        AddReward(-25f/500f);
         rightDone = false;
     }
 
