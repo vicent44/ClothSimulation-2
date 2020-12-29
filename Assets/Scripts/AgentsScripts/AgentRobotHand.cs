@@ -381,7 +381,7 @@ public class AgentRobotHand : Agent
 
     void FoldCompleted()
     {
-        //AddReward(100f);
+        AddReward(5f);
         EndEpisode();
         arearobot.AreaReset();
     }
@@ -395,14 +395,14 @@ public class AgentRobotHand : Agent
 
         left_start_2_prev = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Prev;
 
-        distance_left_cloth = Vector3.Distance(left_goal, left_start_2);
-        distance_left_cloth_prev = Vector3.Distance(left_goal, left_start_2_prev);
+        distance_left_cloth = Vector3.Distance(left_goal, left_hand.transform.position);
+        //distance_left_cloth_prev = Vector3.Distance(left_goal, left_start_2_prev);
 
         if(float.IsNaN(distance_left_cloth))
         {
             count += 1;
             Debug.Log("Error: "+ count);
-            distance_left_cloth = 1f;
+            distance_left_cloth = 1.2f;
             //Error();
         }
         //rew -=(distance_left_cloth)*0.01f;
@@ -418,13 +418,13 @@ public class AgentRobotHand : Agent
 
         right_start_2_prev = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Prev;
 
-        distance_right_cloth = Vector3.Distance(right_goal, right_start_2);
+        distance_right_cloth = Vector3.Distance(right_goal, right_hand.transform.position);
 
         if(float.IsNaN(distance_right_cloth))
         {
             count += 1;
             Debug.Log("Error: "+count);
-            distance_right_cloth = 1f;
+            distance_right_cloth = 1.2f;
             //Error();
         }
 
