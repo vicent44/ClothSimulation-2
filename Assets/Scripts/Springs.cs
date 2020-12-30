@@ -77,8 +77,8 @@ public class Springs
         var f = (dirnor - restLength) /dirnor;
         /*if(a.isActive && b.isActive)
         {
-            a.Position -= 0.5f * direction1 * f;
-            b.Position += 0.5f * direction1 * f;
+            a.Position -= 0.15f * direction1 * f;
+            b.Position += 0.15f * direction1 * f;
         }*/
         if(a.isActive) a.Position -= 0.1f * direction1 * f;
         if(b.isActive) b.Position += 0.1f * direction1 * f;

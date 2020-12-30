@@ -128,14 +128,14 @@ public class AgentRobotHand : Agent
         var moveZ_left = Mathf.Clamp(continuousActions[2], -1f, 1f);
         //Debug.Log(moveZ);
         var targetPos_left = left_hand.transform.position;
-        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.0005f, moveY_left*0.0005f, moveZ_left*0.0005f);
+        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.0001f, moveY_left*0.0001f, moveZ_left*0.0001f);
         
         var moveX_right = Mathf.Clamp(continuousActions[3], -1f, 1f);
         var moveY_right = Mathf.Clamp(continuousActions[4], -1f, 1f);
         var moveZ_right = Mathf.Clamp(continuousActions[5], -1f, 1f);
         //Debug.Log(moveZ);
         var targetPos_right = right_hand.transform.position;
-        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.0005f, moveY_right*0.0005f, moveZ_right*0.0005f);
+        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.0001f, moveY_right*0.0001f, moveZ_right*0.0001f);
                 
         
         /*var action = actionBuffers.DiscreteActions[0];
@@ -280,7 +280,7 @@ public class AgentRobotHand : Agent
         distance_left_cloth = Vector3.Distance(left_goal, left_start_2);
         distance_left_cloth = Math.Abs(distance_left_cloth);
 
-        distance_left_hand = Vector3.Distance(left_start, left_hand.transform.position);
+        //distance_left_hand = Vector3.Distance(left_start, left_hand.transform.position);
 
         //Right
         right_start = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
@@ -290,7 +290,7 @@ public class AgentRobotHand : Agent
         distance_right_cloth = Vector3.Distance(right_goal, right_start_2);
         distance_right_cloth = Math.Abs(distance_right_cloth);
 
-        distance_right_hand = Vector3.Distance(right_start, right_hand.transform.position);
+        //distance_right_hand = Vector3.Distance(right_start, right_hand.transform.position);
 
 
         /*if(float.IsNaN(mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position.x))

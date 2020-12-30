@@ -154,6 +154,15 @@ public class MeshGenerator : MonoBehaviour
         collleftLast.center = (new Vector3(0f, 2f, 0f));
         collleftLast.size = (new Vector3(1f, 2f, 1f));
 
+        var midelstack1 = _particlesBehaviour[75].gameObject;
+        midelstack1.name = "stack";
+
+        var midelstack2 = _particlesBehaviour[76].gameObject;
+        midelstack2.name = "stack";
+
+        var midelstack3 = _particlesBehaviour[77].gameObject;
+        midelstack3.name = "stack";
+
         int edgesCount = 0;
         //Instntiate all the springs and all the edges to
         //be able to check collisions (just edges that mades all the triangles)

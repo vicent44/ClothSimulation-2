@@ -26,6 +26,11 @@ public class RobotControlLeft : MonoBehaviour
                 particleNum = particle.particles.I;
                 //col.transform.parent = col.contacts[0].thisCollider.transform;
                 collisionposition = col.contacts[0].normal;
+                //particle.GetComponent<Collider>().enabled = false;   //TODO: any
+                //particle.gameObject.transform.parent = this.gameObject.transform;
+                particle.gameObject.transform.localPosition = Vector3.zero;
+                //var particleleft = particle.transform.parent.GetChild(76).gameObject.GetComponent<ParticlesBehaviour>();
+                //particleleft.particles.isActive = false;
             }
             
         }

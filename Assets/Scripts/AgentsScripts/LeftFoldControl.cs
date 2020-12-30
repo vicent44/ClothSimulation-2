@@ -5,10 +5,11 @@ using System;
 
 public class LeftFoldControl : MonoBehaviour
 {
-    //public GameObject mesh;
+    public GameObject mesh;
     private bool agentLeftCatch;
     private bool agentLeftDone;
     private float val;
+    private ParticlesBehaviour particleleft;
 
 /*    private GameObject left_goal;
     private GameObject right_goal;
@@ -22,6 +23,14 @@ public class LeftFoldControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //var particleleft = mesh.transform.GetChild(81).GetComponent<ParticlesBehaviour>();
+        //particleleft.particles.isActive = false;
+
+        //FixedJoint joint = mesh.transform.GetChild(0).gameObject.AddComponent(typeof(FixedJoint)) as FixedJoint;
+        //joint.connectedBody = this.GetComponent<Rigidbody>();
+        //joint.connectedAnchor = this.GetComponent<Rigidbody>().transform.InverseTransformPoint(particleleft.transform.position);
+
+
         agentLeftCatch = false;
         agentLeftDone = false;
         val = 0f;

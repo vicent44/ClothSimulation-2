@@ -8,10 +8,20 @@ public class RightFoldControl : MonoBehaviour
     private bool agentRightCatch;
     private bool agentRightDone;
     private float val;
+    public GameObject mesh;
+    private ParticlesBehaviour particleright;
 
     // Start is called before the first frame update
     void Start()
     {
+        //var particleright = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>();
+        //particleright.particles.isActive = false;
+
+        //FixedJoint joint = mesh.transform.GetChild(8).gameObject.AddComponent(typeof(FixedJoint)) as FixedJoint;
+        //joint.connectedBody = this.GetComponent<Rigidbody>();
+        //joint.connectedAnchor = this.GetComponent<Rigidbody>().transform.InverseTransformPoint(particleright.transform.position);
+
+
         agentRightCatch = false;
         agentRightDone = false;
         val = 0f;

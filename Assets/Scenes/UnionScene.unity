@@ -3662,13 +3662,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209136117}
-  m_LocalRotation: {x: 0, y: 0.9396927, z: -0.3420201, w: 0}
-  m_LocalPosition: {x: 0.42, y: 1.309, z: 1.798}
+  m_LocalRotation: {x: 0, y: 0.8191521, z: -0.5735764, w: 0}
+  m_LocalPosition: {x: 0.42, y: 2, z: 1.149}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 651075827}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 40, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 180, z: 0}
 --- !u!20 &209136119
 Camera:
   m_ObjectHideFlags: 0
@@ -6342,7 +6342,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376226116}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a001567adca8f0b84bca7e3f516dd877, type: 3}
   m_Name: 
@@ -8067,6 +8067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ade9821a5899464b98d1ccca5ee76c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mesh: {fileID: 670033704}
 --- !u!135 &479389280
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -22986,6 +22987,7 @@ GameObject:
   - component: {fileID: 1544403515}
   - component: {fileID: 1544403514}
   - component: {fileID: 1544403513}
+  - component: {fileID: 1544403517}
   m_Layer: 0
   m_Name: Plane
   m_TagString: plane
@@ -23068,6 +23070,18 @@ Transform:
   m_Father: {fileID: 651075827}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1544403517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544403512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83166119c5c1e22a99712d4439125d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1556544731
 GameObject:
   m_ObjectHideFlags: 0
@@ -28425,6 +28439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 971240cc300dc0bfcb859d8adc2a55c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mesh: {fileID: 670033704}
 --- !u!135 &2022774857
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -30463,7 +30478,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125905105}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.33463472, y: 0.656, z: 0.14933473}
+  m_LocalPosition: {x: 0.33463472, y: 0.537, z: 0.14933473}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 651075827}
