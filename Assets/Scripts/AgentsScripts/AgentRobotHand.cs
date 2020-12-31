@@ -128,14 +128,14 @@ public class AgentRobotHand : Agent
         var moveZ_left = Mathf.Clamp(continuousActions[2], -1f, 1f);
         //Debug.Log(moveZ);
         var targetPos_left = left_hand.transform.position;
-        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.0005f, moveY_left*0.0005f, moveZ_left*0.0005f);
+        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.001f, moveY_left*0.001f, moveZ_left*0.001f);
         
         var moveX_right = Mathf.Clamp(continuousActions[3], -1f, 1f);
         var moveY_right = Mathf.Clamp(continuousActions[4], -1f, 1f);
         var moveZ_right = Mathf.Clamp(continuousActions[5], -1f, 1f);
         //Debug.Log(moveZ);
         var targetPos_right = right_hand.transform.position;
-        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.0005f, moveY_right*0.0005f, moveZ_right*0.0005f);
+        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.001f, moveY_right*0.001f, moveZ_right*0.001f);
                 
         
         /*var action = actionBuffers.DiscreteActions[0];
@@ -192,7 +192,7 @@ public class AgentRobotHand : Agent
             AddReward(-1f/(500f));
         }
 
-        if(float.IsNaN(mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position.x))
+        if(float.IsNaN(mesh.transform.GetChild(2).GetComponent<ParticlesBehaviour>().particles.Position.x))
         {
             count += 1;
             Debug.Log("Error: "+count);
@@ -448,11 +448,11 @@ public class AgentRobotHand : Agent
 
         distance_left_hand = Vector3.Distance(left_start, left_hand.transform.position);
 
-        if(distance_left_hand > 0.3f)
+        /*if(distance_left_hand > 0.3f)
         {
             Debug.Log("Fuera broo");
             Error();
-        } 
+        }*/
             //Debug.Log("ei fora broo");
         leftCatch = false;
         /*if(float.IsNaN(distance_left_cloth))
@@ -490,11 +490,11 @@ public class AgentRobotHand : Agent
 
         distance_right_hand = Vector3.Distance(right_start, right_hand.transform.position);
 
-        if(distance_right_hand > 0.3f)
+        /*if(distance_right_hand > 0.3f)
         {
             Debug.Log("Fuera broo");
             Error();
-        }
+        }*/
         rightCatch = false;
         /*if(float.IsNaN(distance_right_cloth))
         {

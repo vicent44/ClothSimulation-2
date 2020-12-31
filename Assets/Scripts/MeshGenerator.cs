@@ -289,6 +289,10 @@ public class MeshGenerator : MonoBehaviour
     {
         this.transform.GetChild(0).gameObject.GetComponent<ParticlesBehaviour>().particles.SetPosition(targetLeft.position);
         this.transform.GetChild(8).gameObject.GetComponent<ParticlesBehaviour>().particles.SetPosition(targetRight.position);
+        if(float.IsNaN(this.transform.GetChild(0).gameObject.GetComponent<ParticlesBehaviour>().particles.Position.x))
+        {
+            GameObject.Find("AgentHands").GetComponent<AgentRobotHand>().Error();
+        }
     }
 
     void Update()

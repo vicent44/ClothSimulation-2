@@ -490,7 +490,7 @@ ScriptsOnlyBuild:
     className: UrdfVisuals
   - hash:
       serializedVersion: 2
-      Hash: a9b85f0d2a8dcf35a66317bac83d6cef
+      Hash: 9d3bb0663bf4e00f813402f5a0e587b6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RobotControlLeft
@@ -712,7 +712,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: a9b85f0d2a8dcf35a66317bac83d6cef
+      Hash: 9d3bb0663bf4e00f813402f5a0e587b6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RobotControlRight

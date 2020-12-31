@@ -12,6 +12,8 @@ public class RobotControlRight : MonoBehaviour
     public Transform guide;
     private Vector3 collisionposition;
 
+    public MeshGenerator mesh;
+
     void OnCollisionEnter(Collision col)
     {
         if(col.gameObject.name == "New Particle")
@@ -77,5 +79,9 @@ public class RobotControlRight : MonoBehaviour
             detectedBefore = false;
             Debug.Log("Now you can select another particle to move");
         }
+    }
+    void FixedUpdate()
+    {
+        mesh.transform.GetChild(8).gameObject.GetComponent<ParticlesBehaviour>().particles.SetPosition(guide.position);
     }
 }

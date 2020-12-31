@@ -6348,6 +6348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guide: {fileID: 2022774853}
+  mesh: {fileID: 670033707}
 --- !u!1 &377439177
 GameObject:
   m_ObjectHideFlags: 0
@@ -16727,6 +16728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guide: {fileID: 479389275}
+  mesh: {fileID: 670033707}
 --- !u!114 &1088903068
 MonoBehaviour:
   m_ObjectHideFlags: 0
