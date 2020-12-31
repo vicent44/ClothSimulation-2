@@ -11413,6 +11413,8 @@ MonoBehaviour:
   normalSecondPlane: {x: 0, y: 0, z: 1}
   SphereRightHand: {fileID: 0}
   SphereLeftHand: {fileID: 0}
+  targetLeft: {fileID: 479389275}
+  targetRight: {fileID: 2022774853}
   isPaused: 0
 --- !u!4 &670033708
 Transform:

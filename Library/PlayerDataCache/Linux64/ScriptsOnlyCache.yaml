@@ -376,7 +376,7 @@ ScriptsOnlyBuild:
     className: AnimationTrack
   - hash:
       serializedVersion: 2
-      Hash: e869483b352f8be8e76c2f7e94ecd7d5
+      Hash: 1ff064b34ca19faac0215d027fa96501
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MeshGenerator

@@ -76,6 +76,11 @@ public class MeshGenerator : MonoBehaviour
     Ray ray;
     RaycastHit hit;
 
+
+    public Transform targetLeft;
+    public Transform targetRight;
+
+
     public bool isPaused = false;
 
     void Start()
@@ -278,6 +283,12 @@ public class MeshGenerator : MonoBehaviour
         CreateShape();
         UpdateMesh();
         UpdateEdges();
+    }
+
+    void FixedUpdate()
+    {
+        this.transform.GetChild(0).gameObject.GetComponent<ParticlesBehaviour>().particles.SetPosition(targetLeft.position);
+        this.transform.GetChild(8).gameObject.GetComponent<ParticlesBehaviour>().particles.SetPosition(targetRight.position);
     }
 
     void Update()

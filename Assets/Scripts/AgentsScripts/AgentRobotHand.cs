@@ -450,6 +450,7 @@ public class AgentRobotHand : Agent
 
         if(distance_left_hand > 0.3f)
         {
+            Debug.Log("Fuera broo");
             Error();
         } 
             //Debug.Log("ei fora broo");
@@ -491,6 +492,7 @@ public class AgentRobotHand : Agent
 
         if(distance_right_hand > 0.3f)
         {
+            Debug.Log("Fuera broo");
             Error();
         }
         rightCatch = false;
