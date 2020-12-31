@@ -128,14 +128,14 @@ public class AgentRobotHand : Agent
         var moveZ_left = Mathf.Clamp(continuousActions[2], -1f, 1f);
         //Debug.Log(moveZ);
         var targetPos_left = left_hand.transform.position;
-        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.001f, moveY_left*0.001f, moveZ_left*0.001f);
+        targetPos_left = left_hand.transform.position + new Vector3(moveX_left*0.0005f, moveY_left*0.0005f, moveZ_left*0.0005f);
         
         var moveX_right = Mathf.Clamp(continuousActions[3], -1f, 1f);
         var moveY_right = Mathf.Clamp(continuousActions[4], -1f, 1f);
         var moveZ_right = Mathf.Clamp(continuousActions[5], -1f, 1f);
         //Debug.Log(moveZ);
         var targetPos_right = right_hand.transform.position;
-        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.001f, moveY_right*0.001f, moveZ_right*0.001f);
+        targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.0005f, moveY_right*0.0005f, moveZ_right*0.0005f);
                 
         
         /*var action = actionBuffers.DiscreteActions[0];
@@ -373,7 +373,7 @@ public class AgentRobotHand : Agent
     public void Error()
     {
         //AddReward(-100f);
-        AddReward(-50f/500f);
+        AddReward(-50f);
         rew -=100;
         EndEpisode();
         arearobot.AreaReset(); 
@@ -381,6 +381,7 @@ public class AgentRobotHand : Agent
 
     void FoldCompleted()
     {
+        //AddReward(2f);
         AddReward(100f/500f);
         EndEpisode();
         arearobot.AreaReset();
@@ -520,22 +521,26 @@ public class AgentRobotHand : Agent
     public void ClothFoldedLeft()
     {
         AddReward(25f/500f);
+        //AddReward(1f);
         leftDone = true;
     }
     public void ClothFoldedRight()
     {
         AddReward(25f/500f);
+        //AddReward(1f);
         rightDone = true;
     }
 
     public void ClothLostFoldedLeft()
     {
         AddReward(-25f/500f);
+        //AddReward(-1f);
         leftDone = false;
     }
     public void ClothLostFoldedRight()
     {
         AddReward(-25f/500f);
+        //AddReward(-1f);
         rightDone = false;
     }
 
