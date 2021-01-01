@@ -42,7 +42,7 @@ public class ParticlesBehaviour : MonoBehaviour
             }
             //this.particles.isActive = false;
         }*/
-        /*if(this.gameObject.name == "stack")// && this.gameObject.name == "stack")
+        if(this.gameObject.name == "stack")// && this.gameObject.name == "stack")
         {
             var posicoke = transform.position;
             var hit_right = Physics.OverlapBox(posicoke, new Vector3(0.03f, 0.03f, 0.03f));
@@ -57,9 +57,9 @@ public class ParticlesBehaviour : MonoBehaviour
             {
                 //right_hand.transform.position = targetPos_right;
                 //Debug.Log("Next Position No Walls - Posible");
-            }
+            }*/
             //this.particles.isActive = false;
-        }*/
+        }
     }
 
     //Creatio of the vertex objects
