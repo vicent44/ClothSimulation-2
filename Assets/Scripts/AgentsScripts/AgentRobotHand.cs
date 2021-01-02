@@ -373,7 +373,7 @@ public class AgentRobotHand : Agent
     public void Error()
     {
         //AddReward(-100f);
-        AddReward(-50f);
+        AddReward(-10f);
         rew -=100;
         EndEpisode();
         arearobot.AreaReset(); 
@@ -408,7 +408,7 @@ public class AgentRobotHand : Agent
         }
         //rew -=(distance_left_cloth)*0.01f;
         //Debug.Log((-(distance_left_cloth))*1f);
-        AddReward((-(distance_left_cloth))*(1f/(1.2f*500f)));
+        AddReward((-(distance_left_cloth))*(1f/(1.2f*50f)));
         leftCatch = true;
     }
     public void ClothCathRight()
@@ -430,7 +430,7 @@ public class AgentRobotHand : Agent
         }
 
         //rew -=(distance_right_cloth)*0.01f;
-        AddReward((-(distance_right_cloth))*(1f/(1.2f*500f)));
+        AddReward((-(distance_right_cloth))*(1f/(1.2f*50f)));
         rightCatch = true;
         //Debug.Log("ei dins");
     }
