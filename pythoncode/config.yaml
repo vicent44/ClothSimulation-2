@@ -11,7 +11,7 @@ unity_wrapper:
     inference_time_scale: 0
     target_frame_rate: 60
     render: True
-    file_path: UnityEnvironment/Head-NoGrip/Head-Robot-Stiff-Half.x86_64
+    file_path: UnityEnvironment/Head-NewPosCam/Head-Robot-Stiff-Half.x86_64
     env_seed: 1
     reset_config: {}
     port: 5004
@@ -23,7 +23,7 @@ curl_sac:
     hidden_dim: 256
     discount: 0.99
     init_temperature: 0.01
-    alpha_lr: 0.01
+    alpha_lr: 0.001
     alpha_beta: 0.6
     actor_lr: 0.001
     actor_beta: 0.9
