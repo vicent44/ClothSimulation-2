@@ -17,28 +17,13 @@ public class ParticlesBehaviour : MonoBehaviour
     //Sett the inicial positions of the particles/vertex
     void Start()
     {
-        if(float.IsNaN(_particle.Position.x))
-        {
-            //this.transform.position = _particle.Prev;
-        }
-        else
-        {
-            this.transform.position = _particle.Position;
-        }
-        
+        this.transform.position = _particle.Position;
     }
 
     //Update the positions of the particles/vertex
     void Update()
     {
-        if(float.IsNaN(_particle.Position.x))
-        {
-            //this.transform.position = _particle.Prev;
-        }
-        else
-        {
-            this.transform.position = _particle.Position;
-        }
+        this.transform.position = _particle.Position;
         //Debug.Log(this.gameObject.name);
         //Debug.Log("gfhgfhgfd");
         /*if(Input.GetKey("p"))
@@ -78,14 +63,7 @@ public class ParticlesBehaviour : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if(float.IsNaN(_particle.Position.x))
-        {
-            //this.transform.position = _particle.Prev;
-        }
-        else
-        {
-            this.transform.position = _particle.Position;
-        }
+        this.transform.position = _particle.Position;
     }
 
     //Creatio of the vertex objects

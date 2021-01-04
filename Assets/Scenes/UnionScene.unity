@@ -11408,7 +11408,7 @@ MonoBehaviour:
   deltaTimeStep: 0.01
   sphereControl: {fileID: 6907724091159522119, guid: c911309835fefc842bf76a3f3d482a3a,
     type: 3}
-  sphereScale: 0.005
+  sphereScale: 0.05
   plane: {fileID: 1544403516}
   secondPlane: {fileID: 1014346339}
   normalSecondPlane: {x: 0, y: 0, z: 1}
