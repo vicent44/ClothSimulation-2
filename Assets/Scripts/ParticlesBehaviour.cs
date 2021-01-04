@@ -17,13 +17,13 @@ public class ParticlesBehaviour : MonoBehaviour
     //Sett the inicial positions of the particles/vertex
     void Start()
     {
-        transform.position = _particle.Position;
+        this.transform.position = _particle.Position;
     }
 
     //Update the positions of the particles/vertex
     void Update()
     {
-        transform.position = _particle.Position;
+        this.transform.position = _particle.Position;
         //Debug.Log(this.gameObject.name);
         //Debug.Log("gfhgfhgfd");
         /*if(Input.GetKey("p"))
@@ -60,6 +60,10 @@ public class ParticlesBehaviour : MonoBehaviour
             }*/
             //this.particles.isActive = false;
         }
+    }
+    void FixedUpdate()
+    {
+        this.transform.position = _particle.Position;
     }
 
     //Creatio of the vertex objects

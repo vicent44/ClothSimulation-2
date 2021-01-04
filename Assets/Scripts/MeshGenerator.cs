@@ -115,6 +115,8 @@ public class MeshGenerator : MonoBehaviour
         //Instantiate the position of the particles and the gameobject.
         float jP = 0;
         float iP = 0;
+        float iniJ = this.transform.position.x;
+        float iniI = this.transform.position.z;
         int pi = 0;
         int pj = 0;
         for(int i = 0; i < gridSize; i++)
@@ -124,10 +126,10 @@ public class MeshGenerator : MonoBehaviour
                 jP = j * 0.1f;
                 iP = i * 0.1f;
                 
-                var newP = ParticlesBehaviour.Create(transform.position+new Vector3(jP,0.0f,iP), mass, pi, pj, sphereControl);
+                var newP = ParticlesBehaviour.Create(this.transform.localPosition+new Vector3(jP,0.0f,iP), mass, pi, pj, sphereControl);
                 newP.transform.SetParent(this.transform, false);
-                newP.transform.localPosition = (new Vector3(jP,0.0f,iP)+transform.position);
-                newP.particles.Position = newP.transform.position;
+                newP.transform.localPosition = (new Vector3(jP,0.0f,iP)+this.transform.localPosition);
+                newP.particles.Position = newP.transform.localPosition;
                 _particles.Add(newP.particles);
                 _particlesBehaviour.Add(newP);
                 pi++;
@@ -466,11 +468,11 @@ public class MeshGenerator : MonoBehaviour
 
                 var p1 = new Triangles(i0, i2, i1, ind);
                 ind++;
-                p1.PosTriangles(_particles[i0].Position, _particles[i2].Position, _particles[i1].Position);
+                p1.PosTriangles(_particlesBehaviour[i0].transform.localPosition, _particlesBehaviour[i2].transform.localPosition, _particlesBehaviour[i1].transform.localPosition);
                 _triangles.Add(p1);
                 var p2 = new Triangles(i2, i3, i1, ind);
                 ind++;
-                p2.PosTriangles(_particles[i2].Position, _particles[i3].Position, _particles[i1].Position);
+                p2.PosTriangles(_particlesBehaviour[i2].transform.localPosition, _particlesBehaviour[i3].transform.localPosition, _particlesBehaviour[i1].transform.localPosition);
                 _triangles.Add(p2);
                 triangles[x] = i0;
                 x++;
@@ -506,7 +508,7 @@ public class MeshGenerator : MonoBehaviour
             for(int j = 0; j < gridSize; j++)
             {
                 var pos = j * gridSize + i;
-                vertices[pos] = _particles[pos].Position;
+                vertices[pos] = _particlesBehaviour[pos].transform.position;
             }
         }
 
@@ -533,9 +535,9 @@ public class MeshGenerator : MonoBehaviour
                 int i2 = (j + 1) * gridSize + i;
                 int i3 = (j + 1) * gridSize + i +1;
 
-                _triangles[posi].PosTriangles(_particles[i0].Position, _particles[i2].Position, _particles[i1].Position);
+                _triangles[posi].PosTriangles(_particlesBehaviour[i0].transform.localPosition, _particlesBehaviour[i2].transform.localPosition, _particlesBehaviour[i1].transform.localPosition);
                 posi++;
-                _triangles[posi].PosTriangles(_particles[i2].Position, _particles[i3].Position, _particles[i1].Position);
+                _triangles[posi].PosTriangles(_particlesBehaviour[i2].transform.localPosition, _particlesBehaviour[i3].transform.localPosition, _particlesBehaviour[i1].transform.localPosition);
                 posi++;
             }
         } 
@@ -545,7 +547,7 @@ public class MeshGenerator : MonoBehaviour
             for(int j = 0; j < gridSize; j++)
             {
                 var pos = j * gridSize + i;
-                vertices[pos] = _particles[pos].Position;
+                vertices[pos] = _particlesBehaviour[pos].transform.localPosition;
             }
         }
         for(int i = 0; i < uvs.Length; i++)

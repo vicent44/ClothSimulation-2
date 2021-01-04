@@ -80,8 +80,8 @@ public class RobotControlRight : MonoBehaviour
             Debug.Log("Now you can select another particle to move");
         }
     }
-    void FixedUpdate()
+    /*void FixedUpdate()
     {
         mesh.transform.GetChild(8).gameObject.GetComponent<ParticlesBehaviour>().particles.SetPosition(guide.position);
-    }
+    }*/
 }
