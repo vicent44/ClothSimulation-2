@@ -585,7 +585,7 @@ public class Simulate
                                     particles[tri.indexTriB].Prev += dot0 * normalTri * val1;
                                     particles[tri.indexTriC].Prev += dot0 * normalTri * val2;                                 
                                 }*/
-                                if(dot0 < 0f)
+                                /*if(dot0 < 0f)
                                 {
                                     //particles[idx].Position = particles[idx].Position + dt * velocityBest0;
                                     //particles[tri.indexTriA].Position = particles[tri.indexTriA].Position - dt * velocityBest1 * val0; 
@@ -609,7 +609,7 @@ public class Simulate
                                     particles[tri.indexTriA].Prev -= dot0 * velocityBest1 * val0; 
                                     particles[tri.indexTriB].Prev -= dot0 * velocityBest2 * val1;
                                     particles[tri.indexTriC].Prev -= dot0 * velocityBest3 * val2;                                 
-                                }
+                                }*/
                             }   
                         }
                     }

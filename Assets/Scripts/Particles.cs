@@ -88,7 +88,11 @@ public class Particles
         position = position * 2f - prev + deltaTimeMass * force;
         prev = lastPosition;
         velocity = (position - prev) / dt;
-        if(float.IsNaN(position.x)) Debug.Log("nan-P");
+        if(float.IsNaN(position.x))
+        {
+            position = prev;
+            Debug.Log("nan-P"+"Force: "+force+ " Mass: "+ deltaTimeMass);
+        }
     }
     public void UpdateParticlePos(float dt)
     {

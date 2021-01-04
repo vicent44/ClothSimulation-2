@@ -58,7 +58,7 @@ public class Springs
         Vector3 force = (springForce + dampingForce) * direction;
 
         //Add the force to the particle (is it's needed, if it's not ancored)
-        if(float.IsNaN(dampingForce)) Debug.Log("nan-ForceDamping");
+        if(float.IsNaN(dampingForce)) Debug.Log("nan-ForceDamping"+" Damping:"+direction+ " Delta vel:"+ deltaVelocity);
         if(float.IsNaN(a.Velocity.x)) Debug.Log("nan-ForceDam");
         if(a.isActive)
         {
