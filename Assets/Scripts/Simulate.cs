@@ -69,9 +69,7 @@ public class Simulate
         IntegratorVerlet(dt);
         //SolveConstraints();
         CheckPlaneCollitions(dt, frictionConstPlane, dissipationConstPlane);
-        //CheckSecondPlaneCollitions(dt, frictionConstPlane, dissipationConstPlane);
-        //CheckSphereRightCollitions(dt, frictionConstShpereHand, dissipationConstSphereHand);
-        //CheckSphereLeftCollitions(dt, frictionConstShpereHand, dissipationConstSphereHand);
+
         if(EdgeOrTriangle) CheckSelfCollitionsEdge(dt, frictionConstCloth, dissipationConstCloth);
         else CheckSelfCollitionsPoint(dt, frictionConstCloth, dissipationConstCloth);
         SolveConstraints();
@@ -389,56 +387,7 @@ public class Simulate
                                 Vector3 velocityBest1 = tangencialVelocity1 - frictionConstCloth*normalVelocity1.magnitude*(tangencialVelocity1/tangencialVelocity1.magnitude) - dissipationConstCloth*normalVelocity1;
                                 Vector3 velocityBest2 = tangencialVelocity2 - frictionConstCloth*normalVelocity2.magnitude*(tangencialVelocity2/tangencialVelocity2.magnitude) - dissipationConstCloth*normalVelocity2;
                                 Vector3 velocityBest3 = tangencialVelocity3 - frictionConstCloth*normalVelocity3.magnitude*(tangencialVelocity3/tangencialVelocity3.magnitude) - dissipationConstCloth*normalVelocity3;
-
-                                /*if(situation == 1)
-                                {
-                                    particles[ed.indexEdgeA].Position = particles[ed.indexEdgeA].Position + dt * velocityBestA;
-                                    particles[tri.indexTriA].Position = particles[tri.indexTriA].Position - dt * velocityBest1 * val1;
-                                    particles[tri.indexTriB].Position = particles[tri.indexTriB].Position - dt * velocityBest2 * val1;
-                                    particles[tri.indexTriC].Position = particles[tri.indexTriC].Position - dt * velocityBest3 * val1;
-                                }
-                                if(situation == 2)
-                                {
-                                    particles[ed.indexEdgeB].Position = particles[ed.indexEdgeB].Position + dt * velocityBestB;
-                                    particles[tri.indexTriA].Position = particles[tri.indexTriA].Position - dt * velocityBest1 * val1;
-                                    particles[tri.indexTriB].Position = particles[tri.indexTriB].Position - dt * velocityBest2 * val2;
-                                    particles[tri.indexTriC].Position = particles[tri.indexTriC].Position - dt * velocityBest3 * val3;
-                                }*/
-
-                                /*if(situation == 3)
-                                {
-                                    if(dotA < 0f)
-                                    {
-                                        particles[ed.indexEdgeA].Position = particles[ed.indexEdgeA].Position - dt * velocityBestA;
-                                        particles[tri.indexTriA].Position = particles[tri.indexTriA].Position + dt * velocityBest1 * val1;
-                                        particles[tri.indexTriB].Position = particles[tri.indexTriB].Position + dt * velocityBest2 * val2;
-                                        particles[tri.indexTriC].Position = particles[tri.indexTriC].Position + dt * velocityBest3 * val3;                                    
-                                    }
-                                    if(dotA > 0f)
-                                    {
-                                        particles[ed.indexEdgeA].Position = particles[ed.indexEdgeA].Position + dt * velocityBestA;
-                                        particles[tri.indexTriA].Position = particles[tri.indexTriA].Position - dt * velocityBest1 * val1;
-                                        particles[tri.indexTriB].Position = particles[tri.indexTriB].Position - dt * velocityBest2 * val2;
-                                        particles[tri.indexTriC].Position = particles[tri.indexTriC].Position - dt * velocityBest3 * val3;                                    
-                                    }
-                                }
-                                if(situation == 4)
-                                {
-                                    if(dotB < 0f)
-                                    {
-                                        particles[ed.indexEdgeB].Position = particles[ed.indexEdgeB].Position - dt * velocityBestB;
-                                        particles[tri.indexTriA].Position = particles[tri.indexTriA].Position + dt * velocityBest1 * val1;
-                                        particles[tri.indexTriB].Position = particles[tri.indexTriB].Position + dt * velocityBest2 * val2;
-                                        particles[tri.indexTriC].Position = particles[tri.indexTriC].Position + dt * velocityBest3 * val3;
-                                    }
-                                    if(dotB > 0f)
-                                    {
-                                        particles[ed.indexEdgeB].Position = particles[ed.indexEdgeB].Position + dt * velocityBestB;
-                                        particles[tri.indexTriA].Position = particles[tri.indexTriA].Position - dt * velocityBest1 * val1;
-                                        particles[tri.indexTriB].Position = particles[tri.indexTriB].Position - dt * velocityBest2 * val2;
-                                        particles[tri.indexTriC].Position = particles[tri.indexTriC].Position - dt * velocityBest3 * val3;
-                                    }
-                                } */                           
+                          
                             }   
                         }
                     }
@@ -509,11 +458,6 @@ public class Simulate
                                     particles[tri.indexTriB].Position = particles[tri.indexTriB].Prev + dot0 * normalTri * val1;
                                     particles[tri.indexTriC].Position = particles[tri.indexTriC].Prev + dot0 * normalTri * val2;
                                 
-                                    //particles[idx].Position -= dot0 * normalTri;
-                                    //particles[tri.indexTriA].Position += dot0 * normalTri * val0; 
-                                    //particles[tri.indexTriB].Position += dot0 * normalTri * val1;
-                                    //particles[tri.indexTriC].Position += dot0 * normalTri * val2;
-
                                     particles[idx].Prev -= dot0 * normalTri;
                                     particles[tri.indexTriA].Prev += dot0 * normalTri * val0; 
                                     particles[tri.indexTriB].Prev += dot0 * normalTri * val1;
@@ -527,11 +471,6 @@ public class Simulate
                                     particles[tri.indexTriB].Position = particles[tri.indexTriB].Prev - dot0 * normalTri * val1;
                                     particles[tri.indexTriC].Position = particles[tri.indexTriC].Prev - dot0 * normalTri * val2;
                                 
-                                    //particles[idx].Position += dot0 * normalTri;
-                                    //particles[tri.indexTriA].Position -= dot0 * normalTri * val0; 
-                                    //particles[tri.indexTriB].Position -= dot0 * normalTri * val1;
-                                    //particles[tri.indexTriC].Position -= dot0 * normalTri * val2;
-
                                     particles[idx].Prev += dot0 * normalTri;
                                     particles[tri.indexTriA].Prev -= dot0 * normalTri * val0; 
                                     particles[tri.indexTriB].Prev -= dot0 * normalTri * val1;
@@ -559,32 +498,6 @@ public class Simulate
                                 Vector3 velocityBest2 = tangencialVelocity2 - frictionConstCloth*normalVelocity2.magnitude*(tangencialVelocity2/tangencialVelocity2.magnitude) - dissipationConstCloth*normalVelocity2;
                                 Vector3 velocityBest3 = tangencialVelocity3 - frictionConstCloth*normalVelocity3.magnitude*(tangencialVelocity3/tangencialVelocity3.magnitude) - dissipationConstCloth*normalVelocity3;
 
-                                //Velocity
-                                /*if(dot0 < 0f)
-                                {
-                                    particles[idx].Position = particles[idx].Position - dt * velocityBest0;
-                                    particles[tri.indexTriA].Position = particles[tri.indexTriA].Position + dt * velocityBest1 * val0; 
-                                    particles[tri.indexTriB].Position = particles[tri.indexTriB].Position + dt * velocityBest2 * val1;
-                                    particles[tri.indexTriC].Position = particles[tri.indexTriC].Position + dt * velocityBest3 * val2;
-                                
-                                    particles[idx].Prev += dot0 * normalTri;
-                                    particles[tri.indexTriA].Prev -= dot0 * normalTri * val0; 
-                                    particles[tri.indexTriB].Prev -= dot0 * normalTri * val1;
-                                    particles[tri.indexTriC].Prev -= dot0 * normalTri * val2;                                 
-                                }
-
-                                if(dot0 > 0f)
-                                {
-                                    particles[idx].Position = particles[idx].Position + dt * velocityBest0;
-                                    particles[tri.indexTriA].Position = particles[tri.indexTriA].Position - dt * velocityBest1 * val0; 
-                                    particles[tri.indexTriB].Position = particles[tri.indexTriB].Position - dt * velocityBest2 * val1;
-                                    particles[tri.indexTriC].Position = particles[tri.indexTriC].Position - dt * velocityBest3 * val2;
-                                
-                                    particles[idx].Prev -= dot0 * normalTri;
-                                    particles[tri.indexTriA].Prev += dot0 * normalTri * val0; 
-                                    particles[tri.indexTriB].Prev += dot0 * normalTri * val1;
-                                    particles[tri.indexTriC].Prev += dot0 * normalTri * val2;                                 
-                                }*/
                                 /*if(dot0 < 0f)
                                 {
                                     //particles[idx].Position = particles[idx].Position + dt * velocityBest0;

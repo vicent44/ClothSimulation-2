@@ -28,13 +28,8 @@ public class RobotControlLeft : MonoBehaviour
                 particleNum = particle.particles.I;
                 //col.transform.parent = col.contacts[0].thisCollider.transform;
                 collisionposition = col.contacts[0].normal;
-                //particle.GetComponent<Collider>().enabled = false;   //TODO: any
-                //particle.gameObject.transform.parent = this.gameObject.transform;
                 particle.gameObject.transform.localPosition = Vector3.zero;
-                //var particleleft = particle.transform.parent.GetChild(76).gameObject.GetComponent<ParticlesBehaviour>();
-                //particleleft.particles.isActive = false;
             }
-            
         }
     }
 
@@ -85,8 +80,4 @@ public class RobotControlLeft : MonoBehaviour
             Debug.Log("Now you can select another particle to move");
         }
     }
-    /*void FixedUpdate()
-    {
-        mesh.transform.GetChild(0).gameObject.GetComponent<ParticlesBehaviour>().particles.SetPosition(guide.position);
-    }*/
 }

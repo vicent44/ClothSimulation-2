@@ -67,52 +67,6 @@ public class AgentRobotHand : Agent
     private int count;
     private float rew;
 
-    /*public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
-    {
-        var positionX = transform.position.x;
-        var positionY = transform.position.y;
-        var positionZ = transform.position.z;
-
-        var minPositionX = -1.5f;
-        var maxPositionX = 2.0f;
-        var minPositionY = plane.transform.position.y + 0.02f;
-        var maxPositionY = plane.transform.position.y + 0.02f + 1f;
-        var minPositionZ = plane2.transform.position.z + 0.02f;
-        var maxPositionZ = plane2.transform.position.z + 0.02f + 1.5f;
-
-        if(minPositionX >= positionX)
-        {
-            actionMask.WriteMask(0, new[] {left});
-        }
-        if(maxPositionX <= positionX)
-        {
-            actionMask.WriteMask(0, new[] {right});
-        }
-        if(minPositionY >= positionY)
-        {
-            actionMask.WriteMask(0, new[] {down});
-        }
-        if(maxPositionY <= positionY)
-        {
-            actionMask.WriteMask(0, new[] {up});
-        }
-        if(minPositionZ >= positionZ)
-        {
-            actionMask.WriteMask(0, new[] {backward});
-        }
-        if(maxPositionZ <= positionZ)
-        {
-            actionMask.WriteMask(0, new[] {forward});
-        }
-    }
-*/
-    /*public override void Initialize()
-    {
-        m_ResetParams = Academy.Instance.EnvironmentParameters;
-        left_hand = transform.Find("TargetLeft").gameObject;
-        right_hand = transform.Find("TargetRight").gameObject;
-        arearobot.SetEnvironment();
-    }*/
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
@@ -136,37 +90,8 @@ public class AgentRobotHand : Agent
         //Debug.Log(moveZ);
         var targetPos_right = right_hand.transform.position;
         targetPos_right = right_hand.transform.position + new Vector3(moveX_right*0.0005f, moveY_right*0.0005f, moveZ_right*0.0005f);
-                
-        
-        /*var action = actionBuffers.DiscreteActions[0];
 
-        var targetPos = transform.position;
-        switch (action)
-        {
-            case noAction:
-                //nothing
-                break;
-            case right:
-                targetPos = transform.position + new Vector3(0.01f, 0, 0f);
-                break;
-            case left:
-                targetPos = transform.position + new Vector3(-0.01f, 0, 0f);
-                break;
-            case up:
-                targetPos = transform.position + new Vector3(0f, 0.01f, 0f);
-                break;
-            case down:
-                targetPos = transform.position + new Vector3(0f, -0.01f, 0f);
-                break;
-            case forward:
-                targetPos = transform.position + new Vector3(0f, 0, 0.01f);
-                break;
-            case backward:
-                targetPos = transform.position + new Vector3(0f, 0, -0.01f);
-                break;
-            //default:
-            //    Debug.Log("Invalid action value");
-        }*/
+
         var hit_left = Physics.OverlapBox(targetPos_left, new Vector3(0.02f, 0.02f, 0.02f));
         if(hit_left.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
         {
@@ -176,7 +101,6 @@ public class AgentRobotHand : Agent
         else
         {
             //AddReward(-0.01f);
-            //Debug.Log("-0.01");
             AddReward(-1f/(500f));
         }
 
@@ -208,47 +132,12 @@ public class AgentRobotHand : Agent
         if(rightCatch && !rightDone) ClothCathRight();
         //else ClothLostRight();
 
-        //left_goal = mesh.transform.Find("left").gameObject;
-        //right_goal = mesh.transform.Find("right").gameObject;
-        //distance_left_after = Vector3.Distance(left_goal.transform.position, left_hand.transform.position);
-        //distance_right_after = Vector3.Distance(right_goal.transform.position, right_hand.transform.position);
-        //AddReward(-(Math.Abs(distance_left_after)+Math.Abs(distance_right_after))*0.1f);
-        /*if(distance_left_after < distance_left_before)
-        {
-            AddReward(0.01f);
-            Debug.Log("More near");
-        }
-        if(distance_right_after < distance_right_before)
-        {
-            AddReward(0.01f);
-            Debug.Log("More near");
-        }*/
     }
-
-    /*void OnTriggerStay(Collider col)
-    {
-        //Debug.Log("Play");
-        if(col.gameObject.tag == this.gameObject.tag)
-        {
-            Debug.Log("Collision with the first line of particles");
-            firstCollisionDone = true;
-            SetReward(0.01f);
-        }
-    }
-    void OnTriggerExit(Collider col)
-    {
-        if(col.gameObject.tag == this.gameObject.tag)
-        {
-            Debug.Log("The particle is not in the Robot hand any more");
-            firstCollisionDone = false;
-            SetReward(-0.01f);
-        }
-    }*/
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActionsOut = actionsOut.ContinuousActions;
-        continuousActionsOut[0] = Input.GetAxis("Horizontal")*1f;    // Racket Movement
+        continuousActionsOut[0] = Input.GetAxis("Horizontal")*1f; 
         continuousActionsOut[3] = Input.GetAxis("Horizontal")*1f; 
         continuousActionsOut[2] = Input.GetAxis("Vertical")*1f;
         continuousActionsOut[5] = Input.GetAxis("Vertical")*1f;    
@@ -258,10 +147,8 @@ public class AgentRobotHand : Agent
     {
         count = 0;
         rew = 0;
-        //StartCoroutine(Example());
         arearobot.AreaReset();
         //arearobot.SetEnvironment();
-        //System.Threading.Thread.Sleep(4000);
         left_hand = transform.Find("TargetLeft").gameObject;
         right_hand = transform.Find("TargetRight").gameObject;
 
@@ -281,72 +168,13 @@ public class AgentRobotHand : Agent
         distance_left_cloth = Vector3.Distance(left_goal, left_start_2);
         distance_left_cloth = Math.Abs(distance_left_cloth);
 
-        //distance_left_hand = Vector3.Distance(left_start, left_hand.transform.position);
-
         //Right
         right_start = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
 
         right_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
         right_start_2 = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
         distance_right_cloth = Vector3.Distance(right_goal, right_start_2);
-        distance_right_cloth = Math.Abs(distance_right_cloth);
-
-        //distance_right_hand = Vector3.Distance(right_start, right_hand.transform.position);
-
-
-        /*if(float.IsNaN(mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position.x))
-        {
-            count += 1;
-            Debug.Log("Error: "+count);
-            Error();
-        }*/
-        /*if(float.IsNaN(distance_left_hand))
-        {
-            Debug.Log("Error");
-            Error();
-        }    
-        else if(float.IsNaN(distance_left_cloth))
-        {
-            Debug.Log("Error");
-            Error();            
-        }
-        if(float.IsNaN(distance_right_hand))
-        {
-            Debug.Log("Error");
-            Error();
-        }    
-        else if(float.IsNaN(distance_right_cloth))
-        {
-            Debug.Log("Error");
-            Error();            
-        }*/
-
-
-        /*if(leftDone && rightDone) FoldCompleted();
-
-        if(leftCatch) ClothCathLeft();
-        else ClothLostLeft();
-
-        if(rightCatch) ClothCathRight();
-        else ClothLostRight();
-        Debug.Log(rew);*/
-
-
-        /*if(leftDone) ClothFoldedLeft();
-        else ClothLostFoldedLeft();
-
-        if(rightDone) ClothFoldedRight();
-        else ClothLostFoldedRight();*/
-
-        /*else if(leftDone && !rightDone) AddReward(-0.01f);
-        else if(!leftDone && rightDone) AddReward(-0.01f);
-
-        if(!leftCatch) AddReward(-0.01f);
-        if(!rightCatch) AddReward(-0.01f);
-
-        if(leftCatch && !leftDone) AddReward(-0.01f);
-        if(rightCatch && !rightDone) AddReward(-0.01f);*/
-        
+        distance_right_cloth = Math.Abs(distance_right_cloth);        
 
         WaitTimeInference();
     }
@@ -375,7 +203,6 @@ public class AgentRobotHand : Agent
     {
         //AddReward(-100f);
         AddReward(-10f);
-        rew -=100;
         EndEpisode();
         arearobot.AreaReset(); 
     }
@@ -391,14 +218,12 @@ public class AgentRobotHand : Agent
     public void ClothCathLeft()
     {
         //AddReward(25f);
-        //Debug.Log("hehe +");
         left_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
         left_start_2 = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
 
         left_start_2_prev = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Prev;
 
         distance_left_cloth = Vector3.Distance(left_goal, left_hand.transform.position);
-        //distance_left_cloth_prev = Vector3.Distance(left_goal, left_start_2_prev);
 
         if(float.IsNaN(distance_left_cloth))
         {
@@ -407,8 +232,7 @@ public class AgentRobotHand : Agent
             distance_left_cloth = 1.2f;
             //Error();
         }
-        //rew -=(distance_left_cloth)*0.01f;
-        Debug.Log((-(distance_left_cloth))*1f);
+        //Debug.Log((-(distance_left_cloth))*1f);
         AddReward((-(distance_left_cloth))*(1f/(1.2f*50f)));
         leftCatch = true;
     }
@@ -430,17 +254,12 @@ public class AgentRobotHand : Agent
             //Error();
         }
 
-        //rew -=(distance_right_cloth)*0.01f;
         AddReward((-(distance_right_cloth))*(1f/(1.2f*50f)));
         rightCatch = true;
-        //Debug.Log("ei dins");
     }
 
     public void ClothLostLeft()
     {
-        //AddReward(-25f);
-        //Debug.Log("hehe -");
-        //left_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
         left_start = mesh.transform.GetChild(0).GetComponent<ParticlesBehaviour>().particles.Position;
 
         left_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
@@ -450,39 +269,10 @@ public class AgentRobotHand : Agent
 
         distance_left_hand = Vector3.Distance(left_start, left_hand.transform.position);
 
-        /*if(distance_left_hand > 0.3f)
-        {
-            Debug.Log("Fuera broo");
-            Error();
-        }*/
-            //Debug.Log("ei fora broo");
         leftCatch = false;
-        /*if(float.IsNaN(distance_left_cloth))
-        {
-            count += 1;
-            Debug.Log("Error: "+count);
-            distance_left_cloth = 10000f;
-            //Error();
-        } 
-        if(float.IsNaN(distance_left_hand))
-        {
-            count += 1;
-            Debug.Log("Error: "+count);
-            distance_left_hand = 10000f;
-            //Error();
-        }*/
-
-        //Debug.Log(-(distance_left_hand+ distance_left_cloth)*0.01f);
-        //Debug.Log("hi");
-        //AddReward(-(distance_left_hand+ distance_left_cloth)*0.01f);
-        //leftCatch = false;
-        //Error();
     }
     public void ClothLostRight()
     {
-        //AddReward(-25f);
-        //Debug.Log("hehe -");
-        //right_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
         right_start = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>().particles.Position;
 
         right_goal = mesh.transform.Find("left").GetComponent<BoxCollider>().transform.position;
@@ -492,38 +282,13 @@ public class AgentRobotHand : Agent
 
         distance_right_hand = Vector3.Distance(right_start, right_hand.transform.position);
 
-        /*if(distance_right_hand > 0.3f)
-        {
-            Debug.Log("Fuera broo");
-            Error();
-        }*/
         rightCatch = false;
-        /*if(float.IsNaN(distance_right_cloth))
-        {
-            count += 1;
-            Debug.Log("Error: "+count);
-            distance_right_cloth = 10000f;
-            //Error();
-        } 
-        if(float.IsNaN(distance_right_hand))
-        {
-            count += 1;
-            Debug.Log("Error: "+count);
-            distance_right_hand = 10000f;
-            //Error();
-        } */
-
-
-        //AddReward(-(distance_right_hand+ distance_right_cloth)*0.01f);
-        //Error();
-        //rightCatch = false;
     }
 
     public void ClothFoldedLeft()
     {
         AddReward(25f/500f);
         //AddReward(1f);
-        Debug.Log("FFFFFFFFF");
         leftDone = true;
     }
     public void ClothFoldedRight()
@@ -545,164 +310,4 @@ public class AgentRobotHand : Agent
         //AddReward(-1f);
         rightDone = false;
     }
-
-
-
-/*
-    // Start is called before the first frame update
-    void Start()
-    {
-        rBody = GetComponent<Rigidbody>();
-        //Initialize();
-    }
-
-    void Initialize()
-    {
-        GameObject rightFin = GameObject.Find("TrainEnvironment/MeshGenerator/rightLast");
-        Rigidbody rBodyRightFin = rightFin.GetComponent<Rigidbody>();
-        GameObject leftFin = GameObject.Find("TrainEnvironment/MeshGenerator/leftLast");
-        Rigidbody rBodyLeftFin = leftFin.GetComponent<Rigidbody>();
-    }
-
-    public override void OnEpisodeBegin()
-    {
-        GameObject rightFin = GameObject.Find("TrainEnvironment/MeshGenerator/rightLast");
-        Rigidbody rBodyRightFin = rightFin.GetComponent<Rigidbody>();
-        GameObject leftFin = GameObject.Find("TrainEnvironment/MeshGenerator/leftLast");
-        Rigidbody rBodyLeftFin = leftFin.GetComponent<Rigidbody>();
-        //mesh.GetComponent<MeshGenerator>().Restart();
-        if(this.gameObject.tag == "right")
-        {
-            mesh.GetComponent<MeshGenerator>().Restart();
-            this.rBody.velocity = Vector3.zero;
-            this.transform.localPosition = new Vector3(0.85f, 0f, -0.1f);
-            //mesh.GetComponent<MeshGenerator>().Restart();
-            //rightFin.transform.localPosition =
-            //rBodyRightFin.velocity = Vector3.zero;
-        }
-        if(this.gameObject.tag == "left")
-        {
-            //mesh.GetComponent<MeshGenerator>().Restart();
-            this.rBody.velocity = Vector3.zero;
-            this.transform.localPosition = new Vector3(-0.05f, 0f, -0.1f);
-            //mesh.GetComponent<MeshGenerator>().Restart();
-            //leftFin.transform.localPosition =
-            //rBodyLeftFin.velocity = Vector3.zero;
-        }
-    }
-
-    public override void CollectObservations(VectorSensor sensor)
-    {
-        if(this.gameObject.tag == "right")
-        {
-            sensor.AddObservation(this.transform.localPosition);
-            sensor.AddObservation(this.rBody.velocity);
-            sensor.AddObservation(rightFin.transform.localPosition);
-            sensor.AddObservation(rBodyRightFin.velocity);
-        }
-        if(this.gameObject.tag == "left")
-        {
-            sensor.AddObservation(this.transform.localPosition);
-            sensor.AddObservation(this.rBody.velocity);
-            sensor.AddObservation(leftFin.transform.localPosition);
-            sensor.AddObservation(rBodyLeftFin.velocity);
-        }
-    }
-
-    public override void OnActionReceived(ActionBuffers actionBuffers)
-    {
-        //MoveAgent(actionBuffers.ContinuousActions);
-        var continuousActions = actionBuffers.ContinuousActions;
-        var moveX = Mathf.Clamp(continuousActions[0], -1f, 1f);
-        var moveY = Mathf.Clamp(continuousActions[1], -1f, 1f);
-        var moveZ = Mathf.Clamp(continuousActions[2], -1f, 1f);
-
-        rBody.AddForce(10f * moveX, 10f * moveY, 10f * moveZ);
-
-        if(this.transform.localPosition.y < (plane.transform.position.y + 0.02f))
-        {
-            SetReward(-1f);
-            EndEpisode();
-        }
-
-        if(this.gameObject.tag == "right")
-        {
-            float distanceToTargetright = Vector3.Distance(this.transform.localPosition, rightFin.transform.localPosition);
-        
-            if(distanceToTargetright < 0.1f)
-            {
-                SetReward(1.0f);
-                EndEpisode();
-            }
-            else if(this.transform.localPosition.y < (plane.transform.localPosition.y + 0.2f))
-            {
-                EndEpisode();
-            }
-        }
-        if(this.gameObject.tag == "left")
-        {
-            float distanceToTargetleft = Vector3.Distance(this.transform.localPosition, leftFin.transform.localPosition);
-        
-            if(distanceToTargetleft < 0.1f)
-            {
-                SetReward(1.0f);
-                EndEpisode();
-            }
-            else if(this.transform.localPosition.y < (plane.transform.localPosition.y + 0.2f))
-            {
-                EndEpisode();
-            }
-        }
-    }
-
-    public void MoveAgent(ActionSegment<int> act)
-    {
-        int directionX = 0;
-        int directionY = 0;
-        int directionZ = 0;
-        int movement = Mathf.FloorToInt(act[0]);
-
-        if (movement == 1) { directionX = -1; }
-        if (movement == 2) { directionX = 1; }
-        if (movement == 3) { directionY = -1; }
-        if (movement == 4) { directionY = 1; }
-        if (movement == 5) { directionZ = -1; }
-        if (movement == 6) { directionZ = 1; }
-
-        rBody.AddForce(10f * directionX, 10f * directionY, 10f * directionZ);
-
-    }
-
-    public override void Heuristic(in ActionBuffers actionsOut)
-    {
-        var discreteActionsOut = actionsOut.DiscreteActions;
-        discreteActionsOut.Clear();
-        //forward
-        if (Input.GetKeyDown("w"))
-        {
-            discreteActionsOut[0] = 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            discreteActionsOut[0] = 2;
-        }
-        //rotate
-        if (Input.GetKey(KeyCode.A))
-        {
-            discreteActionsOut[2] = 1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            discreteActionsOut[2] = 2;
-        }
-        //right
-        if (Input.GetKey(KeyCode.E))
-        {
-            discreteActionsOut[1] = 1;
-        }
-        if (Input.GetKey(KeyCode.Q))
-        {
-            discreteActionsOut[1] = 2;
-        }
-    }*/
 }

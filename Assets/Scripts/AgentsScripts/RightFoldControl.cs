@@ -14,24 +14,14 @@ public class RightFoldControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //var particleright = mesh.transform.GetChild(8).GetComponent<ParticlesBehaviour>();
-        //particleright.particles.isActive = false;
-
-        //FixedJoint joint = mesh.transform.GetChild(8).gameObject.AddComponent(typeof(FixedJoint)) as FixedJoint;
-        //joint.connectedBody = this.GetComponent<Rigidbody>();
-        //joint.connectedAnchor = this.GetComponent<Rigidbody>().transform.InverseTransformPoint(particleright.transform.position);
-
-
         agentRightCatch = false;
-        agentRightDone = false;
-        val = 0f;
-        
+        agentRightDone = false;        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Right: "+val);
+        //Debug.Log("Right: "+val);
     }
 
 

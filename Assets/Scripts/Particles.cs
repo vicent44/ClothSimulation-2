@@ -94,31 +94,4 @@ public class Particles
             Debug.Log("nan-P"+"Force: "+force+ " Mass: "+ deltaTimeMass);
         }
     }
-    public void UpdateParticlePos(float dt)
-    {
-        //velocity = (position - prev) / dt;
-        //float deltaTimeMass = (dt * dt) / mass;
-        Vector3 lastPosition = position;
-        position = prev + velocity * dt + (force/mass) * dt * dt * 0.5f; 
-        //position = position + velocity * dt + force * deltaTimeMass; 
-        prev = lastPosition;
-        prevForce = force/mass;
-    }
-    public void UpdateParticleVel(float dt)
-    {
-        /*//velocity = (position - prev) / dt;
-        //float deltaTimeMass = (dt * dt) / mass;
-        Vector3 lastPosition = position;
-        velocity = 
-        //position =2f * position - prev + (force/mass) * dt * dt; 
-        //position = position + velocity * dt + force * deltaTimeMass; 
-        //prev = lastPosition;*/
-        /*Vector3 lastVel = velocity;
-        velocity = velocity + 0.5f * (force/mass) * dt;
-        velprev = lastVel;*/
-        Vector3 lastVel = velocity;
-        velocity += (force/mass) * dt;
-        position += (lastVel + velocity) * 0.5f * dt;
-        
-    }
 }

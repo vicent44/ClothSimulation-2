@@ -11,61 +11,23 @@ public class LeftFoldControl : MonoBehaviour
     private float val;
     private ParticlesBehaviour particleleft;
 
-/*    private GameObject left_goal;
-    private GameObject right_goal;
-
-    private float distance_left_before;
-    private float distance_right_before;
-    private float distance_left_after;
-    private float distance_right_after;
-    private Vector3 past;*/
 
     // Start is called before the first frame update
     void Start()
     {
-        //var particleleft = mesh.transform.GetChild(81).GetComponent<ParticlesBehaviour>();
-        //particleleft.particles.isActive = false;
-
-        //FixedJoint joint = mesh.transform.GetChild(0).gameObject.AddComponent(typeof(FixedJoint)) as FixedJoint;
-        //joint.connectedBody = this.GetComponent<Rigidbody>();
-        //joint.connectedAnchor = this.GetComponent<Rigidbody>().transform.InverseTransformPoint(particleleft.transform.position);
-
-
         agentLeftCatch = false;
         agentLeftDone = false;
-        val = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Left: "+val);
-
-        /*left_goal = mesh.transform.Find("left").gameObject;
-        Debug.Log(left_goal.transform.position);
-
-        distance_left_before = Vector3.Distance(left_goal.transform.position, past);
-
-        //left_goal = mesh.transform.Find("left").gameObject;
-        distance_left_after = Vector3.Distance(left_goal.transform.position, this.transform.position);
-        
-        //Debug.Log(distance_left_after-distance_left_before);
-        if(Math.Abs(distance_left_after) < Math.Abs(distance_left_before))
-        {
-            //AddReward(1f);
-            Debug.Log("More near");
-        }
-        past = this.transform.position;*/
-
+        //Debug.Log("Left: "+val);
     }
 
 
     void OnTriggerStay(Collider col)
     {
-        /*if(float.IsNaN(col.gameObject.GetComponent<ParticlesBehaviour>().particles.Position.x))
-        {
-            transform.parent.GetComponent<AgentRobotHand>().Error();
-        }*/
         if(col.gameObject.tag == this.gameObject.tag && !agentLeftCatch)
         {
             //Ma esquerra agafan la roba

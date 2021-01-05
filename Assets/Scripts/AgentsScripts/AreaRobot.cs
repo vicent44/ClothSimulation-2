@@ -88,6 +88,5 @@ public class AreaRobot : MonoBehaviour
         handRight.transform.position = rightInitial;
         handLeft.transform.position = leftInitial;
         agentHand.transform.position = agentHandInitial;
-        //StartCoroutine(Example());
     }
 }

@@ -24,25 +24,8 @@ public class ParticlesBehaviour : MonoBehaviour
     void Update()
     {
         this.transform.position = _particle.Position;
-        //Debug.Log(this.gameObject.name);
-        //Debug.Log("gfhgfhgfd");
-        /*if(Input.GetKey("p"))
-        {
-            transform.parent = null;
-        }*/
-        /*if(this.gameObject.name == "stack")// && this.gameObject.name == "stack")
-        {
-            var posicoke = transform.position;
-            var hit_right = Physics.OverlapBox(posicoke, new Vector3(0.02f, 0.02f, 0.02f));
-            
-            /*if(hit_right.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
-            {
-                //right_hand.transform.position = targetPos_right;
-                //Debug.Log("Next Position No Walls - Posible");
-            }
-            //this.particles.isActive = false;
-        }*/
-        if(this.gameObject.name == "stack")// && this.gameObject.name == "stack")
+
+        if(this.gameObject.name == "stack")
         {
             var posicoke = transform.position;
             var hit_right = Physics.OverlapBox(posicoke, new Vector3(0.03f, 0.03f, 0.03f));
@@ -53,12 +36,6 @@ public class ParticlesBehaviour : MonoBehaviour
                     this.particles.isActive = false;
                 }
             }
-            /*if(hit_right.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
-            {
-                //right_hand.transform.position = targetPos_right;
-                //Debug.Log("Next Position No Walls - Posible");
-            }*/
-            //this.particles.isActive = false;
         }
     }
     void FixedUpdate()
@@ -98,18 +75,6 @@ public class ParticlesBehaviour : MonoBehaviour
         {
             contactPoint = col.contacts[0].point;
         }
-        //Debug.Log(this.gameObject.name);
-        /*if(this.gameObject.name == "stack")// && this.gameObject.name == "stack")
-        {
-            Debug.Log(col.gameObject.name);
-            var hit_right = Physics.OverlapBox(this.gameObject, new Vector3(0.02f, 0.02f, 0.02f));
-            if(hit_right.Where(col => col.gameObject.CompareTag("plane")).ToArray().Length == 0)
-            {
-                //right_hand.transform.position = targetPos_right;
-                //Debug.Log("Next Position No Walls - Posible");
-            }
-            //this.particles.isActive = false;
-        }*/
     }
 
     void OnCollisionStay(Collision col)
