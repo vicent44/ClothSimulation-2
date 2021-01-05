@@ -201,11 +201,12 @@ public class AgentRobotHand : Agent
 
         if(leftDone && rightDone) FoldCompleted();
 
-        if(leftCatch) ClothCathLeft();
-        else ClothLostLeft();
+        if(leftCatch && !leftDone) ClothCathLeft();
+        //else if (!leftCatch && !leftDone) ClothLostLeft();
+        //else if (leftCatch && leftDone)  
 
-        if(rightCatch) ClothCathRight();
-        else ClothLostRight();
+        if(rightCatch && !rightDone) ClothCathRight();
+        //else ClothLostRight();
 
         //left_goal = mesh.transform.Find("left").gameObject;
         //right_goal = mesh.transform.Find("right").gameObject;
@@ -407,7 +408,7 @@ public class AgentRobotHand : Agent
             //Error();
         }
         //rew -=(distance_left_cloth)*0.01f;
-        //Debug.Log((-(distance_left_cloth))*1f);
+        Debug.Log((-(distance_left_cloth))*1f);
         AddReward((-(distance_left_cloth))*(1f/(1.2f*50f)));
         leftCatch = true;
     }
@@ -522,6 +523,7 @@ public class AgentRobotHand : Agent
     {
         AddReward(25f/500f);
         //AddReward(1f);
+        Debug.Log("FFFFFFFFF");
         leftDone = true;
     }
     public void ClothFoldedRight()
