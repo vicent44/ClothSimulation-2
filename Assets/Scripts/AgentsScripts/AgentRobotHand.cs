@@ -232,7 +232,7 @@ public class AgentRobotHand : Agent
             distance_left_cloth = 1.2f;
             //Error();
         }
-        //Debug.Log((-(distance_left_cloth))*1f);
+        Debug.Log((-(distance_left_cloth))*1f);
         AddReward((-(distance_left_cloth))*(1f/(1.2f*50f)));
         leftCatch = true;
     }
@@ -289,6 +289,7 @@ public class AgentRobotHand : Agent
     {
         AddReward(25f/500f);
         //AddReward(1f);
+        Debug.Log("Leftfol");
         leftDone = true;
     }
     public void ClothFoldedRight()
