@@ -11,7 +11,7 @@ unity_wrapper:
     inference_time_scale: 0
     target_frame_rate: 60
     render: True
-    file_path: UnityEnvironment/Head-NoGrip3/Head-Robot-Stiff-Half.x86_64
+    file_path: UnityEnvironment/Head-NoGrip2/Head-Robot-Stiff-Half.x86_64
     env_seed: 1
     reset_config: {}
     port: 5004
