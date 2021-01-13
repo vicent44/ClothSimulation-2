@@ -79,47 +79,47 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11478}
     - Class: 114
-      Script: {instanceID: 11680}
+      Script: {instanceID: 11678}
     - Class: 114
-      Script: {instanceID: 11694}
+      Script: {instanceID: 11692}
     - Class: 114
-      Script: {instanceID: 11812}
+      Script: {instanceID: 11810}
     - Class: 114
-      Script: {instanceID: 12090}
+      Script: {instanceID: 12088}
     - Class: 114
-      Script: {instanceID: 12358}
+      Script: {instanceID: 12356}
     - Class: 114
-      Script: {instanceID: 12370}
+      Script: {instanceID: 12368}
     - Class: 114
-      Script: {instanceID: 12396}
+      Script: {instanceID: 12394}
     - Class: 114
-      Script: {instanceID: 12602}
+      Script: {instanceID: 12600}
     - Class: 114
-      Script: {instanceID: 12664}
+      Script: {instanceID: 12662}
     - Class: 114
-      Script: {instanceID: 12716}
+      Script: {instanceID: 12714}
     - Class: 114
-      Script: {instanceID: 12800}
+      Script: {instanceID: 12798}
     - Class: 114
-      Script: {instanceID: 12948}
+      Script: {instanceID: 13014}
     - Class: 114
-      Script: {instanceID: 13018}
+      Script: {instanceID: 13218}
     - Class: 114
-      Script: {instanceID: 13222}
+      Script: {instanceID: 13290}
     - Class: 114
-      Script: {instanceID: 13294}
+      Script: {instanceID: 13356}
     - Class: 114
-      Script: {instanceID: 13362}
+      Script: {instanceID: 13554}
     - Class: 114
-      Script: {instanceID: 13560}
+      Script: {instanceID: 13582}
     - Class: 114
-      Script: {instanceID: 13588}
+      Script: {instanceID: 13694}
     - Class: 114
-      Script: {instanceID: 13702}
+      Script: {instanceID: 14062}
     - Class: 114
-      Script: {instanceID: 14070}
+      Script: {instanceID: 14132}
     - Class: 114
-      Script: {instanceID: 14140}
+      Script: {instanceID: 17994}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 135
@@ -994,4 +994,4 @@ ScriptsOnlyBuild:
   platform: 24
   scenePathNames:
   - Assets/Scenes/UnionScene.unity
-  playerPath: /home/vroig/Escritorio/TFM/Unity-P/RobotAgents/pythoncode/UnityEnvironment/Head-NoGrip3/Head-Robot-Stiff-Half.x86_64
+  playerPath: /home/vroig/Escritorio/TFM/Unity-P/RobotAgents/pythoncode/UnityEnvironment/Head-NoGrip-Up/Head-Robot-Stiff-Half.x86_64
