@@ -5,7 +5,7 @@ The goal of this thesis is cloth folding using visual observations as an input f
 As a simulation engine, [Unity](https://unity.com) has been chosen because it has a package called [Machine Learning Agents](https://github.com/Unity-Technologies/ml-agents) (ML-Agents) that enables games and simulations to serve as environments for training intelligent agents. Those agents can be trained using reinforcement learning, imitation learning, neuroevolution, or other machine learning methods through a Python API.
 
 
-### Thesis
+### Structure
 
 The thesis is divided in three parts:
 * Cloth simulation
