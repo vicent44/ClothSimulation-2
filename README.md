@@ -19,5 +19,5 @@ This image shows the schema of the thesis, how the different parts are interconn
 
 ## Authors
 
-* **Vicent Roig Server**
+* **Vicent Roig Server** - vicent44@gmail.com
 
