@@ -61,7 +61,7 @@ def main():
     spec = env.behavior_specs[behavior_name_left]
     action_size = spec.action_size
     action_shape = spec.action_shape
-    print(spec.observation_shapes, action_size, action_shape,"aquiii bro", spec.discrete_action_branches)
+    print(spec.observation_shapes, action_size, action_shape,"hi", spec.discrete_action_branches)
 
 
     print(env.EnvSpec)
@@ -128,7 +128,6 @@ def main():
 
             #if step % args["train"]["log_interval"] == 0:
             L.log('train/episode_reward', episode_reward, step)
-                #print("Hi-1")
 
             _, obs, _, _, _ = env.reset()
             obs = np.transpose(obs[0][0][0], (2, 0, 1))
