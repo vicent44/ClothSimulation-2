@@ -12,7 +12,7 @@ The thesis is divided in three parts:
 * CURL implementation
 * Experimental setup: Robot simulation to manipulate the cloth simulation through CURL algorithm
 
-This image shows the schema of the thesis, how the different parts are interconnected.
+This image shows the schema of the thesis, how the different parts are connected.
 
 
 ![alt text](https://github.com/vicent44/RobotAgents/blob/master/Thesis/overview.png?raw=true)
