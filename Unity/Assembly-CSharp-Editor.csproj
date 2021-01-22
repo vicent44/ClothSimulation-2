@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{52bc839c-9c99-0748-f5a2-dee41f4df5a8}</ProjectGuid>
+    <ProjectGuid>{c6e61163-200a-3b38-320b-694068de37a5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -276,25 +276,25 @@
         <HintPath>/home/vroig/Unity/Hub/Editor/2019.4.0f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="RosBridgeClient">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Assets/RosSharp/Plugins/RosBridgeClient.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Assets/RosSharp/Plugins/RosBridgeClient.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Assets/RosSharp/Plugins/Newtonsoft.Json.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Assets/RosSharp/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Urdf">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Assets/RosSharp/Plugins/Urdf.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Assets/RosSharp/Plugins/Urdf.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Bson">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Assets/RosSharp/Plugins/Newtonsoft.Json.Bson.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Assets/RosSharp/Plugins/Newtonsoft.Json.Bson.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Assets/RosSharp/Plugins/websocket-sharp.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Assets/RosSharp/Plugins/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/PackageCache/com.unity.barracuda@1.1.1-preview/Barracuda/Runtime/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/PackageCache/com.unity.barracuda@1.1.1-preview/Barracuda/Runtime/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/PackageCache/com.unity.burst@1.3.4/Unity.Burst.Unsafe.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/PackageCache/com.unity.burst@1.3.4/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Abstractions.TestingHelpers">
         <HintPath>/home/vroig/Descargas/ml-agents-master/com.unity.ml-agents/Plugins/System.IO.Abstractions.TestingHelpers.dll</HintPath>
@@ -309,7 +309,7 @@
         <HintPath>/home/vroig/Descargas/ml-agents-master/com.unity.ml-agents/Plugins/ProtoBuffer/Grpc.Core.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
         <HintPath>/home/vroig/Unity/Hub/Editor/2019.4.0f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -666,81 +666,81 @@
         <HintPath>/home/vroig/Unity/Hub/Editor/2019.4.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.TestRunner">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Barracuda.MacBLAS">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Barracuda.MacBLAS.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Barracuda.MacBLAS.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Barracuda.Editor">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Barracuda.Editor.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Barracuda.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Editor">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Barracuda">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Barracuda.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Barracuda.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Barracuda.iOSBLAS">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Barracuda.iOSBLAS.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Barracuda.iOSBLAS.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ML-Agents.CommunicatorObjects">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.ML-Agents.CommunicatorObjects.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.ML-Agents.CommunicatorObjects.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Barracuda.BurstBLAS">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Barracuda.BurstBLAS.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Barracuda.BurstBLAS.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics.Editor">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ML-Agents.Editor">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.ML-Agents.Editor.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.ML-Agents.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ML-Agents">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.ML-Agents.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.ML-Agents.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Barracuda.ONNX">
-        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Library/ScriptAssemblies/Unity.Barracuda.ONNX.dll</HintPath>
+        <HintPath>/home/vroig/Escritorio/TFM/Unity-P/RobotAgents/Unity/Library/ScriptAssemblies/Unity.Barracuda.ONNX.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{b521cdc8-a9ee-7e7f-9ba8-33912f1374ee}</Project>
+      <Project>{03938ccd-4b40-8dfb-6b9b-21988d5cac0a}</Project>
       <Name>Assembly-CSharp</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
